@@ -1,0 +1,285 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load widget_tweaks %}
+
+{% block titulo %}
+Cadastro
+{% endblock %}
+
+
+{% block pagina %}
+<div class="container">
+    <h2><i class="bi bi-building me-1"></i></i>Cadastro de Empresa</h2>
+    <hr>
+</div>
+
+
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+
+        <p class="text-secondary fw-lighter">
+            Informe todos os campos obrigatorios (<span class="text-danger"><b>*</b></span>)
+        </p>
+        
+        <!-- ========================== -->
+        <!-- ===== DADOS EMPRESARIAIS ===== -->
+        <div class="row">
+            <div class="col-12 mt-3">
+                <h3>Dados da Empresa</h3>
+                <hr>
+            </div>
+            <div class="col-sm-12 col-md-12 mb-3">
+                <label for="{{ form.pessoa_juridica.id_for_label }}" class="form-label">{{ form.pessoa_juridica.label }}: {% if form.pessoa_juridica.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.pessoa_juridica class="form-control" %}
+                {% for error in form.pessoa_juridica.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="col-sm-12 col-md-12 mb-3">
+                <label for="{{ form.nome_fantasia.id_for_label }}" class="form-label">{{ form.nome_fantasia.label }}: {% if form.nome_fantasia.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.nome_fantasia class="form-control" %}
+                {% for error in form.nome_fantasia.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+
+            <div class="col-sm-12 col-md-4 mb-3 position-relative">
+                <label for="{{ form.cnpj.id_for_label }}" class="form-label">{{ form.cnpj.label }}: {% if form.cnpj.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.cnpj class="form-control"  onkeyup="validarCNPJ_x()" autocomplete="false" placeholder="00000000000000" %}
+                {% for error in form.cnpj.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+                <div class="invalid-feedback d-none fs-6" id="cnpjlog">
+                    CNPJ invalido.
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="{{ form.is_estadual.id_for_label }}" class="form-label">{{ form.is_estadual.label }}: {% if form.is_estadual.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.is_estadual class="form-control" %}
+                {% for error in form.is_estadual.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="{{ form.is_municipal.id_for_label }}" class="form-label">{{ form.is_municipal.label }}: {% if form.is_municipal.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.is_municipal class="form-control" %}
+                {% for error in form.is_municipal.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+
+    </div>
+
+        <!-- ========================================================================================================== -->
+        <!-- ===== CONTATO ===== -->
+        <div class="row">
+            <div class="col-12 mt-3">
+                <h3>Contato</h3>
+                <hr>
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+                <label for="{{ form.email_1.id_for_label }}" class="form-label">{{ form.email_1.label }}: {% if form.email_1.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.email_1 class="form-control" %}
+                {% for error in form.email_1.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+                <label for="{{ form.email_2.id_for_label }}" class="form-label">{{ form.email_2.label }}: {% if form.email_2.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.email_2 class="form-control" %}
+                {% for error in form.email_2.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="div-fone-1" class="form-label">{{ form.fone_1.label }}: {% if form.fone_1.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                <div id="div-fone-1" class="d-inline-flex w-100 ">
+                    <div class="input-group pe-1">
+                        {% render_field form.fone_1 class="form-control" onkeyup="mascaraFone1(event)" style="width: 60%;" %}
+                        {% render_field form.fone_1_tipo class="form-select" style="width: 40%;" onchange="btncontato1()" %}
+                    </div>
+                    <a class="btn btn-outline-dark" href="#" id="btn_id_fone_1" target="_blank" title="Abrir APP com o Contato">
+                    </a>
+                </div>
+                {% for error in form.fone_1.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="div-fone-2" class="form-label">{{ form.fone_2.label }}: {% if form.fone_2.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                <div id="div-fone-2" class="d-inline-flex w-100 ">
+                    <div class="input-group pe-1">
+                        {% render_field form.fone_2 class="form-control" onkeyup="mascaraFone2(event)" style="width: 60%;" %}
+                        {% render_field form.fone_2_tipo class="form-select" style="width: 40%;" onchange="btncontato2()" %}
+                    </div>
+                    <a class="btn btn-outline-dark" href="#" id="btn_id_fone_2" target="_blank" title="Abrir APP com o Contato">
+                    </a>
+                </div>
+                {% for error in form.fone_2.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="div-fone-3" class="form-label">{{ form.fone_3.label }}: {% if form.fone_3.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                <div id="div-fone-3" class="d-inline-flex w-100 ">
+                    <div class="input-group pe-1">
+                        {% render_field form.fone_3 class="form-control" onkeyup="mascaraFone3(event)" style="width: 60%;" %}
+                        {% render_field form.fone_3_tipo class="form-select" style="width: 40%;" onchange="btncontato3()" %}
+                    </div>
+                    <a class="btn btn-outline-dark" href="#" id="btn_id_fone_3" target="_blank" title="Abrir APP com o Contato">
+                    </a>
+                </div>
+                {% for error in form.fone_3.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="col-sm-12 col-md-6 mb-3">
+                <label for="{{ form.link_1.id_for_label }}" class="form-label">{{ form.link_1.label }}: {% if form.link_1.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.link_1 class="form-control" %}
+                {% for error in form.link_1.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+                <label for="{{ form.link_2.id_for_label }}" class="form-label">{{ form.link_2.label }}: {% if form.link_2.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.link_2 class="form-control" %}
+                {% for error in form.link_2.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-12 mb-3">
+                <label for="{{ form.obs_contato.id_for_label }}" class="form-label">{{ form.obs_contato.label }}: {% if form.obs_contato.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.obs_contato class="form-control" rows="2" %}
+                {% for error in form.obs_contato.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- ========================================================================================================== -->
+        <!-- ===== ENDERECO ===== -->
+        <div class="row">
+            <div class="col-12 mt-3">
+                <h3>Endereço</h3>
+                <hr>
+            </div>
+            <div class="col-6 col-sm-6 col-md-3 mb-3">
+                <label for="div-cep" class="form-label">{{ form.cep.label }}: {% if form.cep.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                <div id="div-cep" class="d-inline-flex w-100">
+                    {% render_field form.cep class="form-control" placeholder="00000000" %}
+                    <button type="button" onclick="pesquisacep(id_cep.value);" class="btn btn-outline-dark ms-1" title="Buscar dados do CEP">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </button>
+                </div>
+                {% for error in form.cep.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+                <div class="invalid-feedback show fs-6" id="ceplog">
+                    CEP invalido.
+                </div>
+            </div>
+            <div class="col-6 col-sm-6 col-md-2 mb-3">
+                <label for="{{ form.estado.id_for_label }}" class="form-label">{{ form.estado.label }}: {% if form.estado.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.estado class="form-control text-uppercase" placeholder="XX" %}
+                {% for error in form.estado.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-7 mb-3">
+                <label for="{{ form.cidade.id_for_label }}" class="form-label">{{ form.cidade.label }}: {% if form.cidade.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.cidade class="form-control" %}
+                {% for error in form.cidade.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="{{ form.bairro.id_for_label }}" class="form-label">{{ form.bairro.label }}: {% if form.bairro.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.bairro class="form-control" %}
+                {% for error in form.bairro.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+                <label for="{{ form.endereco.id_for_label }}" class="form-label">{{ form.endereco.label }}: {% if form.endereco.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.endereco class="form-control" %}
+                {% for error in form.endereco.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-2 mb-3">
+                <label for="{{ form.numero.id_for_label }}" class="form-label">{{ form.numero.label }}: {% if form.numero.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.numero class="form-control" %}
+                {% for error in form.numero.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-12 mb-3">
+                <label for="{{ form.complemento.id_for_label }}" class="form-label">{{ form.complemento.label }}: {% if form.complemento.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.complemento class="form-control" %}
+                {% for error in form.complemento.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-12 mb-3">
+                <label for="{{ form.obs_endereco.id_for_label }}" class="form-label">{{ form.obs_endereco.label }}: {% if form.obs_endereco.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.obs_endereco class="form-control" rows="2" %}
+                {% for error in form.obs_endereco.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mt-3">
+                <h3>Outros</h3>
+                <hr>
+            </div>
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="{{ form.status.id_for_label }}" class="form-label">{{ form.status.label }}: {% if form.status.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.status class="form-select" %}
+                {% for error in form.status.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-4 mb-3">
+                <label for="{{ form.ultima_att.id_for_label }}" class="form-label">{{ form.ultima_att.label }}: 
+                    {% if form.ultima_att.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                    {% render_field form.ultima_att class="form-control" disabled="True" %}
+            </div>
+    
+            <div class="col-6 col-sm-6 col-md-4 mb-3">
+                <label for="{{ form.data_att.id_for_label }}" class="form-label">{{ form.data_att.label }}: 
+                    {% if form.data_att.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                    {% render_field form.data_att class="form-control" disabled="True" %}
+            </div>
+
+
+        </div>
+        <!-- ========================================================================================================== -->
+        <!-- ===== BOTOES ===== -->
+        <div class="container g-0 mt-2">
+            <button type="submit" class="btn btn-success my-1 me-1">
+                <i class="bi bi-check-lg me-1"></i>Salvar
+            </button>
+            <button type="reset" class="btn btn-warning my-1 me-1">
+                <i class="bi bi-x me-1"></i>Limpar
+            </button>
+            <a href="{% url 'empresa-busca' %}" class="btn btn-dark my-1">
+                <i class="bi bi-arrow-return-left me-1"></i>Voltar
+            </a>
+        </div>
+    </form>
+</div>
+
+<script src="{% static 'cadastro_empresa/cadastro.js' %}"></script>
+
+{% endblock %}
