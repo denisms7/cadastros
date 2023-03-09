@@ -66,7 +66,7 @@ class Cadastro_Empresa(models.Model):
     data_att = models.DateTimeField(verbose_name=_('Data de Atualização'), null=True, blank=True)
 
     def __str__(self):
-        return f"{self.nome_fantasia} - {self.cnpj}."
+        return f"{self.nome_fantasia} - {self.cnpj[0:2]}.{self.cnpj[2:5]}.{self.cnpj[5:8]}/{self.cnpj[8:12]}-{self.cnpj[12:14]}"
 
 # PESSOA
 
@@ -193,5 +193,5 @@ class Cadastro_Pessoa(models.Model):
     data_att = models.DateTimeField(verbose_name=_('Data de Atualização'), null=True, blank=True)
 
     def __str__(self):
-        return f"{self.primeiro_nome} {self.ultimo_nome} - {self.cpf}."
+        return f'{self.primeiro_nome} {self.ultimo_nome} - {self.cpf[0:3]}.{self.cpf[3:6]}.{self.cpf[6:9]}-{self.cpf[9:11]}'
     
