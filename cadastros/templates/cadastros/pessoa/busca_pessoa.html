@@ -7,6 +7,9 @@ Cadastros
 {% endblock %}
 
 {% block pagina %}
+
+{% include "cadastros/alertas.html" %}
+
 <div class="container">
     <h2><i class="bi bi-person-lines-fill me-2"></i>Cadastros de Pessoas</h2>
     <hr>
@@ -76,6 +79,6 @@ Cadastros
     </div>
 </div>
 
-{% include "paginacao.html" %}
+{% include "cadastros/paginacao.html" %}
 
 {% endblock %}
