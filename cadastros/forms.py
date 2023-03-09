@@ -3,7 +3,7 @@ from .models import Cadastro_Empresa, Cadastro_Pessoa
 
 
 
-class FormCadastro(forms.ModelForm):
+class FormCadastroEmpresa(forms.ModelForm):
     class Meta:
         model = Cadastro_Empresa
         fields = [
@@ -11,10 +11,8 @@ class FormCadastro(forms.ModelForm):
             'pessoa_juridica',
             'nome_fantasia',
             'cnpj',
-
             'is_estadual',
             'is_municipal',
-
             'email_1',
             'email_2',
             'fone_1',
@@ -34,7 +32,6 @@ class FormCadastro(forms.ModelForm):
             'numero',
             'complemento',
             'obs_endereco',
-
             'ultima_att',
             'data_att',
         ]
@@ -43,9 +40,7 @@ class FormCadastro(forms.ModelForm):
             'nascimento': forms.DateInput(format=("%Y-%m-%d")),
         }
 
-
-
-class FormCadastro(forms.ModelForm):
+class FormCadastroPessoa(forms.ModelForm):
     class Meta:
         model = Cadastro_Pessoa
         fields = [

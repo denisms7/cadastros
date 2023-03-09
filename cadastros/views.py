@@ -7,8 +7,8 @@ from django.core.paginator import Paginator
 from itertools import cycle
 from django.shortcuts import redirect
 
-from .models import Cadastro_Pessoa
-from .forms import FormCadastro
+from .models import Cadastro_Pessoa, Cadastro_Empresa
+from .forms import FormCadastroPessoa, FormCadastroEmpresa
 
 from datetime import datetime
 
@@ -28,7 +28,7 @@ class BuscaPessoa(ListView):
 
 class CadastroPessoa(CreateView):
     model = Cadastro_Pessoa
-    form_class = FormCadastro
+    form_class = FormCadastroPessoa
     template_name = 'cadastro_pessoa/cadastro_pessoa.html'
     success_url = reverse_lazy('pessoa-busca')
 
@@ -49,7 +49,7 @@ class CadastroPessoa(CreateView):
 
 class EditarPessoa(UpdateView):
     model = Cadastro_Pessoa
-    form_class = FormCadastro
+    form_class = FormCadastroPessoa
     template_name = 'cadastro_pessoa/cadastro_pessoa.html'
     success_url = reverse_lazy('pessoa-busca')
 
@@ -83,38 +83,7 @@ class DeletePessoa(DeleteView):
 
 
 
-def cpf_validate(cpf: str) -> bool:
-    TAMANHO_CPF = 11
-    if len(cpf) != TAMANHO_CPF:
-        return False
-    if not cpf.isdigit():
-        return False
-    if cpf in (c * TAMANHO_CPF for c in "1234567890"):
-        return False
-    cpf_reverso = cpf[::-1]
-    for i in range(2, 0, -1):
-        cpf_enumerado = enumerate(cpf_reverso[i:], start=2)
-        dv_calculado = sum(map(lambda x: int(x[1]) * x[0], cpf_enumerado)) * 10 % 11
-        if cpf_reverso[i - 1:i] != str(dv_calculado % 10):
-            return False
-    return True
 
-
-def cnpj_validate(cnpj: str) -> bool:
-    LENGTH_CNPJ = 14
-    if len(cnpj) != LENGTH_CNPJ:
-        return False
-    if not cnpj.isdigit():
-        return False
-    if cnpj in (c * LENGTH_CNPJ for c in "1234567890"):
-        return False
-    cnpj_r = cnpj[::-1]
-    for i in range(2, 0, -1):
-        cnpj_enum = zip(cycle(range(2, 10)), cnpj_r[i:])
-        dv = sum(map(lambda x: int(x[1]) * x[0], cnpj_enum)) * 10 % 11
-        if cnpj_r[i - 1:i] != str(dv % 10):
-            return False
-    return True
 
 # EMPRESA
 
@@ -135,7 +104,7 @@ class BuscaEmpresa(ListView):
 
 class CadastroEmpresa(CreateView):
     model = Cadastro_Empresa
-    form_class = FormCadastro
+    form_class = FormCadastroEmpresa
     template_name = 'cadastro_empresa/cadastro_empresa.html'
     success_url = reverse_lazy('empresa-busca')
 
@@ -156,7 +125,7 @@ class CadastroEmpresa(CreateView):
 
 class EditarEmpresa(UpdateView):
     model = Cadastro_Empresa
-    form_class = FormCadastro
+    form_class = FormCadastroEmpresa
     template_name = 'cadastro_empresa/cadastro_empresa.html'
     success_url = reverse_lazy('empresa-busca')
 
@@ -187,6 +156,25 @@ class DeleteEmpresa(DeleteView):
         except:
             messages.warning(self.request, "Não foi possivel deletar o registro")
             return redirect('pessoa-busca')
+
+
+
+
+def cpf_validate(cpf: str) -> bool:
+    TAMANHO_CPF = 11
+    if len(cpf) != TAMANHO_CPF:
+        return False
+    if not cpf.isdigit():
+        return False
+    if cpf in (c * TAMANHO_CPF for c in "1234567890"):
+        return False
+    cpf_reverso = cpf[::-1]
+    for i in range(2, 0, -1):
+        cpf_enumerado = enumerate(cpf_reverso[i:], start=2)
+        dv_calculado = sum(map(lambda x: int(x[1]) * x[0], cpf_enumerado)) * 10 % 11
+        if cpf_reverso[i - 1:i] != str(dv_calculado % 10):
+            return False
+    return True
 
 
 def cnpj_validate(cnpj: str) -> bool:

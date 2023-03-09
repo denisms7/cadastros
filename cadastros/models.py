@@ -20,15 +20,12 @@ class Cadastro_Empresa(models.Model):
         auto_now_add=True, verbose_name=_('Data de Cadastro'))
     cadastrado_por = models.ForeignKey(
         User, default=1, on_delete=models.PROTECT, verbose_name=_('Cadastrado por'), null=True, blank=True)
-
     # Dados Pessoais
     pessoa_juridica = models.CharField(max_length=200, verbose_name=_('Razão Social'))
     nome_fantasia = models.CharField(max_length=200, verbose_name=_('Nome Fantasia'))
     cnpj = models.CharField(max_length=14, unique=True, verbose_name=_('CNPJ'))
-
     is_estadual = models.CharField(max_length=14, verbose_name=_('Incrição Estadual'), null=True, blank=True)
     is_municipal = models.CharField(max_length=14, verbose_name=_('Incrição Municipal'), null=True, blank=True)
-
     # E-mail
     email_1 = models.EmailField(max_length=150, verbose_name=_(
         'E-mail 01'), null=True, blank=True)
@@ -43,14 +40,11 @@ class Cadastro_Empresa(models.Model):
     # Contato 03
     fone_3 = models.CharField(max_length=15, verbose_name=_('Contato 03'), null=True, blank=True)
     fone_3_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 03 Tipo'), default=1, choices=CONTATOS_CHOICES, null=True, blank=True)
-
     # Link
     link_1 = models.URLField(verbose_name=_('Link 01'), null=True, blank=True)
     link_2 = models.URLField(verbose_name=_('Link 02'), null=True, blank=True)
-
     obs_contato = models.TextField(max_length=2000, verbose_name=_(
         'Observações'), null=True, blank=True)
-
     # Endereço
     cep = models.CharField(
         max_length=8, verbose_name='CEP', null=True, blank=True)
@@ -68,7 +62,6 @@ class Cadastro_Empresa(models.Model):
         'Complemento'), null=True, blank=True)
     obs_endereco = models.TextField(
         max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
-    
     ultima_att = models.CharField(max_length=200, verbose_name=_('Última Atualização'), null=True, blank=True)
     data_att = models.DateTimeField(verbose_name=_('Data de Atualização'), null=True, blank=True)
 
@@ -125,7 +118,6 @@ class Cadastro_Pessoa(models.Model):
         auto_now_add=True, verbose_name=_('Data de Cadastro'))
     cadastrado_por = models.ForeignKey(
         User, default=1, on_delete=models.PROTECT, verbose_name=_('Cadastrado por'), null=True, blank=True)
-
     # Dados Pessoais
     primeiro_nome = models.CharField(max_length=50, verbose_name=_('Nome'))
     ultimo_nome = models.CharField(max_length=150, verbose_name=_('Sobrenome'))
@@ -144,53 +136,42 @@ class Cadastro_Pessoa(models.Model):
         'Sexo'), null=True, blank=True)
     estado_civil = models.PositiveSmallIntegerField(choices=ESTADO_CIVIL_CHOICES, verbose_name=_(
         'Estado Civil'), null=True, blank=True)
-
     # Conjuge
     conjuge_primeiro_nome = models.CharField(
         max_length=50, verbose_name=_('Nome do Conjuge'), null=True, blank=True)
     conjuge_ultimo_nome = models.CharField(max_length=150, verbose_name=_(
         'Sobrenome do Conjuge'), null=True, blank=True)
-
     # Mãe
     mae_primeiro_nome = models.CharField(
         max_length=50, verbose_name=_('Nome da Mãe'), null=True, blank=True)
     mae_ultimo_nome = models.CharField(max_length=150, verbose_name=_(
         'Sobrenome da Mãe'), null=True, blank=True)
-
     # Pai
     pai_primeiro_nome = models.CharField(
         max_length=50, verbose_name=_('Nome do Pai'), null=True, blank=True)
     pai_ultimo_nome = models.CharField(max_length=150, verbose_name=_(
         'Sobrenome do Pai'), null=True, blank=True)
-
     obs_pessoal = models.TextField(max_length=2000, verbose_name=_(
         'Observações'), null=True, blank=True)
-
     # E-mail
     email_1 = models.EmailField(max_length=150, verbose_name=_(
         'E-mail 01'), null=True, blank=True)
     email_2 = models.EmailField(max_length=150, verbose_name=_(
         'E-mail 02'), null=True, blank=True)
-    
     # Contato 01
     fone_1 = models.CharField(max_length=15, verbose_name=_('Contato 01'), null=True, blank=True)
     fone_1_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 01 Tipo'), default=1, choices=CONTATOS_CHOICES, null=True, blank=True)
-
     # Contato 02
     fone_2 = models.CharField(max_length=15, verbose_name=_('Contato 02'), null=True, blank=True)
     fone_2_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 02 Tipo'), default=1, choices=CONTATOS_CHOICES, null=True, blank=True)
-
     # Contato 03
     fone_3 = models.CharField(max_length=15, verbose_name=_('Contato 03'), null=True, blank=True)
     fone_3_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 03 Tipo'), default=1, choices=CONTATOS_CHOICES, null=True, blank=True)
-
     # Link
     link_1 = models.URLField(verbose_name=_('Link 01'), null=True, blank=True)
     link_2 = models.URLField(verbose_name=_('Link 02'), null=True, blank=True)
-
     obs_contato = models.TextField(max_length=2000, verbose_name=_(
         'Observações'), null=True, blank=True)
-
     # Endereço
     cep = models.CharField(
         max_length=8, verbose_name='CEP', null=True, blank=True)
@@ -208,7 +189,6 @@ class Cadastro_Pessoa(models.Model):
         'Complemento'), null=True, blank=True)
     obs_endereco = models.TextField(
         max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
-
     ultima_att = models.CharField(max_length=200, verbose_name=_('Última Atualização'), null=True, blank=True)
     data_att = models.DateTimeField(verbose_name=_('Data de Atualização'), null=True, blank=True)
 
