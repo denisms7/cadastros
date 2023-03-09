@@ -1,8 +1,39 @@
-window.onload = function () {
+window.onload = function() {
     btncontato1()
     btncontato2()
     btncontato3()
+    AbrirConjuge()
 };
+
+
+// Abrir Conjuge
+function AbrirConjuge() {
+    try {
+        const divConjuge = document.getElementById('div_conjuge')
+        let estadoCivil = document.getElementById('id_estado_civil')
+        teste = false
+    
+    
+        if (estadoCivil.value == '1') {
+            teste = true
+        }
+        if (estadoCivil.value == '4') {
+            teste = true
+        }
+        if (teste) {
+            divConjuge.classList.add("show");
+        }
+        else {
+            divConjuge.classList.remove("show");
+            document.getElementById('conjuge_nome').value = ''
+            document.getElementById('conjuge_sobrenome').value = ''
+        }
+    }
+    catch {
+        return undefined
+    }
+
+}
 
 
 // FORMATAR TELEFONE
