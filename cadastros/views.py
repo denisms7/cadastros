@@ -34,6 +34,13 @@ class CadastroPessoa(CreateView):
 
     def form_valid(self, form):
         cpf = form.cleaned_data.get('cpf')
+        cpf = cpf.replace('.', '').replace('-', '')
+        form.instance.cpf = cpf 
+
+        cep = form.cleaned_data.get('cep')
+        cep = cep.replace('.', '').replace('-', '')
+        form.instance.cep = cep 
+
         if not cpf_validate(cpf):
             messages.warning(self.request, f"O CPF {cpf} é inválido, O registro não foi salvo.")
             return self.form_invalid(form)
@@ -55,6 +62,13 @@ class EditarPessoa(UpdateView):
 
     def form_valid(self, form):
         cpf = form.cleaned_data.get('cpf')
+        cpf = cpf.replace('.', '').replace('-', '')
+        form.instance.cpf = cpf 
+
+        cep = form.cleaned_data.get('cep')
+        cep = cep.replace('.', '').replace('-', '')
+        form.instance.cep = cep 
+        
         if not cpf_validate(cpf):
             messages.warning(self.request, f"O CPF {cpf} é inválido, O registro não foi salvo.")
             return self.form_invalid(form)
@@ -110,6 +124,12 @@ class CadastroEmpresa(CreateView):
 
     def form_valid(self, form):
         cnpj = form.cleaned_data.get('cnpj')
+        cnpj = cnpj.replace('.', '').replace('-', '').replace('/', '') # Remove pontos e traços do CNPJ
+        form.instance.cnpj = cnpj # Atualiza o valor do CNPJ no objeto form.instance
+        cep = form.cleaned_data.get('cep')
+        cep = cep.replace('.', '').replace('-', '')
+        form.instance.cep = cep 
+
         if not cnpj_validate(cnpj):
             messages.warning(self.request, f"O CNPJ {cnpj} é inválido, O registro não foi salvo.")
             return self.form_invalid(form)
@@ -123,6 +143,7 @@ class CadastroEmpresa(CreateView):
         return url
 
 
+
 class EditarEmpresa(UpdateView):
     model = Cadastro_Empresa
     form_class = FormCadastroEmpresa
@@ -131,6 +152,13 @@ class EditarEmpresa(UpdateView):
 
     def form_valid(self, form):
         cnpj = form.cleaned_data.get('cnpj')
+        cnpj = cnpj.replace('.', '').replace('-', '').replace('/', '') # Remove pontos e traços do CNPJ
+        form.instance.cnpj = cnpj # Atualiza o valor do CNPJ no objeto form.instance
+
+        cep = form.cleaned_data.get('cep')
+        cep = cep.replace('.', '').replace('-', '')
+        form.instance.cep = cep 
+
         if not cnpj_validate(cnpj):
             messages.warning(self.request, f"O CNPJ {cnpj} é inválido, O registro não foi salvo.")
             return self.form_invalid(form)
@@ -175,8 +203,7 @@ def cpf_validate(cpf: str) -> bool:
         if cpf_reverso[i - 1:i] != str(dv_calculado % 10):
             return False
     return True
-
-
+    
 def cnpj_validate(cnpj: str) -> bool:
     LENGTH_CNPJ = 14
     if len(cnpj) != LENGTH_CNPJ:

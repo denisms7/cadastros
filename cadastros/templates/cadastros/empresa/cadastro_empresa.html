@@ -35,26 +35,10 @@ PJ - Cadastro
                 <h3>Dados da Empresa</h3>
                 <hr>
             </div>
-            <div class="col-sm-12 col-md-12 mb-3">
-                <label for="{{ form.pessoa_juridica.id_for_label }}" class="form-label">{{ form.pessoa_juridica.label }}: {% if form.pessoa_juridica.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-                {% render_field form.pessoa_juridica class="form-control" %}
-                {% for error in form.pessoa_juridica.errors %}
-                    <span class="text-danger">{{ error }}</span>
-                {% endfor %}
-            </div>
-
-            <div class="col-sm-12 col-md-12 mb-3">
-                <label for="{{ form.nome_fantasia.id_for_label }}" class="form-label">{{ form.nome_fantasia.label }}: {% if form.nome_fantasia.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-                {% render_field form.nome_fantasia class="form-control" %}
-                {% for error in form.nome_fantasia.errors %}
-                    <span class="text-danger">{{ error }}</span>
-                {% endfor %}
-            </div>
-
 
             <div class="col-sm-12 col-md-4 mb-3 position-relative">
                 <label for="{{ form.cnpj.id_for_label }}" class="form-label">{{ form.cnpj.label }}: {% if form.cnpj.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-                {% render_field form.cnpj class="form-control"  onkeyup="validarCNPJ_x()" autocomplete="false" placeholder="00000000000000" %}
+                {% render_field form.cnpj class="form-control"  onkeyup="validarCNPJ_x()" autocomplete="false" placeholder="00.000.000/0000-00" data-mask="00.000.000/0000-00" %}
                 {% for error in form.cnpj.errors %}
                     <span class="text-danger">{{ error }}</span>
                 {% endfor %}
@@ -78,6 +62,27 @@ PJ - Cadastro
                     <span class="text-danger">{{ error }}</span>
                 {% endfor %}
             </div>
+
+
+
+            <div class="col-sm-12 col-md-12 mb-3">
+                <label for="{{ form.pessoa_juridica.id_for_label }}" class="form-label">{{ form.pessoa_juridica.label }}: {% if form.pessoa_juridica.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.pessoa_juridica class="form-control" %}
+                {% for error in form.pessoa_juridica.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="col-sm-12 col-md-12 mb-3">
+                <label for="{{ form.nome_fantasia.id_for_label }}" class="form-label">{{ form.nome_fantasia.label }}: {% if form.nome_fantasia.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.nome_fantasia class="form-control" %}
+                {% for error in form.nome_fantasia.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+
+
 
 
     </div>
@@ -179,7 +184,7 @@ PJ - Cadastro
             <div class="col-6 col-sm-6 col-md-3 mb-3">
                 <label for="div-cep" class="form-label">{{ form.cep.label }}: {% if form.cep.field.required %}<span class="text-danger">*</span>{% endif %}</label>
                 <div id="div-cep" class="d-inline-flex w-100">
-                    {% render_field form.cep class="form-control" placeholder="00000000" %}
+                    {% render_field form.cep class="form-control" placeholder="00.000-000" data-mask="00.000-000" %}
                     <button type="button" onclick="pesquisacep(id_cep.value);" class="btn btn-outline-dark ms-1" title="Buscar dados do CEP">
                         <i class="bi bi-geo-alt-fill"></i>
                     </button>
@@ -283,6 +288,9 @@ PJ - Cadastro
     </form>
 </div>
 
+<script src="{% static 'cadastros/jQuery-v3.6.4.js' %}"></script>
+<script src="{% static 'cadastros/jQuery Mask Plugin v1.14.16.js' %}"></script>
 <script src="{% static 'cadastros/cadastro.js' %}"></script>
+
 
 {% endblock %}

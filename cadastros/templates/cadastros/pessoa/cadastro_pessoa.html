@@ -51,7 +51,7 @@ PF - Cadastro
             </div>
             <div class="col-6 col-sm-6 col-md-2 mb-3 position-relative">
                 <label for="{{ form.cpf.id_for_label }}" class="form-label">{{ form.cpf.label }}: {% if form.cpf.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-                {% render_field form.cpf class="form-control"  onkeyup="ValidaCPF()" autocomplete="false" placeholder="00000000000" %}
+                {% render_field form.cpf class="form-control"  onkeyup="ValidaCPF()" autocomplete="false" placeholder="000.000.000-00" data-mask="000.000.000-00" %}
                 {% for error in form.cpf.errors %}
                     <span class="text-danger">{{ error }}</span>
                 {% endfor %}
@@ -276,7 +276,7 @@ PF - Cadastro
             <div class="col-6 col-sm-6 col-md-3 mb-3">
                 <label for="div-cep" class="form-label">{{ form.cep.label }}: {% if form.cep.field.required %}<span class="text-danger">*</span>{% endif %}</label>
                 <div id="div-cep" class="d-inline-flex w-100">
-                    {% render_field form.cep class="form-control" placeholder="00000000" %}
+                    {% render_field form.cep class="form-control" placeholder="00000000" data-mask="00.000-000" %}
                     <button type="button" onclick="pesquisacep(id_cep.value);" class="btn btn-outline-dark ms-1" title="Buscar dados do CEP">
                         <i class="bi bi-geo-alt-fill"></i>
                     </button>
@@ -381,6 +381,8 @@ PF - Cadastro
     </form>
 </div>
 
+<script src="{% static 'cadastros/jQuery-v3.6.4.js' %}"></script>
+<script src="{% static 'cadastros/jQuery Mask Plugin v1.14.16.js' %}"></script>
 <script src="{% static 'cadastros/cadastro.js' %}"></script>
 
 {% endblock %}

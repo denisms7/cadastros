@@ -23,7 +23,7 @@ class Cadastro_Empresa(models.Model):
     # Dados Pessoais
     pessoa_juridica = models.CharField(max_length=200, verbose_name=_('Razão Social'))
     nome_fantasia = models.CharField(max_length=200, verbose_name=_('Nome Fantasia'))
-    cnpj = models.CharField(max_length=14, unique=True, verbose_name=_('CNPJ'))
+    cnpj = models.CharField(max_length=18, unique=True, verbose_name=_('CNPJ'))
     is_estadual = models.CharField(max_length=14, verbose_name=_('Incrição Estadual'), null=True, blank=True)
     is_municipal = models.CharField(max_length=14, verbose_name=_('Incrição Municipal'), null=True, blank=True)
     # E-mail
@@ -47,7 +47,7 @@ class Cadastro_Empresa(models.Model):
         'Observações'), null=True, blank=True)
     # Endereço
     cep = models.CharField(
-        max_length=8, verbose_name='CEP', null=True, blank=True)
+        max_length=10, verbose_name='CEP', null=True, blank=True)
     estado = models.CharField(max_length=2, verbose_name=_(
         'Estado'), null=True, blank=True)
     cidade = models.CharField(max_length=200, verbose_name=_(
@@ -121,7 +121,7 @@ class Cadastro_Pessoa(models.Model):
     # Dados Pessoais
     primeiro_nome = models.CharField(max_length=50, verbose_name=_('Nome'))
     ultimo_nome = models.CharField(max_length=150, verbose_name=_('Sobrenome'))
-    cpf = models.CharField(max_length=11, unique=True, verbose_name=_('CPF'))
+    cpf = models.CharField(max_length=14, unique=True, verbose_name=_('CPF'))
     rg = models.CharField(max_length=11, verbose_name=_(
         'RG'), null=True, blank=True)
     rg_emissor = models.CharField(
@@ -174,7 +174,7 @@ class Cadastro_Pessoa(models.Model):
         'Observações'), null=True, blank=True)
     # Endereço
     cep = models.CharField(
-        max_length=8, verbose_name='CEP', null=True, blank=True)
+        max_length=10, verbose_name='CEP', null=True, blank=True)
     estado = models.CharField(max_length=2, verbose_name=_(
         'Estado'), null=True, blank=True)
     cidade = models.CharField(max_length=200, verbose_name=_(
