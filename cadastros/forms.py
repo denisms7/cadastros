@@ -2,7 +2,6 @@ from django import forms
 from .models import Cadastro_Empresa, Cadastro_Pessoa
 
 
-
 class FormCadastroEmpresa(forms.ModelForm):
     class Meta:
         model = Cadastro_Empresa
