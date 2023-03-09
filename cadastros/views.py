@@ -15,7 +15,7 @@ from datetime import datetime
 class BuscaPessoa(ListView):
     paginate_by = 20
     model = Cadastro_Pessoa
-    template_name = 'cadastro_pessoa/busca_pessoa.html'
+    template_name = 'cadastros/pessoa/busca_pessoa.html'
     def get_queryset(self):
         queryset = super().get_queryset()
         query = self.request.GET.get('q')
@@ -29,7 +29,7 @@ class BuscaPessoa(ListView):
 class CadastroPessoa(CreateView):
     model = Cadastro_Pessoa
     form_class = FormCadastroPessoa
-    template_name = 'cadastro_pessoa/cadastro_pessoa.html'
+    template_name = 'cadastros/pessoa/cadastro_pessoa.html'
     success_url = reverse_lazy('pessoa-busca')
 
     def form_valid(self, form):
@@ -50,7 +50,7 @@ class CadastroPessoa(CreateView):
 class EditarPessoa(UpdateView):
     model = Cadastro_Pessoa
     form_class = FormCadastroPessoa
-    template_name = 'cadastro_pessoa/cadastro_pessoa.html'
+    template_name = 'cadastros/pessoa/cadastro_pessoa.html'
     success_url = reverse_lazy('pessoa-busca')
 
     def form_valid(self, form):
@@ -70,7 +70,7 @@ class EditarPessoa(UpdateView):
 class DeletePessoa(DeleteView):
     model = Cadastro_Pessoa
     success_url = reverse_lazy('pessoa-busca')
-    template_name = 'cadastro_pessoa/delete_pessoa.html'
+    template_name = 'cadastros/pessoa/delete_pessoa.html'
 
     def form_valid(self, form):
         try:
@@ -91,7 +91,7 @@ class DeletePessoa(DeleteView):
 class BuscaEmpresa(ListView):
     paginate_by = 20
     model = Cadastro_Empresa
-    template_name = 'cadastro_empresa/busca_empresa.html'
+    template_name = 'cadastros/empresa/busca_empresa.html'
     def get_queryset(self):
         queryset = super().get_queryset()
         query = self.request.GET.get('q')
@@ -105,7 +105,7 @@ class BuscaEmpresa(ListView):
 class CadastroEmpresa(CreateView):
     model = Cadastro_Empresa
     form_class = FormCadastroEmpresa
-    template_name = 'cadastro_empresa/cadastro_empresa.html'
+    template_name = 'cadastros/empresa/cadastro_empresa.html'
     success_url = reverse_lazy('empresa-busca')
 
     def form_valid(self, form):
@@ -126,7 +126,7 @@ class CadastroEmpresa(CreateView):
 class EditarEmpresa(UpdateView):
     model = Cadastro_Empresa
     form_class = FormCadastroEmpresa
-    template_name = 'cadastro_empresa/cadastro_empresa.html'
+    template_name = 'cadastros/empresa/cadastro_empresa.html'
     success_url = reverse_lazy('empresa-busca')
 
     def form_valid(self, form):
@@ -146,7 +146,7 @@ class EditarEmpresa(UpdateView):
 class DeleteEmpresa(DeleteView):
     model = Cadastro_Empresa
     success_url = reverse_lazy('empresa-busca')
-    template_name = 'cadastro_empresa/delete_empresa.html'
+    template_name = 'cadastros/empresa/delete_empresa.html'
 
     def form_valid(self, form):
         try:
