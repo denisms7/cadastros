@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from itertools import cycle
 from django.shortcuts import redirect
+from django.db import IntegrityError
 
 from .models import Cadastro_Pessoa, Cadastro_Empresa
 from .forms import FormCadastroPessoa, FormCadastroEmpresa
@@ -34,12 +35,14 @@ class CadastroPessoa(CreateView):
 
     def form_valid(self, form):
         cpf = form.cleaned_data.get('cpf')
-        cpf = cpf.replace('.', '').replace('-', '')
-        form.instance.cpf = cpf 
+        if len(cpf) > 1:
+            cpf = cpf.replace('.', '').replace('-', '')
+            form.instance.cpf = cpf 
 
         cep = form.cleaned_data.get('cep')
-        cep = cep.replace('.', '').replace('-', '')
-        form.instance.cep = cep 
+        if cep != None:
+            cep = cep.replace('.', '').replace('-', '')
+            form.instance.cep = cep 
 
         if not cpf_validate(cpf):
             messages.warning(self.request, f"O CPF {cpf} é inválido, O registro não foi salvo.")
@@ -49,9 +52,20 @@ class CadastroPessoa(CreateView):
         form.instance.ultima_att = self.request.user.username
         form.instance.data_att = datetime.now()
 
-        url = super().form_valid(form)
+        try:
+            url = super().form_valid(form)
+        except IntegrityError as e:
+            return self.handle_unique(e)
+
         messages.success(self.request, "Registro salvo com sucesso.")
         return url
+
+    def handle_unique(self, e):
+        if "cpf" in str(e):
+            messages.warning(self.request, "Cadastro com CPF Duplicado. o registro nao foi salvo")
+        else:
+            messages.warning(self.request, "Erro.")
+        return self.form_invalid(self.get_form())
 
 
 class EditarPessoa(UpdateView):
@@ -62,12 +76,14 @@ class EditarPessoa(UpdateView):
 
     def form_valid(self, form):
         cpf = form.cleaned_data.get('cpf')
-        cpf = cpf.replace('.', '').replace('-', '')
-        form.instance.cpf = cpf 
+        if cpf != None:
+            cpf = cpf.replace('.', '').replace('-', '')
+            form.instance.cpf = cpf 
 
         cep = form.cleaned_data.get('cep')
-        cep = cep.replace('.', '').replace('-', '')
-        form.instance.cep = cep 
+        if cep != None:
+            cep = cep.replace('.', '').replace('-', '')
+            form.instance.cep = cep 
         
         if not cpf_validate(cpf):
             messages.warning(self.request, f"O CPF {cpf} é inválido, O registro não foi salvo.")
@@ -76,10 +92,20 @@ class EditarPessoa(UpdateView):
         form.instance.ultima_att = self.request.user.username
         form.instance.data_att = datetime.now()
         
-        url = super().form_valid(form)
-        messages.success(self.request, "Registro alterado com sucesso.")
+        try:
+            url = super().form_valid(form)
+        except IntegrityError as e:
+            return self.handle_unique(e)
+
+        messages.success(self.request, "Registro salvo com sucesso.")
         return url
 
+    def handle_unique(self, e):
+        if "cpf" in str(e):
+            messages.warning(self.request, "Cadastro com CPF Duplicado. o registro nao foi salvo")
+        else:
+            messages.warning(self.request, "Erro.")
+        return self.form_invalid(self.get_form())
 
 class DeletePessoa(DeleteView):
     model = Cadastro_Pessoa

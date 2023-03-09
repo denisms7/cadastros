@@ -12,8 +12,6 @@ function AbrirConjuge() {
         const divConjuge = document.getElementById('div_conjuge')
         let estadoCivil = document.getElementById('id_estado_civil')
         teste = false
-    
-    
         if (estadoCivil.value == '1') {
             teste = true
         }
