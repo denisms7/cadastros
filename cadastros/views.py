@@ -3,7 +3,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.urls import reverse_lazy
 from django.db.models import Q
-from django.core.paginator import Paginator
+# from django.core.paginator import Paginator
 from itertools import cycle
 from django.shortcuts import redirect
 from django.db import IntegrityError
@@ -64,7 +64,7 @@ class CadastroPessoa(CreateView):
         if "cpf" in str(e):
             messages.warning(self.request, "Cadastro com CPF Duplicado. o registro nao foi salvo")
         else:
-            messages.warning(self.request, "Erro.")
+            messages.warning(self.request, "Erro. Salvamento cancelado")
         return self.form_invalid(self.get_form())
 
 
@@ -104,7 +104,7 @@ class EditarPessoa(UpdateView):
         if "cpf" in str(e):
             messages.warning(self.request, "Cadastro com CPF Duplicado. o registro nao foi salvo")
         else:
-            messages.warning(self.request, "Erro.")
+            messages.warning(self.request, "Erro. Salvamento cancelado")
         return self.form_invalid(self.get_form())
 
 class DeletePessoa(DeleteView):
@@ -125,7 +125,7 @@ class DeletePessoa(DeleteView):
 
 
 
-# EMPRESA
+# EMPRESA =====================================================================================================
 
 
 class BuscaEmpresa(ListView):
@@ -150,23 +150,36 @@ class CadastroEmpresa(CreateView):
 
     def form_valid(self, form):
         cnpj = form.cleaned_data.get('cnpj')
-        cnpj = cnpj.replace('.', '').replace('-', '').replace('/', '') # Remove pontos e traços do CNPJ
-        form.instance.cnpj = cnpj # Atualiza o valor do CNPJ no objeto form.instance
         cep = form.cleaned_data.get('cep')
-        cep = cep.replace('.', '').replace('-', '')
-        form.instance.cep = cep 
-
-        if not cnpj_validate(cnpj):
-            messages.warning(self.request, f"O CNPJ {cnpj} é inválido, O registro não foi salvo.")
-            return self.form_invalid(form)
+        if cnpj:
+            cnpj = cnpj.replace('.', '').replace('-', '').replace('/', '') 
+            form.instance.cnpj = cnpj 
+            if not cnpj_validate(cnpj):
+                messages.warning(self.request, f"O CNPJ {cnpj} é inválido, O registro não foi salvo.")
+                return self.form_invalid(form)
+        if cep:
+            cep = cep.replace('.', '').replace('-', '')
+            form.instance.cep = cep 
 
         form.instance.cadastrado_por = self.request.user
         form.instance.ultima_att = self.request.user.username
         form.instance.data_att = datetime.now()
 
-        url = super().form_valid(form)
+        try:
+            url = super().form_valid(form)
+        except IntegrityError as e:
+            return self.handle_unique(e)
+
         messages.success(self.request, "Registro salvo com sucesso.")
         return url
+
+    def handle_unique(self, e):
+        if "cnpj" in str(e):
+            messages.warning(self.request, "Cadastro com CNPJ duplicado. O registro não foi salvo.")
+        else:
+            messages.warning(self.request, "Erro. Salvamento cancelado.")
+        return self.form_invalid(self.get_form())
+
 
 
 
@@ -178,12 +191,16 @@ class EditarEmpresa(UpdateView):
 
     def form_valid(self, form):
         cnpj = form.cleaned_data.get('cnpj')
-        cnpj = cnpj.replace('.', '').replace('-', '').replace('/', '') # Remove pontos e traços do CNPJ
-        form.instance.cnpj = cnpj # Atualiza o valor do CNPJ no objeto form.instance
-
         cep = form.cleaned_data.get('cep')
-        cep = cep.replace('.', '').replace('-', '')
-        form.instance.cep = cep 
+        if cnpj:
+            cnpj = cnpj.replace('.', '').replace('-', '').replace('/', '') 
+            form.instance.cnpj = cnpj 
+            if not cnpj_validate(cnpj):
+                messages.warning(self.request, f"O CNPJ {cnpj} é inválido, O registro não foi salvo.")
+                return self.form_invalid(form)
+        if cep:
+            cep = cep.replace('.', '').replace('-', '')
+            form.instance.cep = cep 
 
         if not cnpj_validate(cnpj):
             messages.warning(self.request, f"O CNPJ {cnpj} é inválido, O registro não foi salvo.")
