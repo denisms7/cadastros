@@ -9,6 +9,19 @@ window.onload = function () {
 function carregarCNPJ(cnpj) {
     let v_cnpj = cnpj.replace(/[^0-9]/g, '')
     let v_url = 'https://www.receitaws.com.br/v1/cnpj/' + v_cnpj
+    const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+
+
+    const alert = (message, type) => {
+        const wrapper = document.createElement('div')
+        wrapper.innerHTML = [
+            `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+            `   <div>${message}</div>`,
+            '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+            '</div>'
+        ].join('')
+        alertPlaceholder.append(wrapper)
+    }
 
     try {
         if (v_cnpj.length == 14 && validarCNPJ(v_cnpj)) {
@@ -17,51 +30,51 @@ function carregarCNPJ(cnpj) {
                 dataType: 'jsonp',
                 crossDomain: true,
                 success: function (response) {
-                    const v_situacao = response.situacao;
-                    const v_porte = response.porte;
-                    const v_abertura = response.abertura;
-                    const v_tipo = response.tipo;
-                    const v_atividade_principal = response.atividade_principal;
+                    if (response.status === "OK") {
+                        const v_situacao = response.situacao
+                        const v_porte = response.porte
+                        const v_abertura = response.abertura
+                        const v_tipo = response.tipo
+                        const v_atividade_principal = response.atividade_principal
+                        if (response.nome != '') {
+                            document.getElementById('id_pessoa_juridica').value = response.nome
+                        }
+                        if (response.fantasia != '') {
+                            document.getElementById('id_nome_fantasia').value = response.fantasia
+                        }
+                        if (response.cep != '') {
+                            document.getElementById('id_cep').value = response.cep
+                        }
+                        if (response.uf != '') {
+                            document.getElementById('id_estado').value = response.uf
+                        }
+                        if (response.municipio != '') {
+                            document.getElementById('id_cidade').value = response.municipio
+                        }
+                        if (response.bairro != '') {
+                            document.getElementById('id_bairro').value = response.bairro
+                        }
+                        if (response.logradouro != '') {
+                            document.getElementById('id_endereco').value = response.logradouro
+                        }
+                        if (response.numero != '') {
+                            document.getElementById('id_numero').value = response.numero
+                        }
 
-                    if (response.nome != '') {
-                        document.getElementById('id_pessoa_juridica').value = response.nome
+                    } else {
+                        alert('CNPJ não encontrado na base de dados', 'primary')
                     }
-                    if (response.fantasia != '') {
-                        document.getElementById('id_nome_fantasia').value = response.fantasia
-                    }
-                    if (response.cep != '') {
-                        document.getElementById('id_cep').value = response.cep
-                    }
-
-                    if (response.uf != '') {
-                        document.getElementById('id_estado').value = response.uf
-                    }
-
-                    if (response.municipio != '') {
-                        document.getElementById('id_cidade').value = response.municipio
-                    }
-
-                    if (response.bairro != '') {
-                        document.getElementById('id_bairro').value = response.bairro
-                    }
-                    if (response.logradouro != '') {
-                        document.getElementById('id_endereco').value = response.logradouro
-                    }
-                    if (response.numero != '') {
-                        document.getElementById('id_numero').value = response.numero
-                    }
-
                 },
                 error: function (xhr, textStatus, error) {
-                    console.log('Erro na solicitação HTTP: ' + textStatus + ', ' + error);
+                    alert('Houve um erro ao receber os dados, aguarde 1 minuto e tente novamente.', 'primary')
                 }
             });
         } else {
-            console.log('CNPJ Invalido');
+            alert('CNPJ inválido!', 'warning')
         }
 
     } catch {
-        console.log('CNPJ Global');
+        alert('Erro ao enviar dados', 'warning')
     }
 
 }
