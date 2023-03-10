@@ -15,7 +15,7 @@ class Cadastro_Empresa(models.Model):
     ]
 
     # Sistema
-    status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, verbose_name=_('Status do Cadastro'))
+    status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, verbose_name=_('Status do Cadastro'), default=1)
     cadastrado_em = models.DateTimeField(
         auto_now_add=True, verbose_name=_('Data de Cadastro'))
     cadastrado_por = models.ForeignKey(
@@ -113,7 +113,7 @@ class Cadastro_Pessoa(models.Model):
     ]
 
     # Sistema
-    status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, verbose_name=_('Status do Cadastro'))
+    status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, verbose_name=_('Status do Cadastro'), default=1)
     cadastrado_em = models.DateTimeField(
         auto_now_add=True, verbose_name=_('Data de Cadastro'))
     cadastrado_por = models.ForeignKey(

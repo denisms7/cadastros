@@ -10,61 +10,59 @@ function carregarCNPJ(cnpj) {
     let v_cnpj = cnpj.replace(/[^0-9]/g, '')
     let v_url = 'https://www.receitaws.com.br/v1/cnpj/' + v_cnpj
 
-    if (v_cnpj.length == 14) {
-        $.ajax({
-            url: v_url,
-            dataType: 'jsonp',
-            crossDomain: true,
-            success: function (response) {
-    
-                const v_situacao = response.situacao;
-                const v_porte = response.porte;
-                const v_abertura = response.abertura;
-                const v_tipo = response.tipo;
-                const v_atividade_principal = response.atividade_principal;
+    try {
+        if (v_cnpj.length == 14) {
+            $.ajax({
+                url: v_url,
+                dataType: 'jsonp',
+                crossDomain: true,
+                success: function (response) {
+                    const v_situacao = response.situacao;
+                    const v_porte = response.porte;
+                    const v_abertura = response.abertura;
+                    const v_tipo = response.tipo;
+                    const v_atividade_principal = response.atividade_principal;
 
-                if (response.nome != '') {
-                    document.getElementById('id_pessoa_juridica').value = response.nome 
-                }
+                    if (response.nome != '') {
+                        document.getElementById('id_pessoa_juridica').value = response.nome
+                    }
+                    if (response.fantasia != '') {
+                        document.getElementById('id_nome_fantasia').value = response.fantasia
+                    }
+                    if (response.cep != '') {
+                        document.getElementById('id_cep').value = response.cep
+                    }
 
-                if (response.fantasia != '') {
-                    document.getElementById('id_nome_fantasia').value = response.fantasia 
-                }
+                    if (response.uf != '') {
+                        document.getElementById('id_estado').value = response.uf
+                    }
 
-                if (response.cep != '') {
-                    document.getElementById('id_cep').value = response.cep
-                }
-                
-                if (response.uf != '') {
-                    document.getElementById('id_estado').value = response.uf
-                }
-                
-                if (response.municipio != '') {
-                    document.getElementById('id_cidade').value = response.municipio
-                }
-                
-                if (response.bairro != '') {
-                    document.getElementById('id_bairro').value = response.bairro
-                }
+                    if (response.municipio != '') {
+                        document.getElementById('id_cidade').value = response.municipio
+                    }
 
-                if (response.logradouro != '') {
-                    document.getElementById('id_endereco').value = response.logradouro
-                }
+                    if (response.bairro != '') {
+                        document.getElementById('id_bairro').value = response.bairro
+                    }
+                    if (response.logradouro != '') {
+                        document.getElementById('id_endereco').value = response.logradouro
+                    }
+                    if (response.numero != '') {
+                        document.getElementById('id_numero').value = response.numero
+                    }
 
-                if (response.numero != '') {
-                    document.getElementById('id_numero').value = response.numero
+                },
+                error: function (xhr, textStatus, error) {
+                    console.log('Erro na solicitação HTTP: ' + textStatus + ', ' + error);
                 }
-                
-                console.log(response.bairro)
-                
-            },
-            error: function (xhr, textStatus, error) {
-                console.log('Erro na solicitação HTTP: ' + textStatus + ', ' + error);
-            }
-        });
-    
+            });
+        } else {
+            console.log('CNPJ Invalido');
+        }
+
+    } catch {
+        console.log('CNPJ Global');
     }
-
 
 }
 
