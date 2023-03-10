@@ -70,7 +70,7 @@ function carregarCNPJ(cnpj) {
                 }
             });
         } else {
-            alert('CNPJ inválido!', 'warning')
+            alert(`O CNPJ ${cnpj} é inválido!`, 'warning')
         }
 
     } catch {
