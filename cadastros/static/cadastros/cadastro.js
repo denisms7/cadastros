@@ -1,10 +1,40 @@
-window.onload = function() {
+window.onload = function () {
     btncontato1()
     btncontato2()
     btncontato3()
     AbrirConjuge()
 };
 
+
+function carregarCNPJ(cnpj) {
+    const v_url = 'https://www.receitaws.com.br/v1/cnpj/' + cnpj.replace(/[^0-9]/g, '');
+    
+    $.ajax({
+        url: v_url,
+        dataType: 'jsonp',
+        crossDomain: true,
+        success: function(response) {
+            const v_fantasia = response.fantasia
+            const v_razao = response.nome
+            const v_cep = response.cep;
+            const v_uf = response.uf;
+            const v_municipio = response.municipio;
+            const v_logradouro = response.logradouro;
+            const v_numero = response.numero;
+            const v_status = response.status;
+            const v_porte = response.porte;
+            const v_abertura = response.abertura;
+
+            console.log(v_fantasia)
+            console.log(v_razao)
+
+
+        },
+        error: function(xhr, textStatus, error) {
+            console.log('Erro na solicitação HTTP: ' + textStatus + ', ' + error);
+        }
+    });
+}
 
 // Abrir Conjuge
 function AbrirConjuge() {

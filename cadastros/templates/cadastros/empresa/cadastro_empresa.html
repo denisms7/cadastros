@@ -38,7 +38,7 @@ PJ - Cadastro
 
             <div class="col-sm-12 col-md-4 mb-3 position-relative">
                 <label for="{{ form.cnpj.id_for_label }}" class="form-label">{{ form.cnpj.label }}: {% if form.cnpj.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-                {% render_field form.cnpj class="form-control"  onkeyup="validarCNPJ_x()" autocomplete="false" placeholder="00.000.000/0000-00" data-mask="00.000.000/0000-00" %}
+                {% render_field form.cnpj class="form-control"  onkeyup="validarCNPJ_x()" onblur="carregarCNPJ(this.value)" autocomplete="false" placeholder="00.000.000/0000-00" data-mask="00.000.000/0000-00" %}
                 {% for error in form.cnpj.errors %}
                     <span class="text-danger">{{ error }}</span>
                 {% endfor %}
