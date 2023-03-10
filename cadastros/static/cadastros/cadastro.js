@@ -11,7 +11,7 @@ function carregarCNPJ(cnpj) {
     let v_url = 'https://www.receitaws.com.br/v1/cnpj/' + v_cnpj
 
     try {
-        if (v_cnpj.length == 14) {
+        if (v_cnpj.length == 14 && validarCNPJ(v_cnpj)) {
             $.ajax({
                 url: v_url,
                 dataType: 'jsonp',
