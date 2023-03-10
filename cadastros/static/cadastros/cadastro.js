@@ -66,7 +66,11 @@ function carregarCNPJ(cnpj) {
                     }
                 },
                 error: function (xhr, textStatus, error) {
-                    alert('Houve um erro ao receber os dados, aguarde 1 minuto e tente novamente.', 'primary')
+                    if (xhr.status == 429) {
+                        alert('Houve um erro ao receber os dados, aguarde 1 minuto e tente novamente.', 'primary')
+                    } else {
+                        alert(`${xhr.status } - Status: ${textStatus} - ${error}`, 'warning')
+                    }
                 }
             });
         } else {
