@@ -31,11 +31,6 @@ function carregarCNPJ(cnpj) {
                 crossDomain: true,
                 success: function (response) {
                     if (response.status === "OK") {
-                        const v_situacao = response.situacao
-                        const v_porte = response.porte
-                        const v_abertura = response.abertura
-                        const v_tipo = response.tipo
-                        const v_atividade_principal = response.atividade_principal
                         if (response.nome != '') {
                             document.getElementById('id_pessoa_juridica').value = response.nome
                         }
@@ -60,8 +55,8 @@ function carregarCNPJ(cnpj) {
                         if (response.numero != '') {
                             document.getElementById('id_numero').value = response.numero
                         }
-                        // =====================
 
+                        // =====================
 
                         if (response.situacao != '') {
                             document.getElementById('id_cnpj_situacao').value = response.situacao
@@ -76,18 +71,24 @@ function carregarCNPJ(cnpj) {
                             let novaStringData = dataNova.toISOString().slice(0, 10);
                             document.getElementById('id_cnpj_data_abertura').value = novaStringData
                         }
+                        if (response.tipo != '') {
+                            document.getElementById('id_cnpj_tipo').value = response.tipo
+                        }
                         if (response.atividade_principal.length > 0) {
                             let dados_web = response.atividade_principal;
                             let dados = '';
-
                             for (let i = 0; i < dados_web.length; i++) {
                                 dados = dados_web[i].code + ' - ' + dados_web[i].text + '. '
                             }
-
                             document.getElementById('id_cnpj_atividade_principal').value = dados;
                         }
-                        if (response.tipo != '') {
-                            document.getElementById('id_cnpj_tipo').value = response.tipo
+                        if (response.atividades_secundarias.length > 0) {
+                            let dados_web = response.atividades_secundarias;
+                            let dados = '';
+                            for (let i = 0; i < dados_web.length; i++) {
+                                dados = dados_web[i].code + ' - ' + dados_web[i].text + '. '
+                            }
+                            // document.getElementById('id_cnpj_atividade_principal').value = dados;
                         }
 
                     } else {
