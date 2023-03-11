@@ -9,6 +9,11 @@ class FormCadastroEmpresa(forms.ModelForm):
             'pessoa_juridica',
             'nome_fantasia',
             'cnpj',
+            'cnpj_situacao',
+            'cnpj_porte',
+            'cnpj_data_abertura',
+            'cnpj_tipo',
+            'cnpj_atividade_principal',
             'is_estadual',
             'is_municipal',
             'email_1',
@@ -34,6 +39,7 @@ class FormCadastroEmpresa(forms.ModelForm):
             'data_att',
         ]
         widgets = {
+            'cnpj_data_abertura': forms.DateInput(format=("%Y-%m-%d")),
             'rg_expedicao': forms.DateInput(format=("%Y-%m-%d")),
             'nascimento': forms.DateInput(format=("%Y-%m-%d")),
         }

@@ -60,6 +60,35 @@ function carregarCNPJ(cnpj) {
                         if (response.numero != '') {
                             document.getElementById('id_numero').value = response.numero
                         }
+                        // =====================
+
+
+                        if (response.situacao != '') {
+                            document.getElementById('id_cnpj_situacao').value = response.situacao
+                        }
+                        if (response.porte != '') {
+                            document.getElementById('id_cnpj_porte').value = response.porte
+                        }
+
+
+
+                        if (response.abertura != '') {
+                            let dataOriginal = response.abertura
+                            let data = Date(dataOriginal);
+
+                            // Formatar a data em "yyyy-mm-dd"
+                            // let dataFormatada = `${ano}-${mes.toString().padStart(2, '0')}-${dia.toString().padStart(2, '0')}`;
+                            document.getElementById('id_cnpj_data_abertura').value = data
+
+                            console.log(data)
+
+                        }
+                        if (response.atividade_principal != '') {
+                            document.getElementById('id_cnpj_atividade_principal').value = response.atividade_principal
+                        }
+                        if (response.tipo != '') {
+                            document.getElementById('id_cnpj_tipo').value = response.tipo
+                        }
 
                     } else {
                         alert('CNPJ não encontrado na base de dados', 'primary')

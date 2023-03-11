@@ -90,8 +90,46 @@ PJ - Cadastro
                 {% endfor %}
             </div>
 
+            <!---  Novos campos  -->
 
+            <div class="col-sm-6 col-md-2 mb-3">
+                <label for="{{ form.cnpj_situacao.id_for_label }}" class="form-label">{{ form.cnpj_situacao.label }}: {% if form.cnpj_situacao.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.cnpj_situacao class="form-control" %}
+                {% for error in form.cnpj_situacao.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-6 col-md-4 mb-3">
+                <label for="{{ form.cnpj_porte.id_for_label }}" class="form-label">{{ form.cnpj_porte.label }}: {% if form.cnpj_porte.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.cnpj_porte class="form-control" %}
+                {% for error in form.cnpj_porte.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-6 col-md-2 mb-3">
+                <label for="{{ form.cnpj_data_abertura.id_for_label }}" class="form-label">{{ form.cnpj_data_abertura.label }}: {% if form.cnpj_data_abertura.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.cnpj_data_abertura class="form-control" type="date" %}
+                {% for error in form.cnpj_data_abertura.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-6 col-md-4 mb-3">
+                <label for="{{ form.cnpj_tipo.id_for_label }}" class="form-label">{{ form.cnpj_tipo.label }}: {% if form.cnpj_tipo.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.cnpj_tipo class="form-control" %}
+                {% for error in form.cnpj_tipo.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <div class="col-sm-12 col-md-12 mb-3">
+                <label for="{{ form.cnpj_atividade_principal.id_for_label }}" class="form-label">{{ form.cnpj_atividade_principal.label }}: {% if form.cnpj_atividade_principal.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.cnpj_atividade_principal class="form-control" rows="2"  %}
+                {% for error in form.cnpj_atividade_principal.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
 
+            <!---  Novos campos  -->
 
 
     </div>

@@ -31,7 +31,7 @@ class Cadastro_Empresa(models.Model):
     cnpj = models.CharField(max_length=18, unique=True, verbose_name=_('CNPJ'))
     cnpj_situacao = models.CharField(max_length=200, verbose_name=_('Situação'), null=True, blank=True)
     cnpj_porte = models.CharField(max_length=200, verbose_name=_('Porte de Empresa'), null=True, blank=True)
-    cnpj_data_abertura = models.CharField(max_length=200, verbose_name=_('Data de Abertura'), null=True, blank=True)
+    cnpj_data_abertura = models.DateField(verbose_name=_('Data de Abertura'), null=True, blank=True) 
     cnpj_tipo = models.CharField(max_length=200, verbose_name=_('Tipo'), null=True, blank=True)
     cnpj_atividade_principal = models.TextField(max_length=2000, verbose_name=_('Atividade Principal'), null=True, blank=True)
     
