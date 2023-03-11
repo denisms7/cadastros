@@ -10,8 +10,6 @@ function carregarCNPJ(cnpj) {
     let v_cnpj = cnpj.replace(/[^0-9]/g, '')
     let v_url = 'https://www.receitaws.com.br/v1/cnpj/' + v_cnpj
     const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
-
-
     const alert = (message, type) => {
         const wrapper = document.createElement('div')
         wrapper.innerHTML = [
@@ -55,9 +53,6 @@ function carregarCNPJ(cnpj) {
                         if (response.numero != '') {
                             document.getElementById('id_numero').value = response.numero
                         }
-
-                        // =====================
-
                         if (response.situacao != '') {
                             document.getElementById('id_cnpj_situacao').value = response.situacao
                         }
@@ -90,8 +85,8 @@ function carregarCNPJ(cnpj) {
                             }
                             // document.getElementById('id_cnpj_atividade_principal').value = dados;
                         }
-
-                    } else {
+                    } 
+                    else {
                         alert('CNPJ não encontrado na base de dados', 'primary')
                     }
                 },
