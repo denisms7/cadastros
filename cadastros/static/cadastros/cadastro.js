@@ -69,22 +69,22 @@ function carregarCNPJ(cnpj) {
                         if (response.porte != '') {
                             document.getElementById('id_cnpj_porte').value = response.porte
                         }
-
-
-
                         if (response.abertura != '') {
                             let dataOriginal = response.abertura
-                            let data = Date(dataOriginal);
-
-                            // Formatar a data em "yyyy-mm-dd"
-                            // let dataFormatada = `${ano}-${mes.toString().padStart(2, '0')}-${dia.toString().padStart(2, '0')}`;
-                            document.getElementById('id_cnpj_data_abertura').value = data
-
-                            console.log(data)
-
+                            let partesData = dataOriginal.split("/");
+                            let dataNova = new Date(partesData[2], partesData[1] - 1, partesData[0]);
+                            let novaStringData = dataNova.toISOString().slice(0, 10);
+                            document.getElementById('id_cnpj_data_abertura').value = novaStringData
                         }
-                        if (response.atividade_principal != '') {
-                            document.getElementById('id_cnpj_atividade_principal').value = response.atividade_principal
+                        if (response.atividade_principal.length > 0) {
+                            let dados_web = response.atividade_principal;
+                            let dados = '';
+
+                            for (let i = 0; i < dados_web.length; i++) {
+                                dados = dados_web[i].code + ' - ' + dados_web[i].text + '. '
+                            }
+
+                            document.getElementById('id_cnpj_atividade_principal').value = dados;
                         }
                         if (response.tipo != '') {
                             document.getElementById('id_cnpj_tipo').value = response.tipo
@@ -98,7 +98,7 @@ function carregarCNPJ(cnpj) {
                     if (xhr.status == 429) {
                         alert('Houve um erro ao receber os dados, aguarde 1 minuto e tente novamente.', 'primary')
                     } else {
-                        alert(`${xhr.status } - Status: ${textStatus} - ${error}`, 'warning')
+                        alert(`${xhr.status} - Status: ${textStatus} - ${error}`, 'warning')
                     }
                 }
             });
