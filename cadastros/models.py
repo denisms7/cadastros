@@ -23,9 +23,18 @@ class Cadastro_Empresa(models.Model):
     # Dados Pessoais
     pessoa_juridica = models.CharField(max_length=200, verbose_name=_('Razão Social'))
     nome_fantasia = models.CharField(max_length=200, verbose_name=_('Nome Fantasia'))
-    cnpj = models.CharField(max_length=18, unique=True, verbose_name=_('CNPJ'))
+    
     is_estadual = models.CharField(max_length=14, verbose_name=_('Incrição Estadual'), null=True, blank=True)
     is_municipal = models.CharField(max_length=14, verbose_name=_('Incrição Municipal'), null=True, blank=True)
+    
+    # CNPJ Dados
+    cnpj = models.CharField(max_length=18, unique=True, verbose_name=_('CNPJ'))
+    cnpj_situacao = models.CharField(max_length=200, verbose_name=_('Situação'), null=True, blank=True)
+    cnpj_porte = models.CharField(max_length=200, verbose_name=_('Porte de Empresa'), null=True, blank=True)
+    cnpj_data_abertura = models.CharField(max_length=200, verbose_name=_('Data de Abertura'), null=True, blank=True)
+    cnpj_tipo = models.CharField(max_length=200, verbose_name=_('Tipo'), null=True, blank=True)
+    cnpj_atividade_principal = models.TextField(max_length=2000, verbose_name=_('Atividade Principal'), null=True, blank=True)
+    
     # E-mail
     email_1 = models.EmailField(max_length=150, verbose_name=_(
         'E-mail 01'), null=True, blank=True)
@@ -68,7 +77,7 @@ class Cadastro_Empresa(models.Model):
     def __str__(self):
         return f"{self.nome_fantasia} - {self.cnpj[0:2]}.{self.cnpj[2:5]}.{self.cnpj[5:8]}/{self.cnpj[8:12]}-{self.cnpj[12:14]}"
 
-# PESSOA
+# PESSOA ===================================================================================================================================
 
 
 class Cadastro_Pessoa(models.Model):
