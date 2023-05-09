@@ -14,6 +14,17 @@ class Cadastro_Empresa(models.Model):
         (2, _('WhatsApp')),
     ]
 
+    CONTA_TIPO_CHOICES = [
+        (1, _('Conta Corrente')),
+        (2, _('Conta Salário')),
+        (3, _('Conta Poupança')),
+    ]
+
+    TIPO_DOCUMENTO_CHOICES = [
+        (1, _('CPF')),
+        (2, _('CNPJ')),
+    ]
+
     # Sistema
     status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, verbose_name=_('Status do Cadastro'), default=1)
     cadastrado_em = models.DateTimeField(
@@ -74,6 +85,21 @@ class Cadastro_Empresa(models.Model):
     ultima_att = models.CharField(max_length=200, verbose_name=_('Última Atualização'), null=True, blank=True)
     data_att = models.DateTimeField(verbose_name=_('Data de Atualização'), null=True, blank=True)
 
+    # Banco
+    nome_razao_titular = models.CharField(max_length=50, verbose_name=_('Nome/Razão'), null=True, blank=True)
+    tipo_de_documento = models.PositiveSmallIntegerField(choices=TIPO_DOCUMENTO_CHOICES, verbose_name=_('Tipo de Documento'), null=True, blank=True)
+    documento_titular = models.CharField(max_length=14, verbose_name=_('CPF/CNPJ'), null=True, blank=True)
+    tipo_de_conta = models.PositiveSmallIntegerField(choices=CONTA_TIPO_CHOICES, verbose_name=_('Tipo de Conta'), null=True, blank=True)
+    n_banco = models.IntegerField(default=0, verbose_name=_('N° Banco'), null=True, blank=True)
+    agencia = models.CharField(max_length=50, verbose_name=_('Agencia'), null=True, blank=True)
+    conta = models.CharField(max_length=50, verbose_name=_('N° Conta'), null=True, blank=True)
+    digito = models.CharField(max_length=50, verbose_name=_('Digito'), null=True, blank=True)
+    pix_1 = models.CharField(max_length=250, verbose_name=_('PIX'), null=True, blank=True)
+    pix_2 = models.CharField(max_length=250, verbose_name=_('PIX'), null=True, blank=True)
+    obs_banco = models.TextField(
+        max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
+
+
     def __str__(self):
         return f"{self.nome_fantasia} - {self.cnpj[0:2]}.{self.cnpj[2:5]}.{self.cnpj[5:8]}/{self.cnpj[8:12]}-{self.cnpj[12:14]}"
 
@@ -119,6 +145,17 @@ class Cadastro_Pessoa(models.Model):
     CONTATOS_CHOICES = [
         (1, _('Telefone')),
         (2, _('WhatsApp')),
+    ]
+
+    CONTA_TIPO_CHOICES = [
+        (1, _('Conta Corrente')),
+        (2, _('Conta Salário')),
+        (3, _('Conta Poupança')),
+    ]
+
+    TIPO_DOCUMENTO_CHOICES = [
+        (1, _('CPF')),
+        (2, _('CNPJ')),
     ]
 
     # Sistema
@@ -201,6 +238,21 @@ class Cadastro_Pessoa(models.Model):
     ultima_att = models.CharField(max_length=200, verbose_name=_('Última Atualização'), null=True, blank=True)
     data_att = models.DateTimeField(verbose_name=_('Data de Atualização'), null=True, blank=True)
 
+    # Banco
+    nome_razao_titular = models.CharField(max_length=50, verbose_name=_('Nome/Razão'), null=True, blank=True)
+    tipo_de_documento = models.PositiveSmallIntegerField(choices=TIPO_DOCUMENTO_CHOICES, verbose_name=_('Tipo de Documento'), null=True, blank=True)
+    documento_titular = models.CharField(max_length=14, verbose_name=_('CPF/CNPJ'), null=True, blank=True)
+    tipo_de_conta = models.PositiveSmallIntegerField(choices=CONTA_TIPO_CHOICES, verbose_name=_('Tipo de Conta'), null=True, blank=True)
+    n_banco = models.IntegerField(default=0, verbose_name=_('N° Banco'), null=True, blank=True)
+    agencia = models.CharField(max_length=50, verbose_name=_('Agencia'), null=True, blank=True)
+    conta = models.CharField(max_length=50, verbose_name=_('N° Conta'), null=True, blank=True)
+    digito = models.CharField(max_length=50, verbose_name=_('Digito'), null=True, blank=True)
+    pix_1 = models.CharField(max_length=250, verbose_name=_('PIX'), null=True, blank=True)
+    pix_2 = models.CharField(max_length=250, verbose_name=_('PIX'), null=True, blank=True)
+    obs_banco = models.TextField(
+        max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
+
+
     def __str__(self):
         return f'{self.primeiro_nome} {self.ultimo_nome} - {self.cpf[0:3]}.{self.cpf[3:6]}.{self.cpf[6:9]}-{self.cpf[9:11]}'
-    
+
