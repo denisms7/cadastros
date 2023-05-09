@@ -1,0 +1,99 @@
+{% load static %}
+
+{% load widget_tweaks %}
+       <div class="row">
+            <div class="col-12 mt-3">
+                <h3>Endereço</h3>
+                <hr>
+            </div>
+            <div class="col-6 col-sm-6 col-md-3 mb-3">
+                <label for="div-cep" class="form-label">{{ form.cep.label }}: {% if form.cep.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                <div id="div-cep" class="d-inline-flex w-100">
+                    {% render_field form.cep class="form-control" placeholder="00.000-000" data-mask="00.000-000" %}
+                    <button type="button" onclick="pesquisacep(id_cep.value);" class="btn btn-outline-dark ms-1" title="Buscar dados do CEP">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </button>
+                </div>
+                {% for error in form.cep.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+                <div class="invalid-feedback show fs-6" id="ceplog">
+                    CEP invalido.
+                </div>
+            </div>
+            <div class="col-6 col-sm-6 col-md-2 mb-3">
+                <label for="{{ form.estado.id_for_label }}" class="form-label">{{ form.estado.label }}: {% if form.estado.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.estado class="form-control text-uppercase" placeholder="XX" %}
+                {% for error in form.estado.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-7 mb-3">
+                <label for="{{ form.cidade.id_for_label }}" class="form-label">{{ form.cidade.label }}: {% if form.cidade.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.cidade class="form-control" %}
+                {% for error in form.cidade.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="{{ form.bairro.id_for_label }}" class="form-label">{{ form.bairro.label }}: {% if form.bairro.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.bairro class="form-control" %}
+                {% for error in form.bairro.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+                <label for="{{ form.endereco.id_for_label }}" class="form-label">{{ form.endereco.label }}: {% if form.endereco.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.endereco class="form-control" %}
+                {% for error in form.endereco.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-2 mb-3">
+                <label for="{{ form.numero.id_for_label }}" class="form-label">{{ form.numero.label }}: {% if form.numero.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.numero class="form-control" %}
+                {% for error in form.numero.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-12 mb-3">
+                <label for="{{ form.complemento.id_for_label }}" class="form-label">{{ form.complemento.label }}: {% if form.complemento.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.complemento class="form-control" %}
+                {% for error in form.complemento.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-12 mb-3">
+                <label for="{{ form.obs_endereco.id_for_label }}" class="form-label">{{ form.obs_endereco.label }}: {% if form.obs_endereco.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.obs_endereco class="form-control" rows="2" %}
+                {% for error in form.obs_endereco.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mt-3">
+                <h3>Outros</h3>
+                <hr>
+            </div>
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="{{ form.status.id_for_label }}" class="form-label">{{ form.status.label }}: {% if form.status.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                {% render_field form.status class="form-select" %}
+                {% for error in form.status.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-4 mb-3">
+                <label for="{{ form.ultima_att.id_for_label }}" class="form-label">{{ form.ultima_att.label }}: 
+                    {% if form.ultima_att.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                    {% render_field form.ultima_att class="form-control" disabled="True" %}
+            </div>
+    
+            <div class="col-6 col-sm-6 col-md-4 mb-3">
+                <label for="{{ form.data_att.id_for_label }}" class="form-label">{{ form.data_att.label }}: 
+                    {% if form.data_att.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                    {% render_field form.data_att class="form-control" disabled="True" %}
+            </div>
+
+        </div>
