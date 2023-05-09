@@ -78,28 +78,6 @@ PJ - Cadastro
 </div>
 
 
-<div class="modal" tabindex="-1" id="Modal-CNPJ">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Load CNPJ</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>Esta ação ir sobrescrever os dados preenchidos caso o campo já esteja povoado e haja novas informações.</p>
-        </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Fechar</button>
-        <button type="button" onclick="carregarCNPJ(document.getElementById('id_cnpj').value)" class="btn btn-success" title="Buscar dados do CNPJ" data-bs-dismiss="modal">
-            Confirmar 
-        </button>
-        </div>
-        </div>
-    </div>
-  </div>
-
-
-
 <script src="{% static 'cadastros/jQuery-v3.6.4.js' %}"></script>
 <script src="{% static 'cadastros/jQuery Mask Plugin v1.14.16.js' %}"></script>
 <script src="{% static 'cadastros/cadastro.js' %}"></script>
