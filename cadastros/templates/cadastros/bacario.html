@@ -1,29 +1,72 @@
-{% load static %}
+<!doctype html>
+<html lang="pt-br">
 
-{% load widget_tweaks %}
-        
-        <div class="row">
-            <div class="col-12 mt-3">
-                <h3>Dados Bancarios</h3>
-                <hr>
-            </div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dados Bancarios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
 
-            <div class="col-sm-12 col-md-6 mb-3">
-                <label for="{{ form.email_1.id_for_label }}" class="form-label">{{ form.email_1.label }}: {% if form.email_1.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-                {% render_field form.email_1 class="form-control" %}
-                {% for error in form.email_1.errors %}
-                    <span class="text-danger">{{ error }}</span>
-                {% endfor %}
-            </div>
-
-            
-
-
-            <div class="col-sm-12 col-md-12 mb-3">
-                <label for="{{ form.obs_contato.id_for_label }}" class="form-label">{{ form.obs_contato.label }}: {% if form.obs_contato.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-                {% render_field form.obs_contato class="form-control" rows="2" %}
-                {% for error in form.obs_contato.errors %}
-                    <span class="text-danger">{{ error }}</span>
-                {% endfor %}
-            </div>
+<body class="container">
+    <div class="row">
+        <div class="col-12 mt-3">
+            <h3>Dados Bancarios</h3>
+            <hr>
         </div>
+
+        <div class="col-sm-12 col-md-4 mb-3">
+            <label class="form-label">primeiro nome</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="col-sm-12 col-md-8 mb-3">
+            <label class="form-label">ultimo nome</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="col-6 col-sm-6 col-md-2 mb-3">
+            <label class="form-label">CPF Titular</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="col-6 col-sm-6 col-md-2 mb-3">
+            <label class="form-label">N Banco</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="col-6 col-sm-6 col-md-2 mb-3">
+            <label class="form-label">Agencia</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="col-6 col-sm-6 col-md-3 mb-3">
+            <label class="form-label">Tipo de Conta</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="col-6 col-sm-6 col-md-2 mb-3">
+            <label class="form-label">Conta</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="col-6 col-sm-1 col-md-1 mb-3">
+            <label class="form-label">Digito</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="col-12 col-sm-12 col-md-6 mb-3">
+            <label class="form-label">Chave PIX</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="col-12 col-sm-12 col-md-6 mb-3">
+            <label class="form-label">Chave PIX</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="col-sm-12 col-md-12 mb-3">
+            <label class="form-label">obs</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
