@@ -13,6 +13,7 @@ $(document).ready(function () {
 function configurarCampoDocumento() {
     let tipo_titular = document.getElementById('id_tipo_de_documento');
     let documento_titular = document.getElementById('id_documento_titular');
+    let texto_documento_titular = document.getElementById('texto_documento_titular')
 
     if (tipo_titular.value) {
         documento_titular.disabled = false;
@@ -20,18 +21,22 @@ function configurarCampoDocumento() {
         if (tipo_titular.value.substr(0, 1) === '1') { // CNPJ
             documento_titular.classList.add('cnpj-cpf');
             documento_titular.placeholder = '00.000.000/0000-00';
+            texto_documento_titular.innerHTML = 'CNPJ'
         } else if (tipo_titular.value.substr(0, 1) === '0') { // CPF
             documento_titular.classList.add('cnpj-cpf');
             documento_titular.placeholder = '000.000.000-00';
+            texto_documento_titular.innerHTML = 'CPF'
         } else { // não é nem CNPJ nem CPF
             documento_titular.classList.remove('cnpj-cpf');
             documento_titular.placeholder = '';
+            texto_documento_titular.innerHTML = 'CPF/CNPJ'
         }
     } else {
         documento_titular.disabled = true;
         documento_titular.value = '';
         documento_titular.classList.remove('cnpj-cpf');
         documento_titular.placeholder = '';
+        texto_documento_titular.innerHTML = 'CPF/CNPJ'
     }
 
     // Adicione este trecho de código para aplicar a máscara quando o campo já estiver preenchido
