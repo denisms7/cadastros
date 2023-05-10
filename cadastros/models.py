@@ -46,23 +46,23 @@ class Cadastro_Empresa(models.Model):
     cnpj_tipo = models.CharField(max_length=200, verbose_name=_('Tipo'), null=True, blank=True)
     cnpj_atividade_principal = models.TextField(max_length=2000, verbose_name=_('Atividade Principal'), null=True, blank=True)
     
-    # E-mail
+       # E-mail
     email_1 = models.EmailField(max_length=150, verbose_name=_(
-        'E-mail 01'), null=True, blank=True)
+        'E-mail'), null=True, blank=True)
     email_2 = models.EmailField(max_length=150, verbose_name=_(
-        'E-mail 02'), null=True, blank=True)
+        'E-mail'), null=True, blank=True)
     # Contato 01
-    fone_1 = models.CharField(max_length=15, verbose_name=_('Contato 01'), null=True, blank=True)
+    fone_1 = models.CharField(max_length=15, verbose_name=_('Contato'), null=True, blank=True)
     fone_1_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 01 Tipo'), default=1, choices=CONTATOS_CHOICES, null=True, blank=True)
     # Contato 02
-    fone_2 = models.CharField(max_length=15, verbose_name=_('Contato 02'), null=True, blank=True)
+    fone_2 = models.CharField(max_length=15, verbose_name=_('Contato'), null=True, blank=True)
     fone_2_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 02 Tipo'), default=1, choices=CONTATOS_CHOICES, null=True, blank=True)
     # Contato 03
-    fone_3 = models.CharField(max_length=15, verbose_name=_('Contato 03'), null=True, blank=True)
+    fone_3 = models.CharField(max_length=15, verbose_name=_('Contato'), null=True, blank=True)
     fone_3_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 03 Tipo'), default=1, choices=CONTATOS_CHOICES, null=True, blank=True)
     # Link
-    link_1 = models.URLField(verbose_name=_('Link 01'), null=True, blank=True)
-    link_2 = models.URLField(verbose_name=_('Link 02'), null=True, blank=True)
+    link_1 = models.URLField(verbose_name=_('Link'), null=True, blank=True)
+    link_2 = models.URLField(verbose_name=_('Link'), null=True, blank=True)
     obs_contato = models.TextField(max_length=2000, verbose_name=_(
         'Observações'), null=True, blank=True)
     # Endereço
@@ -87,15 +87,15 @@ class Cadastro_Empresa(models.Model):
 
     # Banco
     nome_razao_titular = models.CharField(max_length=50, verbose_name=_('Nome/Razão'), null=True, blank=True)
-    tipo_de_documento = models.PositiveSmallIntegerField(choices=TIPO_DOCUMENTO_CHOICES, verbose_name=_('Tipo de Documento'), null=True, blank=True)
+    tipo_de_documento = models.PositiveSmallIntegerField(default=0, choices=TIPO_DOCUMENTO_CHOICES, verbose_name=_('Tipo de Documento'), null=True, blank=True)
     documento_titular = models.CharField(max_length=14, verbose_name=_('CPF/CNPJ'), null=True, blank=True)
-    tipo_de_conta = models.PositiveSmallIntegerField(default=0, choices=CONTA_TIPO_CHOICES, verbose_name=_('Tipo de Conta'), null=True, blank=True)
+    tipo_de_conta = models.PositiveSmallIntegerField(choices=CONTA_TIPO_CHOICES, verbose_name=_('Tipo de Conta'), null=True, blank=True)
     n_banco = models.IntegerField(default=0, verbose_name=_('N° Banco'), null=True, blank=True)
     agencia = models.CharField(max_length=10, verbose_name=_('Agencia'), null=True, blank=True)
     conta = models.CharField(max_length=50, verbose_name=_('N° Conta'), null=True, blank=True)
     digito = models.CharField(max_length=5, verbose_name=_('Dígito'), null=True, blank=True)
-    pix_1 = models.CharField(max_length=250, verbose_name=_('PIX'), null=True, blank=True)
-    pix_2 = models.CharField(max_length=250, verbose_name=_('PIX'), null=True, blank=True)
+    pix_1 = models.CharField(max_length=250, verbose_name=_('Chave PIX'), null=True, blank=True)
+    pix_2 = models.CharField(max_length=250, verbose_name=_('Chave PIX'), null=True, blank=True)
     obs_banco = models.TextField(
         max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
 
@@ -201,21 +201,21 @@ class Cadastro_Pessoa(models.Model):
         'Observações'), null=True, blank=True)
     # E-mail
     email_1 = models.EmailField(max_length=150, verbose_name=_(
-        'E-mail 01'), null=True, blank=True)
+        'E-mail'), null=True, blank=True)
     email_2 = models.EmailField(max_length=150, verbose_name=_(
-        'E-mail 02'), null=True, blank=True)
+        'E-mail'), null=True, blank=True)
     # Contato 01
-    fone_1 = models.CharField(max_length=15, verbose_name=_('Contato 01'), null=True, blank=True)
+    fone_1 = models.CharField(max_length=15, verbose_name=_('Contato'), null=True, blank=True)
     fone_1_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 01 Tipo'), default=1, choices=CONTATOS_CHOICES, null=True, blank=True)
     # Contato 02
-    fone_2 = models.CharField(max_length=15, verbose_name=_('Contato 02'), null=True, blank=True)
+    fone_2 = models.CharField(max_length=15, verbose_name=_('Contato'), null=True, blank=True)
     fone_2_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 02 Tipo'), default=1, choices=CONTATOS_CHOICES, null=True, blank=True)
     # Contato 03
-    fone_3 = models.CharField(max_length=15, verbose_name=_('Contato 03'), null=True, blank=True)
+    fone_3 = models.CharField(max_length=15, verbose_name=_('Contato'), null=True, blank=True)
     fone_3_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 03 Tipo'), default=1, choices=CONTATOS_CHOICES, null=True, blank=True)
     # Link
-    link_1 = models.URLField(verbose_name=_('Link 01'), null=True, blank=True)
-    link_2 = models.URLField(verbose_name=_('Link 02'), null=True, blank=True)
+    link_1 = models.URLField(verbose_name=_('Link'), null=True, blank=True)
+    link_2 = models.URLField(verbose_name=_('Link'), null=True, blank=True)
     obs_contato = models.TextField(max_length=2000, verbose_name=_(
         'Observações'), null=True, blank=True)
     # Endereço
@@ -247,8 +247,8 @@ class Cadastro_Pessoa(models.Model):
     agencia = models.CharField(max_length=10, verbose_name=_('Agencia'), null=True, blank=True)
     conta = models.CharField(max_length=50, verbose_name=_('N° Conta'), null=True, blank=True)
     digito = models.CharField(max_length=5, verbose_name=_('Dígito'), null=True, blank=True)
-    pix_1 = models.CharField(max_length=250, verbose_name=_('PIX'), null=True, blank=True)
-    pix_2 = models.CharField(max_length=250, verbose_name=_('PIX'), null=True, blank=True)
+    pix_1 = models.CharField(max_length=250, verbose_name=_('Chave PIX'), null=True, blank=True)
+    pix_2 = models.CharField(max_length=250, verbose_name=_('Chave PIX'), null=True, blank=True)
     obs_banco = models.TextField(
         max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
 
