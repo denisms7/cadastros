@@ -3,7 +3,50 @@ window.onload = function () {
     btncontato2()
     btncontato3()
     AbrirConjuge()
+    configurarCampoDocumento()
 };
+
+$(document).ready(function () {
+    $('#id_tipo_de_documento').on('change', configurarCampoDocumento);
+});
+
+function configurarCampoDocumento() {
+    let tipo_titular = document.getElementById('id_tipo_de_documento');
+    let documento_titular = document.getElementById('id_documento_titular');
+
+    if (tipo_titular.value) {
+        documento_titular.disabled = false;
+
+        if (tipo_titular.value.substr(0, 1) === '1') { // CNPJ
+            documento_titular.classList.add('cnpj-cpf');
+            documento_titular.placeholder = '00.000.000/0000-00';
+        } else if (tipo_titular.value.substr(0, 1) === '0') { // CPF
+            documento_titular.classList.add('cnpj-cpf');
+            documento_titular.placeholder = '000.000.000-00';
+        } else { // não é nem CNPJ nem CPF
+            documento_titular.classList.remove('cnpj-cpf');
+            documento_titular.placeholder = '';
+        }
+    } else {
+        documento_titular.disabled = true;
+        documento_titular.value = '';
+        documento_titular.classList.remove('cnpj-cpf');
+        documento_titular.placeholder = '';
+    }
+
+    // Adicione este trecho de código para aplicar a máscara quando o campo já estiver preenchido
+    $('.cnpj-cpf').each(function () {
+        var tipo = $('#id_tipo_de_documento').val().substr(0, 1);
+        var mascara = '';
+        if (tipo === '1') {
+            mascara = '00.000.000/0000-00';
+        } else if (tipo === '0') {
+            mascara = '000.000.000-00';
+        }
+        $(this).mask(mascara);
+    });
+}
+
 
 
 function carregarCNPJ(cnpj) {
@@ -85,7 +128,7 @@ function carregarCNPJ(cnpj) {
                             }
                             // document.getElementById('id_cnpj_atividade_principal').value = dados;
                         }
-                    } 
+                    }
                     else {
                         alert('CNPJ não encontrado na base de dados', 'primary')
                     }
