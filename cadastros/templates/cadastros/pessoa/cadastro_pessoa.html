@@ -31,15 +31,16 @@ PF - Cadastro
         {% include "cadastros/pessoa.html" %}
 
         <p>
-            <a class="btn btn-primary" data-bs-toggle="collapse" href="#idContato" role="button" aria-expanded="false">
-                Dados de Contato
-            </a>
-            <a class="btn btn-primary" data-bs-toggle="collapse" href="#idEndereco" role="button" aria-expanded="false">
-                Dados de Endereço 
-            </a>
-            <a class="btn btn-primary" data-bs-toggle="collapse" href="#idBanco" role="button" aria-expanded="false">
-                Dados Bancários
-            </a>
+            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" data-bs-toggle="collapse" href="#idContato" role="button">
+                <label class="btn btn-outline-dark" for="btncheck1">Dados de Contato</label>
+            
+                <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" data-bs-toggle="collapse" href="#idEndereco" role="button">
+                <label class="btn btn-outline-dark" for="btncheck2">Dados de Endereço</label>
+            
+                <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off" data-bs-toggle="collapse" href="#idBanco" role="button">
+                <label class="btn btn-outline-dark" for="btncheck3">Dados Bancários</label>
+            </div>
         </p>
 
     
