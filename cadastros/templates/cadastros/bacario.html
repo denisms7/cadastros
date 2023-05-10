@@ -36,7 +36,7 @@
     </div>
     <div class="col-6 col-sm-6 col-md-3 mb-3">
         <label for="{{ form.n_banco.id_for_label }}" class="form-label">{{ form.n_banco.label }}: {% if form.n_banco.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-        {% render_field form.n_banco class="form-control" %}
+        {% render_field form.n_banco class="form-select" %}
         {% for error in form.n_banco.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}

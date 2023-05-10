@@ -6,6 +6,9 @@ window.onload = function () {
     configurarCampoDocumento()
 };
 
+
+
+
 $(document).ready(function () {
     $('#id_tipo_de_documento').on('change', configurarCampoDocumento);
 });
