@@ -21,8 +21,8 @@ class Cadastro_Empresa(models.Model):
     ]
 
     TIPO_DOCUMENTO_CHOICES = [
-        (1, _('CPF')),
-        (2, _('CNPJ')),
+        (0, _('CPF')),
+        (1, _('CNPJ')),
     ]
 
     # Sistema
@@ -89,11 +89,11 @@ class Cadastro_Empresa(models.Model):
     nome_razao_titular = models.CharField(max_length=50, verbose_name=_('Nome/Razão'), null=True, blank=True)
     tipo_de_documento = models.PositiveSmallIntegerField(choices=TIPO_DOCUMENTO_CHOICES, verbose_name=_('Tipo de Documento'), null=True, blank=True)
     documento_titular = models.CharField(max_length=14, verbose_name=_('CPF/CNPJ'), null=True, blank=True)
-    tipo_de_conta = models.PositiveSmallIntegerField(choices=CONTA_TIPO_CHOICES, verbose_name=_('Tipo de Conta'), null=True, blank=True)
+    tipo_de_conta = models.PositiveSmallIntegerField(default=0, choices=CONTA_TIPO_CHOICES, verbose_name=_('Tipo de Conta'), null=True, blank=True)
     n_banco = models.IntegerField(default=0, verbose_name=_('N° Banco'), null=True, blank=True)
-    agencia = models.CharField(max_length=50, verbose_name=_('Agencia'), null=True, blank=True)
+    agencia = models.CharField(max_length=10, verbose_name=_('Agencia'), null=True, blank=True)
     conta = models.CharField(max_length=50, verbose_name=_('N° Conta'), null=True, blank=True)
-    digito = models.CharField(max_length=50, verbose_name=_('Digito'), null=True, blank=True)
+    digito = models.CharField(max_length=5, verbose_name=_('Dígito'), null=True, blank=True)
     pix_1 = models.CharField(max_length=250, verbose_name=_('PIX'), null=True, blank=True)
     pix_2 = models.CharField(max_length=250, verbose_name=_('PIX'), null=True, blank=True)
     obs_banco = models.TextField(
@@ -154,8 +154,8 @@ class Cadastro_Pessoa(models.Model):
     ]
 
     TIPO_DOCUMENTO_CHOICES = [
-        (1, _('CPF')),
-        (2, _('CNPJ')),
+        (0, _('CPF')),
+        (1, _('CNPJ')),
     ]
 
     # Sistema
@@ -240,13 +240,13 @@ class Cadastro_Pessoa(models.Model):
 
     # Banco
     nome_razao_titular = models.CharField(max_length=50, verbose_name=_('Nome/Razão'), null=True, blank=True)
-    tipo_de_documento = models.PositiveSmallIntegerField(choices=TIPO_DOCUMENTO_CHOICES, verbose_name=_('Tipo de Documento'), null=True, blank=True)
+    tipo_de_documento = models.PositiveSmallIntegerField(default=0, choices=TIPO_DOCUMENTO_CHOICES, verbose_name=_('Tipo de Documento'), null=True, blank=True)
     documento_titular = models.CharField(max_length=14, verbose_name=_('CPF/CNPJ'), null=True, blank=True)
     tipo_de_conta = models.PositiveSmallIntegerField(choices=CONTA_TIPO_CHOICES, verbose_name=_('Tipo de Conta'), null=True, blank=True)
     n_banco = models.IntegerField(default=0, verbose_name=_('N° Banco'), null=True, blank=True)
-    agencia = models.CharField(max_length=50, verbose_name=_('Agencia'), null=True, blank=True)
+    agencia = models.CharField(max_length=10, verbose_name=_('Agencia'), null=True, blank=True)
     conta = models.CharField(max_length=50, verbose_name=_('N° Conta'), null=True, blank=True)
-    digito = models.CharField(max_length=50, verbose_name=_('Digito'), null=True, blank=True)
+    digito = models.CharField(max_length=5, verbose_name=_('Dígito'), null=True, blank=True)
     pix_1 = models.CharField(max_length=250, verbose_name=_('PIX'), null=True, blank=True)
     pix_2 = models.CharField(max_length=250, verbose_name=_('PIX'), null=True, blank=True)
     obs_banco = models.TextField(

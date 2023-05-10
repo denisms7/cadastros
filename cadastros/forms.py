@@ -37,6 +37,18 @@ class FormCadastroEmpresa(forms.ModelForm):
             'obs_endereco',
             'ultima_att',
             'data_att',
+
+            'nome_razao_titular',
+            'tipo_de_documento',
+            'documento_titular',
+            'tipo_de_conta',
+            'n_banco',
+            'agencia',
+            'conta',
+            'digito',
+            'pix_1',
+            'pix_2',
+            'obs_banco',
         ]
         widgets = {
             'cnpj_data_abertura': forms.DateInput(format=("%Y-%m-%d")),
@@ -87,8 +99,21 @@ class FormCadastroPessoa(forms.ModelForm):
             'obs_endereco',
             'ultima_att',
             'data_att',
+
+            'nome_razao_titular',
+            'tipo_de_documento',
+            'documento_titular',
+            'tipo_de_conta',
+            'n_banco',
+            'agencia',
+            'conta',
+            'digito',
+            'pix_1',
+            'pix_2',
+            'obs_banco',
         ]
         widgets = {
             'rg_expedicao': forms.DateInput(format=("%Y-%m-%d")),
             'nascimento': forms.DateInput(format=("%Y-%m-%d")),
         }
+
