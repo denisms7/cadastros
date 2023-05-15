@@ -6,10 +6,7 @@
 PJ - Busca
 {% endblock %}
 
-
-
 {% block pagina %}
-
 
 <div class="container">
     <h2>
@@ -26,7 +23,6 @@ PJ - Busca
             Adicionar Novo
         </a>
     </div>
-
     <form method="get">
         <div class="row mb-3">
             <label for="busca" class="form-label">Pesquisar:</label>
@@ -39,7 +35,6 @@ PJ - Busca
             </div>
         </div>
     </form>
-
     <div class="table-responsive">
         <table class="table table-striped mt-3">
             <thead>
@@ -75,7 +70,6 @@ PJ - Busca
                         </div>
                     </td>
                 </tr>
-
                 <div class="modal fade modal-lg" id="delete-{{item.pk}}" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -115,7 +109,6 @@ PJ - Busca
                         </div>
                     </div>
                 </div>
-
                 {% empty %}
                 <tr>
                     <td colspan="5" class="text-center">Não existe cadastros</td>
