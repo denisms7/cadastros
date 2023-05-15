@@ -9,7 +9,7 @@ urlpatterns = [
     path('pf-del/<int:pk>', DeletePessoa.as_view(), name='pessoa-delete'),
     
     path('pj-add/', CadastroEmpresa.as_view(), name='empresa-cadastro'),
-    path('pj-edit/<int:pk>', EditarEmpresa.as_view(), name='empresa-edit'),
+    path('pj-edit/<int:pk>/', EditarEmpresa.as_view(), name='empresa-edit'),
     path('pj-loc/', BuscaEmpresa.as_view(), name='empresa-busca'),
-    path('pj-del/<int:pk>', DeleteEmpresa.as_view(), name='empresa-delete'),
+    path('pj-del/<int:pk>/', DeleteEmpresa, name='empresa-delete'),
 ]

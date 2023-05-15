@@ -7,6 +7,7 @@ from django.db.models import Q
 from itertools import cycle
 from django.shortcuts import redirect
 from django.db import IntegrityError
+from django.contrib.auth.decorators import user_passes_test
 
 from .models import Cadastro_Pessoa, Cadastro_Empresa
 from .forms import FormCadastroPessoa, FormCadastroEmpresa
@@ -126,8 +127,6 @@ class DeletePessoa(DeleteView):
 
 
 # EMPRESA =====================================================================================================
-
-
 class BuscaEmpresa(ListView):
     paginate_by = 20
     model = Cadastro_Empresa
@@ -181,8 +180,6 @@ class CadastroEmpresa(CreateView):
         return self.form_invalid(self.get_form())
 
 
-
-
 class EditarEmpresa(UpdateView):
     model = Cadastro_Empresa
     form_class = FormCadastroEmpresa
@@ -214,21 +211,17 @@ class EditarEmpresa(UpdateView):
         return url
 
 
-class DeleteEmpresa(DeleteView):
-    model = Cadastro_Empresa
-    success_url = reverse_lazy('empresa-busca')
-    template_name = 'cadastros/empresa/delete_empresa.html'
-
-    def form_valid(self, form):
-        try:
-            url = super().form_valid(form)
-            messages.success(self.request, "Registro Deletado com sucesso.")
-            return url
-        except:
-            messages.warning(self.request, "Não foi possivel deletar o registro")
-            return redirect('pessoa-busca')
-
-
+# Cadastro_Empresa delete
+@user_passes_test(lambda user: user.is_authenticated)
+def DeleteEmpresa(request, pk):
+    try:
+        registro = Cadastro_Empresa.objects.get(id=pk)
+        registro.delete()
+        messages.success(request, 'Cadastro deletado')
+        return redirect('empresa-busca')
+    except:
+        messages.warning(request, 'Não é possível deletar este registro')
+        return redirect('empresa-busca')
 
 
 def cpf_validate(cpf: str) -> bool:
@@ -247,6 +240,7 @@ def cpf_validate(cpf: str) -> bool:
             return False
     return True
     
+
 def cnpj_validate(cnpj: str) -> bool:
     LENGTH_CNPJ = 14
     if len(cnpj) != LENGTH_CNPJ:
