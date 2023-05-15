@@ -62,9 +62,9 @@ PF - Busca
                         <a href="{% url 'pessoa-edit' item.pk %}" title="Editar Registro" class="btn btn-dark btn-sm mt-1">
                             <i class="bi bi-pencil"></i>
                         </a>
-                        <a href="{% url 'pessoa-delete' item.pk %}" title="Apagar Registro" class="btn btn-danger btn-sm mt-1">
+                        <button title="Apagar Registro" class="btn btn-danger btn-sm mt-1"  data-bs-toggle="modal" data-bs-target="#delete-{{item.pk}}">
                             <i class="bi bi-trash3"></i> 
-                        </a>
+                        </button>
                     </div>
                     </td>
                 </tr>
@@ -93,14 +93,13 @@ PF - Busca
                                 <b>Data de Cadastro: </b>{{ item.cadastrado_em }}
                             </p>
                             <p>* Esta ação não poderá ser desfeita</p>
-                            
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
                                 <i class="bi bi-x-lg"></i>
                                 Fechar
                             </button>
-                            <a href="{% url 'empresa-delete' item.pk %}" class="btn btn-danger">
+                            <a href="{% url 'pessoa-delete' item.pk %}" class="btn btn-danger">
                                 <i class="bi bi-check-lg"></i>
                                 Confirmar
                             </a>

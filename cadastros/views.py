@@ -108,20 +108,18 @@ class EditarPessoa(UpdateView):
             messages.warning(self.request, "Erro. Salvamento cancelado")
         return self.form_invalid(self.get_form())
 
-class DeletePessoa(DeleteView):
-    model = Cadastro_Pessoa
-    success_url = reverse_lazy('pessoa-busca')
-    template_name = 'cadastros/pessoa/delete_pessoa.html'
 
-    def form_valid(self, form):
-        try:
-            url = super().form_valid(form)
-            messages.success(self.request, "Registro Deletado com sucesso.")
-            return url
-        except:
-            messages.warning(self.request, "Não foi possivel deletar o registro")
-            return redirect('pessoa-busca')
-
+# Cadastro_Pessoa delete
+@user_passes_test(lambda user: user.is_authenticated)
+def DeletePessoa(request, pk):
+    try:
+        registro = Cadastro_Pessoa.objects.get(id=pk)
+        registro.delete()
+        messages.success(request, 'Cadastro deletado')
+        return redirect('pessoa-busca')
+    except:
+        messages.warning(request, 'Não é possível deletar este registro')
+        return redirect('pessoa-busca')
 
 
 
