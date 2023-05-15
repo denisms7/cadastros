@@ -107,11 +107,12 @@ PF - Busca
                         </div>
                     </div>
                 </div>
-
-
                 {% empty %}
                 <tr>
-                    <td colspan="4" class="text-center">Não existem cadastros</td>
+                    <td colspan="4" class="text-center">
+                        <i class="bi bi-exclamation-lg"></i>
+                        Não existem Cadastros
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
