@@ -124,7 +124,6 @@ class FormCadastroPessoa(forms.ModelForm):
             'obs_endereco',
             'ultima_att',
             'data_att',
-
             'nome_razao_titular',
             'tipo_de_documento',
             'documento_titular',
