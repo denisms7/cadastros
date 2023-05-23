@@ -14,7 +14,11 @@ from .forms import FormCadastroPessoa, FormCadastroEmpresa
 
 from datetime import datetime
 
-class BuscaPessoa(ListView):
+
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class BuscaPessoa(LoginRequiredMixin, ListView):
     paginate_by = 20
     model = Cadastro_Pessoa
     template_name = 'cadastros/pessoa/busca_pessoa.html'
@@ -28,7 +32,7 @@ class BuscaPessoa(ListView):
         return queryset
 
 
-class CadastroPessoa(CreateView):
+class CadastroPessoa(LoginRequiredMixin, CreateView):
     model = Cadastro_Pessoa
     form_class = FormCadastroPessoa
     template_name = 'cadastros/pessoa/cadastro_pessoa.html'
@@ -69,7 +73,7 @@ class CadastroPessoa(CreateView):
         return self.form_invalid(self.get_form())
 
 
-class EditarPessoa(UpdateView):
+class EditarPessoa(LoginRequiredMixin, UpdateView):
     model = Cadastro_Pessoa
     form_class = FormCadastroPessoa
     template_name = 'cadastros/pessoa/cadastro_pessoa.html'
@@ -125,7 +129,7 @@ def DeletePessoa(request, pk):
 
 
 # EMPRESA =====================================================================================================
-class BuscaEmpresa(ListView):
+class BuscaEmpresa(LoginRequiredMixin, ListView):
     paginate_by = 20
     model = Cadastro_Empresa
     template_name = 'cadastros/empresa/busca_empresa.html'
@@ -139,7 +143,7 @@ class BuscaEmpresa(ListView):
         return queryset
 
 
-class CadastroEmpresa(CreateView):
+class CadastroEmpresa(LoginRequiredMixin, CreateView):
     model = Cadastro_Empresa
     form_class = FormCadastroEmpresa
     template_name = 'cadastros/empresa/cadastro_empresa.html'
@@ -178,7 +182,7 @@ class CadastroEmpresa(CreateView):
         return self.form_invalid(self.get_form())
 
 
-class EditarEmpresa(UpdateView):
+class EditarEmpresa(LoginRequiredMixin, UpdateView):
     model = Cadastro_Empresa
     form_class = FormCadastroEmpresa
     template_name = 'cadastros/empresa/cadastro_empresa.html'

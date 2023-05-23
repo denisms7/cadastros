@@ -66,8 +66,12 @@
     
 
     {% block pagina %}
-    <p class="text-center">É necessário ter um usuário logado para efetuar cadastros pois o mesmo é salvo com o
-        registro.</p>
+
+    {% if request.user.is_authenticated %}
+    {% endif  %}
+    <h2 class="container text-center text-danger">É necessário ter um usuário logado para efetuar cadastros pois o mesmo é salvo com o registro.</h2>
+    
+
     {% endblock %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
