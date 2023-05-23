@@ -7,8 +7,6 @@ window.onload = function () {
 };
 
 
-
-
 $(document).ready(function () {
     $('#id_tipo_de_documento').on('change', configurarCampoDocumento);
 });
@@ -17,29 +15,43 @@ function configurarCampoDocumento() {
     let tipo_titular = document.getElementById('id_tipo_de_documento');
     let documento_titular = document.getElementById('id_documento_titular');
     let texto_documento_titular = document.getElementById('texto_documento_titular')
+    let titular_conta = document.getElementById('id_nome_razao_titular')
+    let titular_conta_label = document.getElementById('texto_nomerazao_titular')
+   
+
+    
 
     if (tipo_titular.value) {
         documento_titular.disabled = false;
+        titular_conta.disabled = false;
 
         if (tipo_titular.value.substr(0, 1) === '1') { // CNPJ
             documento_titular.classList.add('cnpj-cpf');
             documento_titular.placeholder = '00.000.000/0000-00';
             texto_documento_titular.innerHTML = 'CNPJ'
+            titular_conta_label.innerHTML = 'Titular Razão Social'
+        
         } else if (tipo_titular.value.substr(0, 1) === '0') { // CPF
             documento_titular.classList.add('cnpj-cpf');
             documento_titular.placeholder = '000.000.000-00';
             texto_documento_titular.innerHTML = 'CPF'
+            titular_conta_label.innerHTML = 'Titular Nome Completo'
         } else { // não é nem CNPJ nem CPF
             documento_titular.classList.remove('cnpj-cpf');
             documento_titular.placeholder = '';
             texto_documento_titular.innerHTML = 'CPF/CNPJ'
+            titular_conta_label.innerHTML = 'Nome Completo/Razão Social'
         }
     } else {
         documento_titular.disabled = true;
+        titular_conta.disabled = true;
         documento_titular.value = '';
         documento_titular.classList.remove('cnpj-cpf');
         documento_titular.placeholder = '';
         texto_documento_titular.innerHTML = 'CPF/CNPJ'
+        
+        titular_conta_label.innerHTML = 'Nome Completo/Razão Social'
+        titular_conta.value = '';
     }
 
     // Adicione este trecho de código para aplicar a máscara quando o campo já estiver preenchido
