@@ -17,9 +17,7 @@ function configurarCampoDocumento() {
     let texto_documento_titular = document.getElementById('texto_documento_titular')
     let titular_conta = document.getElementById('id_nome_razao_titular')
     let titular_conta_label = document.getElementById('texto_nomerazao_titular')
-   
 
-    
 
     if (tipo_titular.value) {
         documento_titular.disabled = false;
@@ -30,17 +28,25 @@ function configurarCampoDocumento() {
             documento_titular.placeholder = '00.000.000/0000-00';
             texto_documento_titular.innerHTML = 'CNPJ'
             titular_conta_label.innerHTML = 'Titular Razão Social'
+            document.getElementById('id_documento_titular').addEventListener('keyup', validarCNPJ_titular);
+            document.getElementById('cnpjlog_titular').innerHTML = 'CNPJ Invalido'
         
         } else if (tipo_titular.value.substr(0, 1) === '0') { // CPF
             documento_titular.classList.add('cnpj-cpf');
             documento_titular.placeholder = '000.000.000-00';
             texto_documento_titular.innerHTML = 'CPF'
             titular_conta_label.innerHTML = 'Titular Nome Completo'
+            document.getElementById('id_documento_titular').addEventListener('keyup', ValidaCPF_titular);
+            document.getElementById('cnpjlog_titular').innerHTML = 'CPF Invalido'
+        
         } else { // não é nem CNPJ nem CPF
             documento_titular.classList.remove('cnpj-cpf');
             documento_titular.placeholder = '';
             texto_documento_titular.innerHTML = 'CPF/CNPJ'
             titular_conta_label.innerHTML = 'Nome Completo/Razão Social'
+            document.getElementById('id_documento_titular').addEventListener('keyup', function() {});
+            document.getElementById('cnpjlog_titular').innerHTML = ''
+            
         }
     } else {
         documento_titular.disabled = true;
@@ -52,6 +58,8 @@ function configurarCampoDocumento() {
 
         titular_conta_label.innerHTML = 'Nome Completo/Razão Social'
         titular_conta.value = '';
+
+        document.getElementById('cnpjlog_titular').innerHTML = ''
     }
 
     // Adicione este trecho de código para aplicar a máscara quando o campo já estiver preenchido
@@ -445,7 +453,7 @@ function validarCNPJ_x() {
 
 
 function validarCNPJ_titular() {
-    let vcnpj = document.getElementById('id_cnpj_titular')
+    let vcnpj = document.getElementById('id_documento_titular')
     const cnpjlog = document.getElementById('cnpjlog_titular')
     let teste = validarCNPJ(vcnpj.value)
     if (vcnpj.value.length == 0) {
@@ -553,4 +561,24 @@ function ValidaCPF() {
         cpflog.classList.add("d-block");
     }
 }
+
+
+function ValidaCPF_titular() {
+    let formCpf = document.getElementById('id_documento_titular')
+    const cpflog = document.getElementById('cnpjlog_titular')
+    teste = TestaCPF(formCpf.value.replace(/[^\d]/g, ''))
+    if (formCpf.value.length == 0) {
+        teste = true
+    }
+    if (teste) {
+        cpflog.classList.add("d-none");
+        cpflog.classList.remove("d-block");
+    } else {
+        cpflog.classList.remove("d-none");
+        cpflog.classList.add("d-block");
+    }
+}
+
+
+
 
