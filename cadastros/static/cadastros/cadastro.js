@@ -49,7 +49,7 @@ function configurarCampoDocumento() {
         documento_titular.classList.remove('cnpj-cpf');
         documento_titular.placeholder = '';
         texto_documento_titular.innerHTML = 'CPF/CNPJ'
-        
+
         titular_conta_label.innerHTML = 'Nome Completo/Razão Social'
         titular_conta.value = '';
     }
@@ -430,13 +430,10 @@ function btncontato3() {
 function validarCNPJ_x() {
     let vcnpj = document.getElementById('id_cnpj')
     const cnpjlog = document.getElementById('cnpjlog')
-
     let teste = validarCNPJ(vcnpj.value)
-
     if (vcnpj.value.length == 0) {
         teste = true
     }
-
     if (teste) {
         cnpjlog.classList.add("d-none");
         cnpjlog.classList.remove("d-block");
@@ -444,7 +441,23 @@ function validarCNPJ_x() {
         cnpjlog.classList.remove("d-none");
         cnpjlog.classList.add("d-block");
     }
+}
 
+
+function validarCNPJ_titular() {
+    let vcnpj = document.getElementById('id_cnpj_titular')
+    const cnpjlog = document.getElementById('cnpjlog_titular')
+    let teste = validarCNPJ(vcnpj.value)
+    if (vcnpj.value.length == 0) {
+        teste = true
+    }
+    if (teste) {
+        cnpjlog.classList.add("d-none");
+        cnpjlog.classList.remove("d-block");
+    } else {
+        cnpjlog.classList.remove("d-none");
+        cnpjlog.classList.add("d-block");
+    }
 }
 
 
