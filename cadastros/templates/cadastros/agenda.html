@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block titulo %}
+Agenda Telefônica
+{% endblock %}
+
+{% block pagina %}
+
+
+<div class="container">
+    <h2><i class="bi bi-telephone-fill me-2"></i>Agenda Telefônica</h2>
+    <hr>
+</div>
+
+<div class="container">
+    <form method="get">
+        <div class="row mb-3">
+            <label for="busca" class="form-label">Pesquisar:</label>
+            <div class="d-flex align-items-end" id="busca">
+                <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Nome/Nome Completo ou CPF"
+                    class="form-control me-1">
+                <button type="submit" title="Pesquisar Registros" class="btn btn-dark">
+                    <i class="bi bi-search" id="lupacep"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table class="table table-sm table-striped mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">Nome ou Razão social:</th>
+                    <th scope="col">Fone 01:</th>
+                    <th scope="col">Fone 02:</th>
+                    <th scope="col">Fone 03:</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in object_list %}
+                <tr>
+                    <td class="text-capitalize">
+                        {% if item.nome_fantasia %}
+                            {{ item.nome_fantasia }}
+                        {% else %}
+                            {{ item.primeiro_nome }} {{ item.ultimo_nome }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if item.fone_1 %}
+                            {% if item.fone_1_tipo == 2 %}
+                                <a href="https://wa.me/{{ item.fone_1}}" target="_blank" class="btn btn-sm btn-outline-success contato">
+                                    <i class="bi bi-whatsapp"></i>
+                                </a>
+                            {% elif item.fone_1_tipo == 1 %}
+                                <a href="tel:{{ item.fone_1}}" target="_blank" class="btn btn-sm btn-outline-dark contato">
+                                    <i class="bi bi-telephone-outbound"></i>
+                                </a>
+                            {% endif %}
+                            {{ item.fone_1 }}
+                        {% else %}
+                        <i class="bi bi-hash"></i>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if item.fone_2 %}
+                            {% if item.fone_2_tipo == 2 %}
+                                <a href="https://wa.me/{{ item.fone_2}}" target="_blank" class="btn btn-sm btn-outline-success contato">
+                                    <i class="bi bi-whatsapp"></i>
+                                </a>
+                            {% elif item.fone_2_tipo == 1 %}
+                                <a href="tel:{{ item.fone_2}}" target="_blank" class="btn btn-sm btn-outline-dark contato">
+                                    <i class="bi bi-telephone-outbound"></i>
+                                </a>
+                            {% endif %}
+                            {{ item.fone_2 }}
+                        {% else %}
+                        <i class="bi bi-hash"></i>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if item.fone_3 %}
+                            {% if item.fone_3_tipo == 2 %}
+                                <a href="https://wa.me/{{ item.fone_3}}" target="_blank" class="btn btn-sm btn-outline-success contato">
+                                    <i class="bi bi-whatsapp"></i>
+                                </a>
+                            {% elif item.fone_3_tipo == 1 %}
+                                <a href="tel:{{ item.fone_3}}" target="_blank" class="btn btn-sm btn-outline-dark contato">
+                                    <i class="bi bi-telephone-outbound"></i>
+                                </a>
+                            {% endif %}
+                            {{ item.fone_3 }}
+                        {% else %}
+                        <i class="bi bi-hash"></i>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">
+                            <i class="bi bi-exclamation-lg"></i>
+                            Não existem Cadastros
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Obtém os elementos <a> pela classe
+    var contatoLinks = document.getElementsByClassName("contato");
+
+    // Itera sobre os elementos encontrados
+    for (var i = 0; i < contatoLinks.length; i++) {
+        var contatoLink = contatoLinks[i];
+        // Obtém o valor atual do atributo href
+        var href = contatoLink.getAttribute("href");
+        // Remove os caracteres desejados usando expressões regulares
+        var cleanedHref = href.replace(/[()\s-]/g, "");
+        // Atualiza o valor do atributo href com o valor limpo
+        contatoLink.setAttribute("href", cleanedHref);
+    }
+</script>
+
+{% include "paginacao.html" %}
+
+{% endblock %}

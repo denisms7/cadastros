@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import CadastroPessoa, EditarPessoa, BuscaPessoa, DeletePessoa
-from .views import CadastroEmpresa, EditarEmpresa, BuscaEmpresa, DeleteEmpresa
+from .views import CadastroEmpresa, EditarEmpresa, BuscaEmpresa, DeleteEmpresa, Agenda
 
 urlpatterns = [
     path('pf-add/', CadastroPessoa.as_view(), name='pessoa-cadastro'),
@@ -12,4 +12,7 @@ urlpatterns = [
     path('pj-edit/<int:pk>/', EditarEmpresa.as_view(), name='empresa-edit'),
     path('pj-loc/', BuscaEmpresa.as_view(), name='empresa-busca'),
     path('pj-del/<int:pk>/', DeleteEmpresa, name='empresa-delete'),
+
+
+    path('agenda-tel/', Agenda.as_view(), name='agenda-telefonica'),
 ]

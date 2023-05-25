@@ -2,7 +2,8 @@ from django.contrib import messages
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.urls import reverse_lazy
-from django.db.models import Q
+from django.db.models import Q, F, Value
+from django.db.models.functions import Concat
 # from django.core.paginator import Paginator
 from itertools import cycle
 from django.shortcuts import redirect
@@ -13,6 +14,7 @@ from .models import Cadastro_Pessoa, Cadastro_Empresa
 from .forms import FormCadastroPessoa, FormCadastroEmpresa
 
 from datetime import datetime
+
 
 
 from django.contrib.auth.decorators import user_passes_test
@@ -258,3 +260,47 @@ def cnpj_validate(cnpj: str) -> bool:
         if cnpj_r[i - 1:i] != str(dv % 10):
             return False
     return True
+
+
+
+
+class Agenda(ListView):
+    model = Cadastro_Empresa  # Pode ser qualquer um dos modelos, dependendo da sua necessidade
+    template_name = 'cadastros/agenda.html'
+    paginate_by = 20  # Defina o número de itens por página aqui
+
+    def get_queryset(self):
+        empresas = Cadastro_Empresa.objects.all()
+        pessoas = Cadastro_Pessoa.objects.all()
+
+        # Combine os campos relevantes dos modelos
+        results = []
+        for empresa in empresas:
+            marge = {
+                'nome_fantasia': empresa.nome_fantasia,
+                'primeiro_nome': None,
+                'ultimo_nome': None,
+                'fone_1': empresa.fone_1,
+                'fone_1_tipo': empresa.fone_1_tipo,
+                'fone_2': empresa.fone_2,
+                'fone_2_tipo': empresa.fone_2_tipo,
+                'fone_3': empresa.fone_3,
+                'fone_3_tipo': empresa.fone_3_tipo
+            }
+            results.append(marge)
+
+        for pessoa in pessoas:
+            marge = {
+                'nome_fantasia': None,
+                'primeiro_nome': pessoa.primeiro_nome,
+                'ultimo_nome': pessoa.ultimo_nome,
+                'fone_1': pessoa.fone_1,
+                'fone_1_tipo': pessoa.fone_1_tipo,
+                'fone_2': pessoa.fone_2,
+                'fone_2_tipo': pessoa.fone_2_tipo,
+                'fone_3': pessoa.fone_3,
+                'fone_3_tipo': pessoa.fone_3_tipo
+            }
+            results.append(marge)
+
+        return results
