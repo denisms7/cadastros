@@ -30,7 +30,7 @@ function configurarCampoDocumento() {
             titular_conta_label.innerHTML = 'Titular Razão Social'
             document.getElementById('id_documento_titular').addEventListener('keyup', validarCNPJ_titular);
             document.getElementById('cnpjlog_titular').innerHTML = 'CNPJ Invalido'
-        
+
         } else if (tipo_titular.value.substr(0, 1) === '0') { // CPF
             documento_titular.classList.add('cnpj-cpf');
             documento_titular.placeholder = '000.000.000-00';
@@ -38,15 +38,15 @@ function configurarCampoDocumento() {
             titular_conta_label.innerHTML = 'Titular Nome Completo'
             document.getElementById('id_documento_titular').addEventListener('keyup', ValidaCPF_titular);
             document.getElementById('cnpjlog_titular').innerHTML = 'CPF Invalido'
-        
+
         } else { // não é nem CNPJ nem CPF
             documento_titular.classList.remove('cnpj-cpf');
             documento_titular.placeholder = '';
             texto_documento_titular.innerHTML = 'CPF/CNPJ'
             titular_conta_label.innerHTML = 'Nome Completo/Razão Social'
-            document.getElementById('id_documento_titular').addEventListener('keyup', function() {});
+            document.getElementById('id_documento_titular').addEventListener('keyup', function () { });
             document.getElementById('cnpjlog_titular').innerHTML = ''
-            
+
         }
     } else {
         documento_titular.disabled = true;
@@ -206,77 +206,86 @@ function AbrirConjuge() {
 
 }
 
+// FORMATAR BOTAO TELEFONE
+function atualizarBotaoContato(inputId, botaoId) {
+    let fone = document.getElementById(inputId).value;
+    let foneTipo = document.getElementById(inputId + "_tipo").value;
+    let botao = document.getElementById(botaoId);
+
+    if (foneTipo === '1') {
+        botao.innerHTML = '<i class="bi bi-telephone-inbound"></i>';
+        botao.href = "tel:" + fone.replace(/\D/g, '');
+        botao.classList.remove("disabled");
+        botao.classList.add("btn-outline-dark");
+        botao.classList.remove("btn-outline-success");
+    } else if (foneTipo === '2') {
+        botao.innerHTML = '<i class="bi bi-whatsapp"></i>';
+        botao.href = "https://wa.me/" + fone.replace(/\D/g, '');
+        botao.classList.remove("disabled");
+        botao.classList.remove("btn-outline-dark");
+        botao.classList.add("btn-outline-success");
+    } else if (foneTipo === '3') {
+        botao.innerHTML = '<i class="bi bi-telegram"></i>';
+        botao.href = "https://t.me/" + fone.replace(/\D/g, '');
+        botao.classList.remove("disabled");
+        botao.classList.add("btn-outline-dark");
+        botao.classList.remove("btn-outline-success");
+    } else {
+        botao.innerHTML = '<i class="bi bi-dash"></i>';
+        botao.classList.add("disabled");
+        botao.classList.add("btn-outline-dark");
+        botao.classList.remove("btn-outline-success");
+    }
+}
+
 
 // FORMATAR TELEFONE
-function mascaraFone1(event) {
-    var valor = document.getElementById("id_fone_1").attributes[0].ownerElement['value'];
+function formatarTelefone(event, inputId) {
+    var valor = document.getElementById(inputId).value;
     var retorno = valor.replace(/\D/g, "");
     retorno = retorno.replace(/^0/, "");
     if (retorno.length > 10) {
         retorno = retorno.replace(/^(\d\d)(\d{5})(\d{4}).*/, "($1) $2-$3");
     } else if (retorno.length > 5) {
-        if (retorno.length == 6 && event.code == "Backspace") {
-            // necessário pois senão o "-" fica sempre voltando ao dar backspace
+        if (retorno.length === 6 && event.code === "Backspace") {
+            // Necessário pois, senão o "-" fica sempre voltando ao dar backspace
             return;
         }
         retorno = retorno.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, "($1) $2-$3");
     } else if (retorno.length > 2) {
         retorno = retorno.replace(/^(\d\d)(\d{0,5})/, "($1) $2");
     } else {
-        if (retorno.length != 0) {
+        if (retorno.length !== 0) {
             retorno = retorno.replace(/^(\d*)/, "($1");
         }
     }
-    document.getElementById("id_fone_1").attributes[0].ownerElement['value'] = retorno;
+    document.getElementById(inputId).value = retorno;
 }
 
+document.getElementById("id_fone_1").addEventListener("input", function (event) {
+    formatarTelefone(event, "id_fone_1");
+});
 
-function mascaraFone2(event) {
-    var valor = document.getElementById("id_fone_2").attributes[0].ownerElement['value'];
-    var retorno = valor.replace(/\D/g, "");
-    retorno = retorno.replace(/^0/, "");
-    if (retorno.length > 10) {
-        retorno = retorno.replace(/^(\d\d)(\d{5})(\d{4}).*/, "($1) $2-$3");
-    } else if (retorno.length > 5) {
-        if (retorno.length == 6 && event.code == "Backspace") {
-            // necessário pois senão o "-" fica sempre voltando ao dar backspace
-            return;
-        }
-        retorno = retorno.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, "($1) $2-$3");
-    } else if (retorno.length > 2) {
-        retorno = retorno.replace(/^(\d\d)(\d{0,5})/, "($1) $2");
-    } else {
-        if (retorno.length != 0) {
-            retorno = retorno.replace(/^(\d*)/, "($1");
-        }
-    }
-    document.getElementById("id_fone_2").attributes[0].ownerElement['value'] = retorno;
-}
+document.getElementById("id_fone_2").addEventListener("input", function (event) {
+    formatarTelefone(event, "id_fone_2");
+});
+
+document.getElementById("id_fone_3").addEventListener("input", function (event) {
+    formatarTelefone(event, "id_fone_3");
+});
 
 
-function mascaraFone3(event) {
-    var valor = document.getElementById("id_fone_3").attributes[0].ownerElement['value'];
-    var retorno = valor.replace(/\D/g, "");
-    retorno = retorno.replace(/^0/, "");
-    if (retorno.length > 10) {
-        retorno = retorno.replace(/^(\d\d)(\d{5})(\d{4}).*/, "($1) $2-$3");
-    } else if (retorno.length > 5) {
-        if (retorno.length == 6 && event.code == "Backspace") {
-            // necessário pois senão o "-" fica sempre voltando ao dar backspace
-            return;
-        }
-        retorno = retorno.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, "($1) $2-$3");
-    } else if (retorno.length > 2) {
-        retorno = retorno.replace(/^(\d\d)(\d{0,5})/, "($1) $2");
-    } else {
-        if (retorno.length != 0) {
-            retorno = retorno.replace(/^(\d*)/, "($1");
-        }
-    }
-    document.getElementById("id_fone_3").attributes[0].ownerElement['value'] = retorno;
-}
+document.getElementById("id_fone_1").addEventListener("input", function () {
+    atualizarBotaoContato("id_fone_1", "btn_id_fone_1");
+});
 
+document.getElementById("id_fone_2").addEventListener("input", function () {
+    atualizarBotaoContato("id_fone_2", "btn_id_fone_2");
+});
 
+document.getElementById("id_fone_3").addEventListener("input", function () {
+    atualizarBotaoContato("id_fone_3", "btn_id_fone_3");
+});
 
 
 // Buscar CEP
@@ -343,96 +352,6 @@ function pesquisacep(valor) {
 };
 
 
-
-function btncontato1() {
-    let fone_1 = document.getElementById("id_fone_1").value
-    let fone_1_tipo = document.getElementById("id_fone_1_tipo").value
-    let botao = document.getElementById("btn_id_fone_1")
-    if (fone_1_tipo === '1') {
-        botao.innerHTML = '<i class="bi bi-telephone-inbound"></i>'
-        botao.href = "tel:" + fone_1.replace(/\D/g, '') + "";
-        botao.classList.remove("disabled")
-        botao.classList.add("btn-outline-dark")
-        botao.classList.remove("btn-outline-success")
-    } else if (fone_1_tipo === '2') {
-        botao.innerHTML = '<i class="bi bi-whatsapp"></i>'
-        botao.href = "https://wa.me/" + fone_1.replace(/\D/g, '') + "";
-        botao.classList.remove("disabled")
-        botao.classList.remove("btn-outline-dark")
-        botao.classList.add("btn-outline-success")
-    } else if (fone_1_tipo === '3') {
-        botao.innerHTML = '<i class="bi bi-telegram"></i>'
-        botao.href = "https://t.me/" + fone_1.replace(/\D/g, '') + "";
-        botao.classList.remove("disabled")
-        botao.classList.add("btn-outline-dark")
-        botao.classList.remove("btn-outline-success")
-    } else {
-        botao.innerHTML = '<i class="bi bi-dash"></i>'
-        botao.classList.add("disabled")
-        botao.classList.add("btn-outline-dark")
-        botao.classList.remove("btn-outline-success")
-    }
-}
-
-function btncontato2() {
-    let fone_1 = document.getElementById("id_fone_2").value
-    let fone_1_tipo = document.getElementById("id_fone_2_tipo").value
-    let botao = document.getElementById("btn_id_fone_2")
-    if (fone_1_tipo === '1') {
-        botao.innerHTML = '<i class="bi bi-telephone-inbound"></i>'
-        botao.href = "tel:" + fone_1.replace(/\D/g, '') + "";
-        botao.classList.remove("disabled")
-        botao.classList.add("btn-outline-dark")
-        botao.classList.remove("btn-outline-success")
-    } else if (fone_1_tipo === '2') {
-        botao.innerHTML = '<i class="bi bi-whatsapp"></i>'
-        botao.href = "https://wa.me/" + fone_1.replace(/\D/g, '') + "";
-        botao.classList.remove("disabled")
-        botao.classList.remove("btn-outline-dark")
-        botao.classList.add("btn-outline-success")
-    } else if (fone_1_tipo === '3') {
-        botao.innerHTML = '<i class="bi bi-telegram"></i>'
-        botao.href = "https://t.me/" + fone_1.replace(/\D/g, '') + "";
-        botao.classList.remove("disabled")
-        botao.classList.add("btn-outline-dark")
-        botao.classList.remove("btn-outline-success")
-    } else {
-        botao.innerHTML = '<i class="bi bi-dash"></i>'
-        botao.classList.add("disabled")
-        botao.classList.add("btn-outline-dark")
-        botao.classList.remove("btn-outline-success")
-    }
-}
-
-function btncontato3() {
-    let fone_1 = document.getElementById("id_fone_3").value
-    let fone_1_tipo = document.getElementById("id_fone_3_tipo").value
-    let botao = document.getElementById("btn_id_fone_3")
-    if (fone_1_tipo === '1') {
-        botao.innerHTML = '<i class="bi bi-telephone-inbound"></i>'
-        botao.href = "tel:" + fone_1.replace(/\D/g, '') + "";
-        botao.classList.remove("disabled")
-        botao.classList.add("btn-outline-dark")
-        botao.classList.remove("btn-outline-success")
-    } else if (fone_1_tipo === '2') {
-        botao.innerHTML = '<i class="bi bi-whatsapp"></i>'
-        botao.href = "https://wa.me/" + fone_1.replace(/\D/g, '') + "";
-        botao.classList.remove("disabled")
-        botao.classList.remove("btn-outline-dark")
-        botao.classList.add("btn-outline-success")
-    } else if (fone_1_tipo === '3') {
-        botao.innerHTML = '<i class="bi bi-telegram"></i>'
-        botao.href = "https://t.me/" + fone_1.replace(/\D/g, '') + "";
-        botao.classList.remove("disabled")
-        botao.classList.add("btn-outline-dark")
-        botao.classList.remove("btn-outline-success")
-    } else {
-        botao.innerHTML = '<i class="bi bi-dash"></i>'
-        botao.classList.add("disabled")
-        botao.classList.add("btn-outline-dark")
-        botao.classList.remove("btn-outline-success")
-    }
-}
 
 
 function validarCNPJ_x() {
