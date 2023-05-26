@@ -262,8 +262,6 @@ def cnpj_validate(cnpj: str) -> bool:
     return True
 
 
-
-
 class Agenda(ListView):
     model = Cadastro_Empresa  # Pode ser qualquer um dos modelos, dependendo da sua necessidade
     template_name = 'cadastros/agenda.html'
@@ -302,5 +300,18 @@ class Agenda(ListView):
                 'fone_3_tipo': pessoa.fone_3_tipo
             }
             results.append(marge)
+        
+        query = self.request.GET.get('q')  # Obtém o parâmetro de pesquisa da URL
 
+        if query:
+            # Filtra os resultados da lista usando a pesquisa
+            filtered_results = []
+            for result in results:
+                if result['nome_fantasia'] and query.lower() in result['nome_fantasia'].lower():
+                    filtered_results.append(result)
+                elif result['primeiro_nome'] and query.lower() in result['primeiro_nome'].lower():
+                    filtered_results.append(result)
+                elif result['ultimo_nome'] and query.lower() in result['ultimo_nome'].lower():
+                    filtered_results.append(result)
+            results = filtered_results
         return results
