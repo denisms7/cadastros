@@ -22,7 +22,6 @@ function Verifica(var_classe) {
     return todosVazios
 }
 
-
 function verificarCampos(classe, btncheckId, elementId) {
     if (Verifica(classe)) {
         // Todos os campos estão vazios dentro da div
@@ -38,6 +37,3 @@ function verificarCampos(classe, btncheckId, elementId) {
 verificarCampos('.Verifica_Contato', 'btncheck1', 'idContato');
 verificarCampos('.Verifica_Endereco', 'btncheck2', 'idEndereco');
 verificarCampos('.Verifica_Banco', 'btncheck3', 'idBanco');
-
-
-
