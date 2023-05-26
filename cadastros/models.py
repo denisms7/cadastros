@@ -53,13 +53,13 @@ class Cadastro_Empresa(models.Model):
         'E-mail'), null=True, blank=True)
     # Contato 01
     fone_1 = models.CharField(max_length=15, verbose_name=_('Contato'), null=True, blank=True)
-    fone_1_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 01 Tipo'), default=1, choices=CONTATOS_CHOICES, null=True, blank=True)
+    fone_1_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 01 Tipo'), choices=CONTATOS_CHOICES, null=True, blank=True)
     # Contato 02
     fone_2 = models.CharField(max_length=15, verbose_name=_('Contato'), null=True, blank=True)
-    fone_2_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 02 Tipo'), default=1, choices=CONTATOS_CHOICES, null=True, blank=True)
+    fone_2_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 02 Tipo'), choices=CONTATOS_CHOICES, null=True, blank=True)
     # Contato 03
     fone_3 = models.CharField(max_length=15, verbose_name=_('Contato'), null=True, blank=True)
-    fone_3_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 03 Tipo'), default=1, choices=CONTATOS_CHOICES, null=True, blank=True)
+    fone_3_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 03 Tipo'), choices=CONTATOS_CHOICES, null=True, blank=True)
     # Link
     link_1 = models.URLField(verbose_name=_('Link'), null=True, blank=True)
     link_2 = models.URLField(verbose_name=_('Link'), null=True, blank=True)
@@ -206,13 +206,13 @@ class Cadastro_Pessoa(models.Model):
         'E-mail'), null=True, blank=True)
     # Contato 01
     fone_1 = models.CharField(max_length=15, verbose_name=_('Contato'), null=True, blank=True)
-    fone_1_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 01 Tipo'), default=1, choices=CONTATOS_CHOICES, null=True, blank=True)
+    fone_1_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 01 Tipo'), choices=CONTATOS_CHOICES, null=True, blank=True)
     # Contato 02
     fone_2 = models.CharField(max_length=15, verbose_name=_('Contato'), null=True, blank=True)
-    fone_2_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 02 Tipo'), default=1, choices=CONTATOS_CHOICES, null=True, blank=True)
+    fone_2_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 02 Tipo'), choices=CONTATOS_CHOICES, null=True, blank=True)
     # Contato 03
     fone_3 = models.CharField(max_length=15, verbose_name=_('Contato'), null=True, blank=True)
-    fone_3_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 03 Tipo'), default=1, choices=CONTATOS_CHOICES, null=True, blank=True)
+    fone_3_tipo = models.PositiveSmallIntegerField(verbose_name=_('Contato 03 Tipo'), choices=CONTATOS_CHOICES, null=True, blank=True)
     # Link
     link_1 = models.URLField(verbose_name=_('Link'), null=True, blank=True)
     link_2 = models.URLField(verbose_name=_('Link'), null=True, blank=True)
