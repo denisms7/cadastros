@@ -56,16 +56,16 @@ PF - Busca
                         {% endif %}
                     </td>
                     <td>{{item.primeiro_nome}} {{item.ultimo_nome}}</td>
-                    <td>{{ item.cpf|cpf_format }}</td>
-                    <td class="d-flex justify-content-end">
+                    <td style="white-space: nowrap;">{{ item.cpf|cpf_format }}</td>
+                    <td style="height: 100%; white-space: nowrap;">
                         <div>
-                        <a href="{% url 'pessoa-edit' item.pk %}" title="Editar Registro" class="btn btn-dark btn-sm mt-1">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <button title="Apagar Registro" class="btn btn-danger btn-sm mt-1"  data-bs-toggle="modal" data-bs-target="#delete-{{item.pk}}">
-                            <i class="bi bi-trash3"></i> 
-                        </button>
-                    </div>
+                            <a href="{% url 'pessoa-edit' item.pk %}" title="Editar Registro" class="btn btn-dark btn-sm mt-1">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <button title="Apagar Registro" class="btn btn-danger btn-sm mt-1"  data-bs-toggle="modal" data-bs-target="#delete-{{item.pk}}">
+                                <i class="bi bi-trash3"></i> 
+                            </button>
+                        </div>
                     </td>
                 </tr>
 
