@@ -1,2 +1,12 @@
 LICENSE
 README.md
+
+# Diretórios de ambiente virtual Python
+venv/
+.venv/
+env/
+
+# Arquivos específicos de IDEs
+.vscode/
+.idea/
+*.sublime-*
