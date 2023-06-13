@@ -1,7 +1,12 @@
 window.onload = function () {
-    btncontato1()
-    btncontato2()
-    btncontato3()
+    formatarTelefone("input", "id_fone_1");
+    formatarTelefone("input", "id_fone_2");
+    formatarTelefone("input", "id_fone_3");
+
+    atualizarBotaoContato("id_fone_1", "btn_id_fone_1");
+    atualizarBotaoContato("id_fone_2", "btn_id_fone_2");
+    atualizarBotaoContato("id_fone_3", "btn_id_fone_3");
+
     AbrirConjuge()
     configurarCampoDocumento()
 };
@@ -208,28 +213,31 @@ function AbrirConjuge() {
 
 // FORMATAR BOTAO TELEFONE
 function atualizarBotaoContato(inputId, botaoId) {
-    let fone = document.getElementById(inputId).value;
-    let foneTipo = document.getElementById(inputId + "_tipo").value;
-    let botao = document.getElementById(botaoId);
+    let fone = document.getElementById(inputId).value
+    let foneTipo = parseInt(document.getElementById(inputId + "_tipo").value)
+    let botao = document.getElementById(botaoId)
 
-    if (foneTipo === '1') {
+    if (foneTipo === 1) {
         botao.innerHTML = '<i class="bi bi-telephone-inbound"></i>';
         botao.href = "tel:" + fone.replace(/\D/g, '');
         botao.classList.remove("disabled");
         botao.classList.add("btn-outline-dark");
         botao.classList.remove("btn-outline-success");
-    } else if (foneTipo === '2') {
+
+    } else if (foneTipo === 2) {
         botao.innerHTML = '<i class="bi bi-whatsapp"></i>';
         botao.href = "https://wa.me/" + fone.replace(/\D/g, '');
         botao.classList.remove("disabled");
         botao.classList.remove("btn-outline-dark");
         botao.classList.add("btn-outline-success");
-    } else if (foneTipo === '3') {
+
+    } else if (foneTipo === 3) {
         botao.innerHTML = '<i class="bi bi-telegram"></i>';
         botao.href = "https://t.me/" + fone.replace(/\D/g, '');
         botao.classList.remove("disabled");
         botao.classList.add("btn-outline-dark");
         botao.classList.remove("btn-outline-success");
+
     } else {
         botao.innerHTML = '<i class="bi bi-dash"></i>';
         botao.classList.add("disabled");
@@ -237,6 +245,20 @@ function atualizarBotaoContato(inputId, botaoId) {
         botao.classList.remove("btn-outline-success");
     }
 }
+
+
+document.getElementById("id_fone_1_tipo").addEventListener("input", function () {
+    atualizarBotaoContato("id_fone_1", "btn_id_fone_1");
+});
+
+document.getElementById("id_fone_2_tipo").addEventListener("input", function () {
+    atualizarBotaoContato("id_fone_2", "btn_id_fone_2");
+});
+
+document.getElementById("id_fone_3_tipo").addEventListener("input", function () {
+    atualizarBotaoContato("id_fone_3", "btn_id_fone_3");
+});
+
 
 
 // FORMATAR TELEFONE
@@ -275,17 +297,8 @@ document.getElementById("id_fone_3").addEventListener("input", function (event) 
 });
 
 
-document.getElementById("id_fone_1").addEventListener("input", function () {
-    atualizarBotaoContato("id_fone_1", "btn_id_fone_1");
-});
 
-document.getElementById("id_fone_2").addEventListener("input", function () {
-    atualizarBotaoContato("id_fone_2", "btn_id_fone_2");
-});
 
-document.getElementById("id_fone_3").addEventListener("input", function () {
-    atualizarBotaoContato("id_fone_3", "btn_id_fone_3");
-});
 
 
 // Buscar CEP
