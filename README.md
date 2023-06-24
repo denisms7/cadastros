@@ -22,7 +22,8 @@ App modelo de Cadastro de Pessoa em Django para uso em sistemas diversos
 
 ## 📟 Executar este modelo
 ### 📋 Pré-requisitos
-* Python 3.8.2
+* Python 3.11
+* Bootstrap 5.3.0
 
 ### 🛠️ Configuração e Implantação
 Crie um ambiente virtual:

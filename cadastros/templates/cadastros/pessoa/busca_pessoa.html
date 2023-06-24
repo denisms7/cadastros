@@ -16,7 +16,7 @@ PF - Busca
 
 <div class="container">
     <div class="d-flex justify-content-end my-3">
-        <a href="{% url 'pessoa-cadastro' %}" class="btn btn-dark">
+        <a href="{% url 'pessoa-cadastro' %}" class="btn btn-primary">
             <i class="bi bi-person-plus"></i>
             Adicionar Novo
         </a>
@@ -28,7 +28,7 @@ PF - Busca
             <div class="d-flex align-items-end" id="busca">
                 <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Nome/Nome Completo ou CPF"
                     class="form-control me-1">
-                <button type="submit" title="Pesquisar Registros" class="btn btn-dark">
+                <button type="submit" title="Pesquisar Registros" class="btn btn-primary">
                     <i class="bi bi-search" id="lupacep"></i>
                 </button>
             </div>
@@ -59,7 +59,7 @@ PF - Busca
                     <td style="white-space: nowrap;">{{ item.cpf|cpf_format }}</td>
                     <td style="height: 100%; white-space: nowrap;">
                         <div>
-                            <a href="{% url 'pessoa-edit' item.pk %}" title="Editar Registro" class="btn btn-dark btn-sm mt-1">
+                            <a href="{% url 'pessoa-edit' item.pk %}" title="Editar Registro" class="btn btn-primary btn-sm mt-1">
                                 <i class="bi bi-pencil"></i>
                             </a>
                             <button title="Apagar Registro" class="btn btn-danger btn-sm mt-1"  data-bs-toggle="modal" data-bs-target="#delete-{{item.pk}}">
@@ -95,7 +95,7 @@ PF - Busca
                             <p>* Esta ação não poderá ser desfeita</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="bi bi-x-lg"></i>
                                 Fechar
                             </button>
