@@ -46,7 +46,7 @@ class Cadastro_Empresa(models.Model):
     cnpj_tipo = models.CharField(max_length=200, verbose_name=_('Tipo'), null=True, blank=True)
     cnpj_atividade_principal = models.TextField(max_length=2000, verbose_name=_('Atividade Principal'), null=True, blank=True)
     
-       # E-mail
+    # E-mail
     email_1 = models.EmailField(max_length=150, verbose_name=_(
         'E-mail'), null=True, blank=True)
     email_2 = models.EmailField(max_length=150, verbose_name=_(
@@ -158,6 +158,15 @@ class Cadastro_Pessoa(models.Model):
         (1, _('CNPJ')),
     ]
 
+    CHOICES_CATEGORIA_CNH = [
+        (1, _('A')),
+        (2, _('B')),
+        (3, _('AB')),
+        (4, _('C')),
+        (4, _('D')),
+        (4, _('E')),
+    ]
+
     # Sistema
     status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, verbose_name=_('Status do Cadastro'), default=1)
     cadastrado_em = models.DateTimeField(
@@ -252,7 +261,12 @@ class Cadastro_Pessoa(models.Model):
     obs_banco = models.TextField(
         max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
 
+    # CNH
+    cnh_n = models.CharField(max_length=250, verbose_name=_('CNH'), null=True, blank=True)
+    cnh_emissao = models.DateField(verbose_name=_('Emissão'), null=True, blank=True)
+    cnh_validade = models.DateField(verbose_name=_('Validade'), null=True, blank=True)
+    cnh_categoria = models.PositiveSmallIntegerField(choices=CHOICES_CATEGORIA_CNH, verbose_name=_('Categoria'))
+
 
     def __str__(self):
         return f'{self.primeiro_nome} {self.ultimo_nome} - {self.cpf[0:3]}.{self.cpf[3:6]}.{self.cpf[6:9]}-{self.cpf[9:11]}'
-
