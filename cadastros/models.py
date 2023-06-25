@@ -262,11 +262,10 @@ class Cadastro_Pessoa(models.Model):
         max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
 
     # CNH
-    cnh_n = models.CharField(max_length=250, verbose_name=_('CNH'), null=True, blank=True)
+    cnh_n = models.CharField(max_length=50, verbose_name=_('CNH'), null=True, blank=True)
     cnh_emissao = models.DateField(verbose_name=_('Emissão'), null=True, blank=True)
     cnh_validade = models.DateField(verbose_name=_('Validade'), null=True, blank=True)
     cnh_categoria = models.PositiveSmallIntegerField(choices=CHOICES_CATEGORIA_CNH, verbose_name=_('Categoria'))
-
 
     def __str__(self):
         return f'{self.primeiro_nome} {self.ultimo_nome} - {self.cpf[0:3]}.{self.cpf[3:6]}.{self.cpf[6:9]}-{self.cpf[9:11]}'
