@@ -37,3 +37,9 @@ function verificarCampos(classe, btncheckId, elementId) {
 verificarCampos('.Verifica_Contato', 'btncheck1', 'idContato');
 verificarCampos('.Verifica_Endereco', 'btncheck2', 'idEndereco');
 verificarCampos('.Verifica_Banco', 'btncheck3', 'idBanco');
+try {
+    verificarCampos('.Verifica_Cnh', 'btncheck4', 'idveiculo');
+} catch {
+    console.log('#Error Verifica_Cnh')
+}
+

@@ -1,37 +1,39 @@
 {% load static %}
 {% load widget_tweaks %}   
 
-<section class="row">
+<section class="row Verifica_Cnh'">
     <div class="col-12 mt-3">
         <h3>Habilitação</h3>
         <hr>
     </div>
     <div class="col-sm-12 col-md-4 mb-3">
         <label for="{{ form.cnh_n.id_for_label }}" class="form-label">{{ form.cnh_n.label }}: {% if form.cnh_n.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-        {% render_field form.cnh_n class="form-select" %}
+        {% render_field form.cnh_n class="form-control" %}
         {% for error in form.cnh_n.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
     </div>
-    <div class="col-sm-12 col-md-4 mb-3">
+    <div class="col-sm-12 col-md-3 mb-3">
         <label for="{{ form.cnh_emissao.id_for_label }}" class="form-label">{{ form.cnh_emissao.label }}: {% if form.cnh_emissao.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-        {% render_field form.cnh_emissao class="form-select" %}
+        {% render_field form.cnh_emissao class="form-control" type="date" %}
         {% for error in form.cnh_emissao.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
     </div>
-    <div class="col-sm-12 col-md-4 mb-3">
+    <div class="col-sm-12 col-md-3 mb-3">
         <label for="{{ form.cnh_validade.id_for_label }}" class="form-label">{{ form.cnh_validade.label }}: {% if form.cnh_validade.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-        {% render_field form.cnh_validade class="form-select" %}
+        {% render_field form.cnh_validade class="form-control" type="date" %}
         {% for error in form.cnh_validade.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
     </div>
-    <div class="col-sm-12 col-md-4 mb-3">
+
+    <div class="col-sm-12 col-md-2 mb-3">
         <label for="{{ form.cnh_categoria.id_for_label }}" class="form-label">{{ form.cnh_categoria.label }}: {% if form.cnh_categoria.field.required %}<span class="text-danger">*</span>{% endif %}</label>
         {% render_field form.cnh_categoria class="form-select" %}
         {% for error in form.cnh_categoria.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
     </div>
+    
 </section>

@@ -135,10 +135,20 @@ class FormCadastroPessoa(forms.ModelForm):
             'pix_1',
             'pix_2',
             'obs_banco',
+
+            'cnh_n',
+            'cnh_emissao',
+            'cnh_validade',
+            'cnh_categoria',
+
+
         ]
         widgets = {
             'rg_expedicao': forms.DateInput(format=("%Y-%m-%d")),
             'nascimento': forms.DateInput(format=("%Y-%m-%d")),
+
+            'cnh_emissao': forms.DateInput(format=("%Y-%m-%d")),
+            'cnh_validade': forms.DateInput(format=("%Y-%m-%d")),
         }
 
         def clean(self):

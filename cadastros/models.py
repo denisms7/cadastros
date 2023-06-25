@@ -163,8 +163,8 @@ class Cadastro_Pessoa(models.Model):
         (2, _('B')),
         (3, _('AB')),
         (4, _('C')),
-        (4, _('D')),
-        (4, _('E')),
+        (5, _('D')),
+        (6, _('E')),
     ]
 
     # Sistema
@@ -265,7 +265,7 @@ class Cadastro_Pessoa(models.Model):
     cnh_n = models.CharField(max_length=50, verbose_name=_('CNH'), null=True, blank=True)
     cnh_emissao = models.DateField(verbose_name=_('Emissão'), null=True, blank=True)
     cnh_validade = models.DateField(verbose_name=_('Validade'), null=True, blank=True)
-    cnh_categoria = models.PositiveSmallIntegerField(choices=CHOICES_CATEGORIA_CNH, verbose_name=_('Categoria'))
+    cnh_categoria = models.PositiveSmallIntegerField(choices=CHOICES_CATEGORIA_CNH, verbose_name=_('Categoria'), null=True, blank=True)
 
     def __str__(self):
         return f'{self.primeiro_nome} {self.ultimo_nome} - {self.cpf[0:3]}.{self.cpf[3:6]}.{self.cpf[6:9]}-{self.cpf[9:11]}'
