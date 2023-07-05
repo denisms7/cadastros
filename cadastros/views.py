@@ -15,7 +15,17 @@ from .forms import FormCadastroPessoa, FormCadastroEmpresa
 
 from datetime import datetime
 
+from django.contrib.messages import constants
 
+MESSAGE_TAGS = {
+    constants.DEBUG: 'alert-primary',
+    constants.ERROR: 'alert-danger',
+    constants.WARNING: 'alert-warning',
+    constants.SUCCESS: 'alert-success',
+    constants.INFO: 'alert-info ',
+}
+
+# messages.add_message(request, constants.ERROR, 'Preencha todos os campos')
 
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
