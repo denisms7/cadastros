@@ -185,6 +185,9 @@ function carregarCNPJ(cnpj) {
 }
 
 // Abrir Conjuge
+
+// id_conjuge_primeiro_nome
+
 function AbrirConjuge() {
     try {
         const divConjuge = document.getElementById('div_conjuge')
@@ -198,11 +201,17 @@ function AbrirConjuge() {
         }
         if (teste) {
             divConjuge.classList.add("show");
+
+            document.getElementById('id_conjuge_primeiro_nome').setAttribute('required', 'required');
+            document.getElementById('id_conjuge_ultimo_nome').setAttribute('required', 'required');
         }
         else {
             divConjuge.classList.remove("show");
-            document.getElementById('conjuge_nome').value = ''
-            document.getElementById('conjuge_sobrenome').value = ''
+            document.getElementById('id_conjuge_primeiro_nome').value = ''
+            document.getElementById('id_conjuge_ultimo_nome').value = ''
+
+            document.getElementById('id_conjuge_primeiro_nome').removeAttribute('required');
+            document.getElementById('id_conjuge_ultimo_nome').removeAttribute('required');
         }
     }
     catch {
