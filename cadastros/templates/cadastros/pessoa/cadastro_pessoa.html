@@ -14,7 +14,7 @@ PF - Cadastro
     <hr>
 </div>
 <div class="container">
-    <form method="post">
+    <form method="post" class="needs-validation" novalidate>
         {% csrf_token %}
         <p class="text-secondary fw-lighter">
             Informe todos os campos obrigatorios (<span class="text-danger"><b>*</b></span>)
@@ -80,5 +80,6 @@ PF - Cadastro
 <script src="{% static 'cadastros/jQuery Mask Plugin v1.14.16.js' %}"></script>
 <script src="{% static 'cadastros/cadastro.js' %}"></script>
 <script src="{% static 'cadastros/verifica_campos.js' %}"></script>
+<script src="{% static 'cadastros/validacao.js' %}"></script>
 
 {% endblock %}

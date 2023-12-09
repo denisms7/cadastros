@@ -26,7 +26,9 @@ PJ - Cadastro
 
 
 <div class="container">
-    <form method="post">
+
+    <form method="post" class="needs-validation" novalidate>
+
         {% csrf_token %}
 
         <p class="text-secondary fw-lighter">
@@ -91,6 +93,7 @@ PJ - Cadastro
 <script src="{% static 'cadastros/jQuery Mask Plugin v1.14.16.js' %}"></script>
 <script src="{% static 'cadastros/cadastro.js' %}"></script>
 <script src="{% static 'cadastros/verifica_campos.js' %}"></script>
+<script src="{% static 'cadastros/validacao.js' %}"></script>
 
 
 {% endblock %}
