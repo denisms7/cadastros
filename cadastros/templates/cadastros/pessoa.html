@@ -45,6 +45,9 @@
         {% for error in form.rg.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
+        <div class="invalid-feedback">
+            Este campo é obrigatório
+        </div>
     </div>
     <div class="col-6 col-sm-6 col-md-2 mb-3">
         <label for="{{ form.rg_emissor.id_for_label }}" class="form-label">{{ form.rg_emissor.label }}: {% if form.rg_emissor.field.required %}<span class="text-danger">*</span>{% endif %}</label>
@@ -52,6 +55,9 @@
         {% for error in form.rg_emissor.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
+        <div class="invalid-feedback">
+            Este campo é obrigatório
+        </div>
     </div>
         <div class="col-6 col-sm-6 col-md-3 mb-3">
             <label for="{{ form.rg_expedicao.id_for_label }}" class="form-label">{{ form.rg_expedicao.label }}: {% if form.rg_expedicao.field.required %}<span class="text-danger">*</span>{% endif %}</label>
@@ -59,6 +65,9 @@
             {% for error in form.rg_expedicao.errors %}
                 <span class="text-danger">{{ error }}</span>
             {% endfor %}
+            <div class="invalid-feedback">
+                Este campo é obrigatório
+            </div>
         </div>
     <div class="col-sm-6 col-md-3 mb-3">
         <label for="{{ form.nascimento.id_for_label }}" class="form-label">{{ form.nascimento.label }}: {% if form.nascimento.field.required %}<span class="text-danger">*</span>{% endif %}</label>
@@ -66,6 +75,9 @@
         {% for error in form.nascimento.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
+        <div class="invalid-feedback">
+            Este campo é obrigatório
+        </div>
     </div>
 </div>
 
@@ -76,6 +88,9 @@
         {% for error in form.escolaridade.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
+        <div class="invalid-feedback">
+            Este campo é obrigatório
+        </div>
     </div>
     <div class="col-6 col-sm-12 col-md-3 mb-3">
         <label for="{{ form.sexo.id_for_label }}" class="form-label">{{ form.sexo.label }}: {% if form.sexo.field.required %}<span class="text-danger">*</span>{% endif %}</label>
@@ -83,6 +98,9 @@
         {% for error in form.sexo.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
+        <div class="invalid-feedback">
+            Este campo é obrigatório
+        </div>
     </div>
     <div class="col-6 col-sm-12 col-md-3 mb-3">
             <label for="{{ form.estado_civil.id_for_label }}" class="form-label">{{ form.estado_civil.label }}: {% if form.estado_civil.field.required %}<span class="text-danger">*</span>{% endif %}</label>
@@ -97,7 +115,7 @@
 <div class="collapse g-0 p-0" data-bs-toggle="collapse" id="div_conjuge">
         <div class="row">
             <div class="col-sm-12 col-md-4 mb-3">
-                <label for="{{ form.conjuge_primeiro_nome.id_for_label }}" class="form-label">{{ form.conjuge_primeiro_nome.label }}: {% if form.conjuge_primeiro_nome.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                <label for="{{ form.conjuge_primeiro_nome.id_for_label }}" class="form-label">{{ form.conjuge_primeiro_nome.label }}: <span class="text-danger">*</span></label>
                 {% render_field form.conjuge_primeiro_nome class="form-control" %}
                 {% for error in form.conjuge_primeiro_nome.errors %}
                     <span class="text-danger">{{ error }}</span>
@@ -107,7 +125,7 @@
                 </div>
             </div>
             <div class="col-sm-12 col-md-8 mb-3">
-                <label for="{{ form.conjuge_ultimo_nome.id_for_label }}" class="form-label">{{ form.conjuge_ultimo_nome.label }}: {% if form.conjuge_ultimo_nome.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+                <label for="{{ form.conjuge_ultimo_nome.id_for_label }}" class="form-label">{{ form.conjuge_ultimo_nome.label }}: <span class="text-danger">*</span></label>
                 {% render_field form.conjuge_ultimo_nome class="form-control" %}
                 {% for error in form.conjuge_ultimo_nome.errors %}
                     <span class="text-danger">{{ error }}</span>
@@ -128,6 +146,9 @@
         {% for error in form.mae_primeiro_nome.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
+        <div class="invalid-feedback">
+            Este campo é obrigatório
+        </div>
     </div>
     <div class="col-sm-12 col-md-8 mb-3">
         <label for="{{ form.mae_ultimo_nome.id_for_label }}" class="form-label">{{ form.mae_ultimo_nome.label }}: {% if form.mae_ultimo_nome.field.required %}<span class="text-danger">*</span>{% endif %}</label>
@@ -135,6 +156,9 @@
         {% for error in form.mae_ultimo_nome.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
+        <div class="invalid-feedback">
+            Este campo é obrigatório
+        </div>
     </div>
 
     <!-- ===== NOME E SOBRENOME PAI ===== -->
@@ -144,6 +168,9 @@
         {% for error in form.pai_primeiro_nome.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
+        <div class="invalid-feedback">
+            Este campo é obrigatório
+        </div>
     </div>
     <div class="col-sm-12 col-md-8 mb-3">
         <label for="{{ form.pai_ultimo_nome.id_for_label }}" class="form-label">{{ form.pai_ultimo_nome.label }}: {% if form.pai_ultimo_nome.field.required %}<span class="text-danger">*</span>{% endif %}</label>
@@ -151,6 +178,9 @@
         {% for error in form.pai_ultimo_nome.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
+        <div class="invalid-feedback">
+            Este campo é obrigatório
+        </div>
     </div>
 
     <!-- ===== OBS ===== -->
@@ -160,5 +190,8 @@
         {% for error in form.obs_pessoal.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
+        <div class="invalid-feedback">
+            Este campo é obrigatório
+        </div>
     </div>
 </div>

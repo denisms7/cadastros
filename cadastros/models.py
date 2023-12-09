@@ -111,6 +111,7 @@ class Cadastro_Pessoa(models.Model):
         ('M', _('Masculino')),
         ('F', _('Feminino')),
         ('O', _('Outros')),
+        ('-', _('Não Informado')),
     ]
 
     STATUS_CHOICES = [
@@ -187,8 +188,7 @@ class Cadastro_Pessoa(models.Model):
         'Nascimento'), null=True, blank=True)
     escolaridade = models.PositiveSmallIntegerField(choices=ESCOLARIDADE_CHOICES, verbose_name=_(
         'Escolaridade'), null=True, blank=True)
-    sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, verbose_name=_(
-        'Sexo'), null=True, blank=True)
+    sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, verbose_name=_('Sexo'))
     estado_civil = models.PositiveSmallIntegerField(choices=ESTADO_CIVIL_CHOICES, verbose_name=_(
         'Estado Civil'), null=True, blank=True)
     # Conjuge
