@@ -221,27 +221,27 @@ function atualizarBotaoContato(inputId, botaoId) {
         botao.innerHTML = '<i class="bi bi-telephone-inbound"></i>';
         botao.href = "tel:" + fone.replace(/\D/g, '');
         botao.classList.remove("disabled");
-        botao.classList.add("btn-outline-dark");
+        botao.classList.add("btn-outline-primary");
         botao.classList.remove("btn-outline-success");
 
     } else if (foneTipo === 2) {
         botao.innerHTML = '<i class="bi bi-whatsapp"></i>';
         botao.href = "https://wa.me/" + fone.replace(/\D/g, '');
         botao.classList.remove("disabled");
-        botao.classList.remove("btn-outline-dark");
+        botao.classList.remove("btn-outline-primary");
         botao.classList.add("btn-outline-success");
 
     } else if (foneTipo === 3) {
         botao.innerHTML = '<i class="bi bi-telegram"></i>';
         botao.href = "https://t.me/" + fone.replace(/\D/g, '');
         botao.classList.remove("disabled");
-        botao.classList.add("btn-outline-dark");
+        botao.classList.add("btn-outline-primary");
         botao.classList.remove("btn-outline-success");
 
     } else {
         botao.innerHTML = '<i class="bi bi-dash"></i>';
         botao.classList.add("disabled");
-        botao.classList.add("btn-outline-dark");
+        botao.classList.add("btn-outline-primary");
         botao.classList.remove("btn-outline-success");
     }
 }
