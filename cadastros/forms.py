@@ -95,6 +95,7 @@ class FormCadastroPessoa(forms.ModelForm):
         self.fields['primeiro_nome'].required = True
         self.fields['ultimo_nome'].required = True
         self.fields['cpf'].required = True
+        self.fields['sexo'].required = True
 
     class Meta:
         model = Cadastro
