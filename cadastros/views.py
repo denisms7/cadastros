@@ -133,7 +133,7 @@ class EditarPessoa(LoginRequiredMixin, UpdateView):
 @user_passes_test(lambda user: user.is_authenticated)
 def DeletePessoa(request, pk):
     try:
-        registro = Cadastro_Pessoa.objects.get(id=pk)
+        registro = Cadastro.objects.get(id=pk)
         registro.delete()
         messages.success(request, 'Cadastro deletado')
         return redirect('pessoa-busca')
