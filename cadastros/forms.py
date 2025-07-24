@@ -1,5 +1,5 @@
 from django import forms
-from .models import Cadastro_Empresa, Cadastro_Pessoa
+from .models import Cadastro
 import requests
 
 
@@ -19,8 +19,14 @@ def get_bancos_choices():
 class FormCadastroEmpresa(forms.ModelForm):
     n_banco = forms.ChoiceField(choices=get_bancos_choices(), required=False)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['pessoa_juridica'].required = True
+        self.fields['nome_fantasia'].required = True
+        self.fields['cnpj'].required = True
+
     class Meta:
-        model = Cadastro_Empresa
+        model = Cadastro
         fields = [
             'status',
             'pessoa_juridica',
@@ -82,8 +88,16 @@ class FormCadastroEmpresa(forms.ModelForm):
 
 class FormCadastroPessoa(forms.ModelForm):
     n_banco = forms.ChoiceField(choices=get_bancos_choices(), required=False)
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['primeiro_nome'].required = True
+        self.fields['ultimo_nome'].required = True
+        self.fields['cpf'].required = True
+
     class Meta:
-        model = Cadastro_Pessoa
+        model = Cadastro
         fields = [
             'status',
             'primeiro_nome',
@@ -135,13 +149,10 @@ class FormCadastroPessoa(forms.ModelForm):
             'pix_1',
             'pix_2',
             'obs_banco',
-
             'cnh_n',
             'cnh_emissao',
             'cnh_validade',
             'cnh_categoria',
-
-
         ]
         widgets = {
             'rg_expedicao': forms.DateInput(format=("%Y-%m-%d")),
@@ -151,16 +162,11 @@ class FormCadastroPessoa(forms.ModelForm):
             'cnh_validade': forms.DateInput(format=("%Y-%m-%d")),
         }
 
-        def clean(self):
-            cleaned_data = super().clean()
-            n_banco = cleaned_data.get('n_banco')
-            if n_banco is not None:
-                cleaned_data['n_banco'] = int(n_banco)
-            return cleaned_data
+    def clean(self):
+        cleaned_data = super().clean()
+        n_banco = cleaned_data.get('n_banco')
 
+        if n_banco is not None:
+            cleaned_data['n_banco'] = int(n_banco)
 
-
-
-
-
-
+        return cleaned_data

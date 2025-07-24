@@ -10,7 +10,7 @@ from django.shortcuts import redirect
 from django.db import IntegrityError
 from django.contrib.auth.decorators import user_passes_test
 
-from .models import Cadastro_Pessoa, Cadastro_Empresa
+from .models import Cadastro
 from .forms import FormCadastroPessoa, FormCadastroEmpresa
 
 from datetime import datetime
@@ -32,20 +32,23 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 class BuscaPessoa(LoginRequiredMixin, ListView):
     paginate_by = 20
-    model = Cadastro_Pessoa
+    model = Cadastro
     template_name = 'cadastros/pessoa/busca_pessoa.html'
+
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().filter(tipo=0)  # Filtra apenas tipo=0
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
-                Q(primeiro_nome__icontains=query) | Q(cpf__icontains=query) | Q(ultimo_nome__icontains=query)
+                Q(primeiro_nome__icontains=query) |
+                Q(cpf__icontains=query) |
+                Q(ultimo_nome__icontains=query)
             )
         return queryset
 
 
 class CadastroPessoa(LoginRequiredMixin, CreateView):
-    model = Cadastro_Pessoa
+    model = Cadastro
     form_class = FormCadastroPessoa
     template_name = 'cadastros/pessoa/cadastro_pessoa.html'
     success_url = reverse_lazy('pessoa-busca')
@@ -65,6 +68,7 @@ class CadastroPessoa(LoginRequiredMixin, CreateView):
             messages.warning(self.request, f"O CPF {cpf} é inválido, O registro não foi salvo.")
             return self.form_invalid(form)
 
+        form.instance.tipo = 0
         form.instance.cadastrado_por = self.request.user
         form.instance.ultima_att = self.request.user.username
         form.instance.data_att = datetime.now()
@@ -86,7 +90,7 @@ class CadastroPessoa(LoginRequiredMixin, CreateView):
 
 
 class EditarPessoa(LoginRequiredMixin, UpdateView):
-    model = Cadastro_Pessoa
+    model = Cadastro
     form_class = FormCadastroPessoa
     template_name = 'cadastros/pessoa/cadastro_pessoa.html'
     success_url = reverse_lazy('pessoa-busca')
@@ -143,20 +147,23 @@ def DeletePessoa(request, pk):
 # EMPRESA =====================================================================================================
 class BuscaEmpresa(LoginRequiredMixin, ListView):
     paginate_by = 20
-    model = Cadastro_Empresa
+    model = Cadastro
     template_name = 'cadastros/empresa/busca_empresa.html'
+
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().filter(tipo=1)  # Filtra apenas empresas
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
-                Q(nome_fantasia__icontains=query) | Q(cnpj__icontains=query) | Q(pessoa_juridica__icontains=query)
+                Q(nome_fantasia__icontains=query) |
+                Q(cnpj__icontains=query) |
+                Q(pessoa_juridica__icontains=query)
             )
         return queryset
 
 
 class CadastroEmpresa(LoginRequiredMixin, CreateView):
-    model = Cadastro_Empresa
+    model = Cadastro
     form_class = FormCadastroEmpresa
     template_name = 'cadastros/empresa/cadastro_empresa.html'
     success_url = reverse_lazy('empresa-busca')
@@ -174,6 +181,7 @@ class CadastroEmpresa(LoginRequiredMixin, CreateView):
             cep = cep.replace('.', '').replace('-', '')
             form.instance.cep = cep 
 
+        form.instance.tipo = 1
         form.instance.cadastrado_por = self.request.user
         form.instance.ultima_att = self.request.user.username
         form.instance.data_att = datetime.now()
@@ -195,7 +203,7 @@ class CadastroEmpresa(LoginRequiredMixin, CreateView):
 
 
 class EditarEmpresa(LoginRequiredMixin, UpdateView):
-    model = Cadastro_Empresa
+    model = Cadastro
     form_class = FormCadastroEmpresa
     template_name = 'cadastros/empresa/cadastro_empresa.html'
     success_url = reverse_lazy('empresa-busca')
@@ -229,7 +237,7 @@ class EditarEmpresa(LoginRequiredMixin, UpdateView):
 @user_passes_test(lambda user: user.is_authenticated)
 def DeleteEmpresa(request, pk):
     try:
-        registro = Cadastro_Empresa.objects.get(id=pk)
+        registro = Cadastro.objects.get(id=pk)
         registro.delete()
         messages.success(request, 'Cadastro deletado')
         return redirect('empresa-busca')
@@ -271,57 +279,16 @@ def cnpj_validate(cnpj: str) -> bool:
             return False
     return True
 
-
-class Agenda(ListView):
-    model = Cadastro_Empresa  # Pode ser qualquer um dos modelos, dependendo da sua necessidade
+class Agenda(LoginRequiredMixin, ListView):
+    model = Cadastro 
     template_name = 'cadastros/agenda.html'
-    paginate_by = 20  # Defina o número de itens por página aqui
-
+    paginate_by = 20
     def get_queryset(self):
-        empresas = Cadastro_Empresa.objects.all()
-        pessoas = Cadastro_Pessoa.objects.all()
-
-        # Combine os campos relevantes dos modelos
-        results = []
-        for empresa in empresas:
-            marge = {
-                'nome_fantasia': empresa.nome_fantasia,
-                'primeiro_nome': None,
-                'ultimo_nome': None,
-                'fone_1': empresa.fone_1,
-                'fone_1_tipo': empresa.fone_1_tipo,
-                'fone_2': empresa.fone_2,
-                'fone_2_tipo': empresa.fone_2_tipo,
-                'fone_3': empresa.fone_3,
-                'fone_3_tipo': empresa.fone_3_tipo
-            }
-            results.append(marge)
-
-        for pessoa in pessoas:
-            marge = {
-                'nome_fantasia': None,
-                'primeiro_nome': pessoa.primeiro_nome,
-                'ultimo_nome': pessoa.ultimo_nome,
-                'fone_1': pessoa.fone_1,
-                'fone_1_tipo': pessoa.fone_1_tipo,
-                'fone_2': pessoa.fone_2,
-                'fone_2_tipo': pessoa.fone_2_tipo,
-                'fone_3': pessoa.fone_3,
-                'fone_3_tipo': pessoa.fone_3_tipo
-            }
-            results.append(marge)
-        
-        query = self.request.GET.get('q')  # Obtém o parâmetro de pesquisa da URL
-
+        queryset = super().get_queryset()
+        query = self.request.GET.get('q')
         if query:
-            # Filtra os resultados da lista usando a pesquisa
-            filtered_results = []
-            for result in results:
-                if result['nome_fantasia'] and query.lower() in result['nome_fantasia'].lower():
-                    filtered_results.append(result)
-                elif result['primeiro_nome'] and query.lower() in result['primeiro_nome'].lower():
-                    filtered_results.append(result)
-                elif result['ultimo_nome'] and query.lower() in result['ultimo_nome'].lower():
-                    filtered_results.append(result)
-            results = filtered_results
-        return results
+            queryset = queryset.filter(
+                Q(primeiro_nome__icontains=query) | Q(ultimo_nome__icontains=query) | 
+                Q(nome_fantasia__icontains=query) | Q(ultimo_nome__icontains=query)
+            )
+        return queryset
