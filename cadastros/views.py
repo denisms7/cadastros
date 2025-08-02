@@ -135,20 +135,6 @@ class EditarPessoa(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         return self.form_invalid(self.get_form())
 
 
-# Cadastro_Pessoa delete
-@csrf_protect
-@require_POST
-@user_passes_test(lambda user: user.is_authenticated)
-def DeletePessoa(request, pk):
-    try:
-        registro = Cadastro.objects.get(id=pk)
-        registro.delete()
-        messages.success(request, 'Cadastro deletado')
-        return redirect('pessoa-busca')
-    except:
-        messages.warning(request, 'Não é possível deletar este registro')
-        return redirect('pessoa-busca')
-
 
 
 
@@ -243,7 +229,7 @@ class EditarEmpresa(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         messages.success(self.request, "Registro alterado com sucesso.")
         return url
 
-
+# Delete Empresa
 @csrf_protect
 @require_POST
 @user_passes_test(lambda user: user.is_authenticated)
@@ -256,7 +242,19 @@ def DeleteEmpresa(request, pk):
         messages.warning(request, 'Não é possível deletar este registro')
     return redirect('empresa-busca')
 
-
+# Delete Pessoa
+@csrf_protect
+@require_POST
+@user_passes_test(lambda user: user.is_authenticated)
+def DeletePessoa(request, pk):
+    try:
+        registro = Cadastro.objects.get(id=pk)
+        registro.delete()
+        messages.success(request, 'Cadastro deletado')
+        return redirect('pessoa-busca')
+    except:
+        messages.warning(request, 'Não é possível deletar este registro')
+        return redirect('pessoa-busca')
 
 
 
