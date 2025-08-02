@@ -101,10 +101,13 @@ PJ - Busca
                                 <i class="bi bi-x-lg"></i>
                                 Fechar
                             </button>
-                            <a href="{% url 'empresa-delete' item.pk %}" class="btn btn-danger">
-                                <i class="bi bi-check-lg"></i>
-                                Confirmar
-                            </a>
+                            <form method="post" action="{% url 'empresa-delete' item.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="bi bi-check-lg"></i>
+                                    Confirmar
+                                </button>
+                            </form>
                         </div>
                         </div>
                     </div>

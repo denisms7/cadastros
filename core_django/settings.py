@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'django.contrib.humanize',
+    'simple_history',
 
     'cadastros.apps.CadastrosConfig',
     'nav_bar.apps.NavBarConfig',
@@ -42,6 +43,7 @@ MIDDLEWARE = [
     'cadastros.middleware.AutoLoginMiddleware',   # <--- Estoque logado como admin
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'core_django.urls'

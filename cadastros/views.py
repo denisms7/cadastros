@@ -2,18 +2,21 @@ from django.contrib import messages
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.urls import reverse_lazy
-from django.db.models import Q, F, Value
-from django.db.models.functions import Concat
+from django.db.models import Q
 # from django.core.paginator import Paginator
 from itertools import cycle
 from django.shortcuts import redirect
 from django.db import IntegrityError
 from django.contrib.auth.decorators import user_passes_test
+from django.views.decorators.http import require_POST
 
 from .models import Cadastro
 from .forms import FormCadastroPessoa, FormCadastroEmpresa
 
 from datetime import datetime
+
+from django.views.decorators.csrf import csrf_protect
+from django.shortcuts import render, get_object_or_404
 
 from django.contrib.messages import constants
 
@@ -28,12 +31,13 @@ MESSAGE_TAGS = {
 # messages.add_message(request, constants.ERROR, 'Preencha todos os campos')
 
 from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
-class BuscaPessoa(LoginRequiredMixin, ListView):
+class BuscaPessoa(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     paginate_by = 20
     model = Cadastro
     template_name = 'cadastros/pessoa/busca_pessoa.html'
+    permission_required = 'cadastros.view_cadastro'
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(tipo=0)  # Filtra apenas tipo=0
@@ -47,11 +51,12 @@ class BuscaPessoa(LoginRequiredMixin, ListView):
         return queryset
 
 
-class CadastroPessoa(LoginRequiredMixin, CreateView):
+class CadastroPessoa(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Cadastro
     form_class = FormCadastroPessoa
     template_name = 'cadastros/pessoa/cadastro_pessoa.html'
     success_url = reverse_lazy('pessoa-busca')
+    permission_required = 'cadastros.add_cadastro'
 
     def form_valid(self, form):
         cpf = form.cleaned_data.get('cpf')
@@ -89,11 +94,12 @@ class CadastroPessoa(LoginRequiredMixin, CreateView):
         return self.form_invalid(self.get_form())
 
 
-class EditarPessoa(LoginRequiredMixin, UpdateView):
+class EditarPessoa(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Cadastro
     form_class = FormCadastroPessoa
     template_name = 'cadastros/pessoa/cadastro_pessoa.html'
     success_url = reverse_lazy('pessoa-busca')
+    permission_required = 'cadastros.change_cadastro'
 
     def form_valid(self, form):
         cpf = form.cleaned_data.get('cpf')
@@ -130,6 +136,8 @@ class EditarPessoa(LoginRequiredMixin, UpdateView):
 
 
 # Cadastro_Pessoa delete
+@csrf_protect
+@require_POST
 @user_passes_test(lambda user: user.is_authenticated)
 def DeletePessoa(request, pk):
     try:
@@ -145,10 +153,11 @@ def DeletePessoa(request, pk):
 
 
 # EMPRESA =====================================================================================================
-class BuscaEmpresa(LoginRequiredMixin, ListView):
+class BuscaEmpresa(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     paginate_by = 20
     model = Cadastro
     template_name = 'cadastros/empresa/busca_empresa.html'
+    permission_required = 'cadastros.view_cadastro'
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(tipo=1)  # Filtra apenas empresas
@@ -162,11 +171,12 @@ class BuscaEmpresa(LoginRequiredMixin, ListView):
         return queryset
 
 
-class CadastroEmpresa(LoginRequiredMixin, CreateView):
+class CadastroEmpresa(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Cadastro
     form_class = FormCadastroEmpresa
     template_name = 'cadastros/empresa/cadastro_empresa.html'
     success_url = reverse_lazy('empresa-busca')
+    permission_required = 'cadastros.add_cadastro'
 
     def form_valid(self, form):
         cnpj = form.cleaned_data.get('cnpj')
@@ -202,11 +212,12 @@ class CadastroEmpresa(LoginRequiredMixin, CreateView):
         return self.form_invalid(self.get_form())
 
 
-class EditarEmpresa(LoginRequiredMixin, UpdateView):
+class EditarEmpresa(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Cadastro
     form_class = FormCadastroEmpresa
     template_name = 'cadastros/empresa/cadastro_empresa.html'
     success_url = reverse_lazy('empresa-busca')
+    permission_required = 'cadastros.change_cadastro'
 
     def form_valid(self, form):
         cnpj = form.cleaned_data.get('cnpj')
@@ -233,17 +244,27 @@ class EditarEmpresa(LoginRequiredMixin, UpdateView):
         return url
 
 
-# Cadastro_Empresa delete
+@csrf_protect
+@require_POST
 @user_passes_test(lambda user: user.is_authenticated)
 def DeleteEmpresa(request, pk):
+    registro = get_object_or_404(Cadastro, id=pk)
     try:
-        registro = Cadastro.objects.get(id=pk)
         registro.delete()
         messages.success(request, 'Cadastro deletado')
-        return redirect('empresa-busca')
     except:
         messages.warning(request, 'Não é possível deletar este registro')
-        return redirect('empresa-busca')
+    return redirect('empresa-busca')
+
+
+
+
+
+
+
+
+
+
 
 
 def cpf_validate(cpf: str) -> bool:

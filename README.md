@@ -1,5 +1,5 @@
 # 📟 Cadastro Django
-App modelo de Cadastro de Pessoa em Django para uso em sistemas diversos
+App modelo de Cadastro de Pessoa e Empresas Django para uso em sistemas diversos com log de auditoria de registro
 
 <div align="center">
   <img height="180em" src="https://user-images.githubusercontent.com/82631808/218283233-685611a5-7d42-4ef9-be5d-92e7cc11f1bf.png"/>
@@ -63,6 +63,7 @@ O sistema necessita de um usuario logado, para salvar o registro no banco de dad
 * cadastro_empresa
 * cadastro_pessoa
 
+
 ### 📋 Pré-requisitos
 * Bootstrap 5.3
 * Python 3.8.2
@@ -86,13 +87,22 @@ Configurar variavel INSTALLED_APPS acrescentando com os APPS e Libs baixo:
 ```
 INSTALLED_APPS = [
     ...
+    'simple_history',
     'widget_tweaks',
     'django.contrib.humanize',
-    'cadastro_pessoa.apps.CadastroPessoaConfig', 
-    'cadastro_empresa.apps.CadastroEmpresaConfig', 
+    'cadastros.apps.CadastrosConfig',
     ...
     
 ]
+
+MIDDLEWARE = [
+    ...
+    'simple_history.middleware.HistoryRequestMiddleware',
+    ...
+]
+
+
+
 ```
 
 Configurar as variaveis STATIC_URL e STATICFILES_DIRS conforme abaixo:
