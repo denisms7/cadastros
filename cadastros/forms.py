@@ -58,8 +58,6 @@ class FormCadastroEmpresa(forms.ModelForm):
             'numero',
             'complemento',
             'obs_endereco',
-            'ultima_att',
-            'data_att',
 
             'nome_razao_titular',
             'tipo_de_documento',
@@ -137,8 +135,6 @@ class FormCadastroPessoa(forms.ModelForm):
             'numero',
             'complemento',
             'obs_endereco',
-            'ultima_att',
-            'data_att',
             'nome_razao_titular',
             'tipo_de_documento',
             'documento_titular',

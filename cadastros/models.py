@@ -149,8 +149,6 @@ class Cadastro(models.Model):
         'Complemento'), null=True, blank=True)
     obs_endereco = models.TextField(
         max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
-    ultima_att = models.CharField(max_length=200, verbose_name=_('Última Atualização'), null=True, blank=True)
-    data_att = models.DateTimeField(verbose_name=_('Data de Atualização'), null=True, blank=True)
 
     # Banco
     nome_razao_titular = models.CharField(max_length=50, verbose_name=_('Nome/Razão'), null=True, blank=True)
