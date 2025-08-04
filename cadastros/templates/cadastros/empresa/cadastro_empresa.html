@@ -11,19 +11,35 @@ PJ - Cadastro
 {% block pagina %}
 
 
+
+
+
+
 <div class="container">
     <div id="liveAlertPlaceholder"></div>
 </div>
 
 <div class="container">
-    <h2>
-
-        <i class="bi bi-building"></i>
-        Cadastro de Empresa
-    </h2>
-    <hr>
+    <div class="d-flex justify-content-between">
+        <div>
+            <h2>
+                <i class="bi bi-building"></i>
+                Cadastro de Empresa
+            </h2>
+        </div>
+        <div>
+            {% if form.instance.id %}
+                <a href="{% url 'log-cadastro' form.instance.id %}" title="Log" class="btn btn-primary">
+                    Histórico
+                </a>
+            {% endif %}
+        </div>
+    </div>
 </div>
 
+<div class="container">
+    <hr>
+</div>
 
 <div class="container">
 

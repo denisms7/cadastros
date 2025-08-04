@@ -9,10 +9,29 @@ PF - Cadastro
 
 {% block pagina %}
 
+
 <div class="container">
-    <h2><i class="bi bi-person-vcard me-2"></i>Cadastro de Pessoa</h2>
+    <div class="d-flex justify-content-between">
+        <div>
+            <h2>
+                <h2><i class="bi bi-person-vcard me-2"></i>Cadastro de Pessoa</h2>
+            </h2>
+        </div>
+        <div>
+            {% if form.instance.id %}
+                <a href="{% url 'log-cadastro' form.instance.id %}" title="Log" class="btn btn-primary">
+                    Histórico
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container">
     <hr>
 </div>
+
+
 <div class="container">
     <form method="post" class="needs-validation" novalidate>
         {% csrf_token %}
