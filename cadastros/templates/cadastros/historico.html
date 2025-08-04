@@ -50,19 +50,19 @@
         </h2>
         <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#historicoAccordion">
         <div class="accordion-body">
-            {% if h.diff %}
-            <ul class="list-group list-group-flush">
-                {% for change in h.diff.changes %}
-                <li class="list-group-item">
-                    <strong>{{ change.field }}:</strong>
-                    <span class="text-danger">{{ change.old }}</span>
-                    →
-                    <span class="text-success">{{ change.new }}</span>
-                </li>
-                {% endfor %}
-            </ul>
+            {% if h.diff and h.diff.changes %}
+                <ul class="list-group list-group-flush">
+                    {% for change in h.diff.changes %}
+                    <li class="list-group-item">
+                        <strong>{{ change.field }}:</strong>
+                        <span class="text-danger">{{ change.old }}</span>
+                        →
+                        <span class="text-success">{{ change.new }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
             {% else %}
-            <p class="text-muted">Sem alterações (registro inicial ou sem comparação).</p>
+                <p class="text-muted">Sem alterações (registro inicial ou sem comparação).</p>
             {% endif %}
         </div>
         </div>
@@ -70,6 +70,7 @@
     </div>
     {% endfor %}
 </div>
+
 <div class="container mt-3">
     <button type="button" onclick="window.history.go(-1)" class="btn btn-primary my-1">
         <i class="bi bi-arrow-return-left me-1"></i>Voltar
