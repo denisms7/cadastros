@@ -17,5 +17,5 @@ urlpatterns = [
 
     path('agenda-tel/', Agenda.as_view(), name='agenda-telefonica'),
 
-    path('<int:pk>/historico/', cadastro_historico, name='cadastro-historico'),
+    path('<int:pk>/log/', cadastro_historico, name='log-cadastro'),
 ]
