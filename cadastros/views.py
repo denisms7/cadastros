@@ -256,9 +256,33 @@ def DeletePessoa(request, pk):
         messages.warning(request, 'Não é possível deletar este registro')
         return redirect('pessoa-busca')
 
+from django.core.paginator import Paginator
 
+@csrf_protect
+def cadastro_historico(request, pk):
+    cadastro = get_object_or_404(Cadastro, pk=pk)
+    historico = list(cadastro.history.all().order_by('-history_date'))
+    paginate_by = 20
 
+    historico_com_diffs = []
+    for i, item in enumerate(historico):
+        diff = None
+        if i + 1 < len(historico):
+            previous = historico[i + 1]
+            try:
+                diff = item.diff_against(previous)
+            except AttributeError:
+                diff = None
+        historico_com_diffs.append({'item': item, 'diff': diff})
 
+    paginator = Paginator(historico_com_diffs, paginate_by)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'cadastros/historico.html', {
+        'cadastro': cadastro,
+        'page_obj': page_obj,
+    })
 
 
 
@@ -313,27 +337,3 @@ class Agenda(LoginRequiredMixin, ListView):
         return queryset
     
 
-
-def cadastro_historico(request, pk):
-    cadastro = get_object_or_404(Cadastro, pk=pk)
-    historico = list(cadastro.history.all().order_by('-history_date'))
-
-    historico_com_diffs = []
-
-    for i, item in enumerate(historico):
-        diff = None
-        if i + 1 < len(historico):  # Existe uma versão anterior
-            previous = historico[i + 1]
-            try:
-                diff = item.diff_against(previous)
-            except AttributeError:
-                diff = None
-        historico_com_diffs.append({
-            'item': item,
-            'diff': diff
-        })
-
-    return render(request, 'cadastros/historico.html', {
-        'cadastro': cadastro,
-        'historico_com_diffs': historico_com_diffs
-    })
