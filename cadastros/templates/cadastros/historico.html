@@ -3,11 +3,20 @@
 
 {% block pagina %}
 
+<div class="container">
+    <h2>
+        <i class="bi bi-pen"></i>
+        Histórico de Alterações
+    </h2>
+    <hr>
+</div>
+
 <div class="container mt-4">
-    <h2>Histórico de Alterações - {{ cadastro }}</h2>
+    <p class="">
+        {{ cadastro }}  
+    </p>
 
     {% for h in historico_com_diffs %}
-
 
     <div class="accordion mb-1" id="historicoAccordion">
     <div class="accordion-item">
