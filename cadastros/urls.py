@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import CadastroPessoa, EditarPessoa, BuscaPessoa, DeletePessoa
 from .views import CadastroEmpresa, EditarEmpresa, BuscaEmpresa, DeleteEmpresa, Agenda
+from .views import cadastro_historico
 
 urlpatterns = [
     path('pf-add/', CadastroPessoa.as_view(), name='pessoa-cadastro'),
@@ -15,4 +16,6 @@ urlpatterns = [
 
 
     path('agenda-tel/', Agenda.as_view(), name='agenda-telefonica'),
+
+    path('<int:pk>/historico/', cadastro_historico, name='cadastro-historico'),
 ]

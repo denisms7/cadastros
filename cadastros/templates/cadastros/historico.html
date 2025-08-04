@@ -1,0 +1,46 @@
+
+{% extends "base.html" %}
+
+{% block pagina %}
+
+<div class="container mt-4">
+    <h2>Histórico de Alterações - {{ cadastro }}</h2>
+    <table class="table table-sm table-striped mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Data</th>
+                <th>Usuário</th>
+                <th>Tipo</th>
+                <th>Alterações</th>
+            </tr>
+        </thead>
+<tbody>
+    {% for h in historico_com_diffs %}
+        <div class="card mb-3">
+            <div class="card-header">
+                <strong>Alterado em:</strong> {{ h.item.history_date|date:"d/m/Y H:i" }} —
+                por {{ h.item.history_user|default:"Sistema" }}
+            </div>
+            <div class="card-body">
+                {% if h.diff %}
+                    <ul class="list-group list-group-flush">
+                        {% for change in h.diff.changes %}
+                            <li class="list-group-item">
+                                <strong>{{ change.field }}:</strong>
+                                <span class="text-danger">{{ change.old }}</span>
+                                →
+                                <span class="text-success">{{ change.new }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">Sem alterações (registro inicial ou sem comparação).</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</tbody>
+
+    </table>
+</div>
+{% endblock %}

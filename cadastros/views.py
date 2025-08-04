@@ -311,3 +311,29 @@ class Agenda(LoginRequiredMixin, ListView):
                 Q(nome_fantasia__icontains=query) | Q(ultimo_nome__icontains=query)
             )
         return queryset
+    
+
+
+def cadastro_historico(request, pk):
+    cadastro = get_object_or_404(Cadastro, pk=pk)
+    historico = list(cadastro.history.all().order_by('-history_date'))
+
+    historico_com_diffs = []
+
+    for i, item in enumerate(historico):
+        diff = None
+        if i + 1 < len(historico):  # Existe uma versão anterior
+            previous = historico[i + 1]
+            try:
+                diff = item.diff_against(previous)
+            except AttributeError:
+                diff = None
+        historico_com_diffs.append({
+            'item': item,
+            'diff': diff
+        })
+
+    return render(request, 'cadastros/historico.html', {
+        'cadastro': cadastro,
+        'historico_com_diffs': historico_com_diffs
+    })

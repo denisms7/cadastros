@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from simple_history.models import HistoricalRecords
+from simple_history import register
 
 class Cadastro(models.Model):
     SEXO_CHOICES = [
@@ -165,7 +166,7 @@ class Cadastro(models.Model):
     obs_banco = models.TextField(
         max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(inherit=True)
 
     def __str__(self):
         if self.cpf:
@@ -176,3 +177,4 @@ class Cadastro(models.Model):
             return f'{self.nome_fantasia} - {cnpj[0:2]}.{cnpj[2:5]}.{cnpj[5:8]}/{cnpj[8:12]}-{cnpj[12:14]}'
         else:
             return 'Cadastro sem Identificação'
+        
