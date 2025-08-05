@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from simple_history.models import HistoricalRecords
-from simple_history import register
 
 class Cadastro(models.Model):
     SEXO_CHOICES = [

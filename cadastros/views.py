@@ -1,24 +1,21 @@
-from django.contrib import messages
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
-from django.urls import reverse_lazy
-from django.db.models import Q
-# from django.core.paginator import Paginator
 from itertools import cycle
-from django.shortcuts import redirect
-from django.db import IntegrityError
+from django.urls import reverse_lazy
+from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import user_passes_test
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_protect
+from datetime import datetime
+from django.contrib import messages
+from django.contrib.messages import constants
 
 from .models import Cadastro
 from .forms import FormCadastroPessoa, FormCadastroEmpresa
+from django.db.models import Q
+from django.db import IntegrityError
 
-from datetime import datetime
-
-from django.views.decorators.csrf import csrf_protect
-from django.shortcuts import render, get_object_or_404
-
-from django.contrib.messages import constants
 
 MESSAGE_TAGS = {
     constants.DEBUG: 'alert-primary',
@@ -30,8 +27,7 @@ MESSAGE_TAGS = {
 
 # messages.add_message(request, constants.ERROR, 'Preencha todos os campos')
 
-from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+
 
 class BuscaPessoa(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     paginate_by = 20
@@ -133,9 +129,6 @@ class EditarPessoa(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         else:
             messages.warning(self.request, "Erro. Salvamento cancelado")
         return self.form_invalid(self.get_form())
-
-
-
 
 
 # EMPRESA =====================================================================================================
@@ -258,7 +251,8 @@ def DeletePessoa(request, pk):
 
 from django.core.paginator import Paginator
 
-@csrf_protect
+
+@user_passes_test(lambda user: user.is_authenticated)
 def cadastro_historico(request, pk):
     cadastro = get_object_or_404(Cadastro, pk=pk)
     historico = list(cadastro.history.all().order_by('-history_date'))
@@ -285,6 +279,20 @@ def cadastro_historico(request, pk):
     })
 
 
+class Agenda(LoginRequiredMixin, ListView):
+    model = Cadastro 
+    template_name = 'cadastros/agenda.html'
+    paginate_by = 20
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(
+                Q(primeiro_nome__icontains=query) | Q(ultimo_nome__icontains=query) | 
+                Q(nome_fantasia__icontains=query) | Q(ultimo_nome__icontains=query)
+            )
+        return queryset
+    
 
 
 
@@ -321,19 +329,4 @@ def cnpj_validate(cnpj: str) -> bool:
         if cnpj_r[i - 1:i] != str(dv % 10):
             return False
     return True
-
-class Agenda(LoginRequiredMixin, ListView):
-    model = Cadastro 
-    template_name = 'cadastros/agenda.html'
-    paginate_by = 20
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        query = self.request.GET.get('q')
-        if query:
-            queryset = queryset.filter(
-                Q(primeiro_nome__icontains=query) | Q(ultimo_nome__icontains=query) | 
-                Q(nome_fantasia__icontains=query) | Q(ultimo_nome__icontains=query)
-            )
-        return queryset
-    
 

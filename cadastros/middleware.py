@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.middleware import get_user
 from django.conf import settings
 import time
 
