@@ -41,6 +41,6 @@ verificarCampos('.Verifica_Banco', 'btncheck3', 'idBanco');
 try {
     verificarCampos('.Verifica_Cnh', 'btncheck4', 'idveiculo');
 } catch {
-    console.log('#Error Verifica_Cnh')
+    console.log('Verifica_Cnh nao existe ou nao foi carregada corretamente. Ignorando verificacao.');
 }
 
