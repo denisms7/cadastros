@@ -15,5 +15,5 @@ urlpatterns = [
     path('pj-del/<int:pk>/', DeleteEmpresa, name='empresa-delete'),
 
     path('agenda-tel/', Agenda.as_view(), name='agenda-telefonica'),
-    path('<int:pk>/log/', cadastro_historico, name='log-cadastro'),
+    path('cadastro/<int:pk>/log/', cadastro_historico, name='log-cadastro'),
 ]

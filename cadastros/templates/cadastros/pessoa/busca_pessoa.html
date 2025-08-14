@@ -39,7 +39,8 @@ PF - Busca
         <table class="table table-sm table-striped mt-3">
             <thead>
                 <tr>
-                    <th scope="col">Status:</th>
+                    <th scope="col">ID:</th>
+                    <th scope="col" class="text-center">Status:</th>
                     <th scope="col">Nome Completo:</th>
                     <th scope="col">CPF:</th>
                     <th scope="col"></th>
@@ -48,11 +49,12 @@ PF - Busca
             <tbody>
                 {% for item in object_list %}
                 <tr>
-                    <td>
+                    <td class="fw-bold">{{item.pk}}</td>
+                    <td class="text-center">
                         {% if item.status == 0 %}
-                            Inativo
+                            <i class="bi bi-x-circle text-danger"></i>
                         {% else %}
-                            Ativo
+                            <i class="bi bi-check-circle-fill text-success"></i>
                         {% endif %}
                     </td>
                     <td>{{item.primeiro_nome}} {{item.ultimo_nome}}</td>

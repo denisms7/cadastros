@@ -43,7 +43,8 @@ PJ - Busca
         <table class="table table-sm table-striped mt-3">
             <thead>
                 <tr>
-                    <th scope="col">Status:</th>
+                    <th scope="col">ID:</th>
+                    <th scope="col" class="text-center">Status:</th>
                     <th scope="col">Nome Fantasia:</th>
                     <th scope="col">Razão Social:</th>
                     <th scope="col">CNPJ:</th>
@@ -53,11 +54,12 @@ PJ - Busca
             <tbody>
                 {% for item in object_list %}
                 <tr>
-                    <td>
+                    <td class="fw-bold">{{item.pk}}</td>
+                    <td class="text-center">
                         {% if item.status == 0 %}
-                            Inativo
+                            <i class="bi bi-x-circle text-danger"></i>
                         {% else %}
-                            Ativo
+                            <i class="bi bi-check-circle-fill text-success"></i>
                         {% endif %}
                     </td>
                     <td>{{item.nome_fantasia}}</td>
