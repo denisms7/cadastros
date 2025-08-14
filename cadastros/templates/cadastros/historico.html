@@ -2,14 +2,14 @@
 {% extends "base.html" %}
 
 {% block pagina %}
-
+{% load static %}
 
 <div class="container">
     <div class="d-flex justify-content-between">
         <div>
             <h2>
-                <i class="bi bi-pen"></i>
-                Histórico de Alterações
+                <i class="bi bi-journal-text"></i>
+                Log de Alterações
             </h2>
         </div>
         <div>
@@ -29,46 +29,61 @@
         {{ cadastro }}  
     </p>
 
-    {% for h in page_obj %}
 
-    <div class="accordion mb-1" id="historicoAccordion">
+{% for h in page_obj %}
+<div class="accordion mb-1" id="historicoAccordion">
     <div class="accordion-item">
         <h2 class="accordion-header" id="heading{{ forloop.counter }}">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
-            <p class="m-0">
-            {{ h.item.history_date|date:"d/m/Y H:i" }} -  
-                    {% if h.item.history_type == '+' %}
-                        <span class="fw-bold">Criado</span>
-                    {% elif h.item.history_type == '~' %}
-                        <span class="fw-bold">Alterado</span>
-                    {% elif h.item.history_type == '-' %}
-                        <span class="fw-bold">Deletado</span>
-                    {% endif %}
-                <span> - Usuário: {{ h.item.history_user|default:"Sistema" }}</span>
-            </p>
-        </button>
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+                <div class="m-0 d-flex justify-content-between gap-2 align-items-center">
+                    <div class="d-flex align-items-center gap-4">
+                        <span class="me-2">
+                            {% if h.item.history_type == '+' %}
+                                <i class="bi bi-plus-circle-fill text-success"></i>
+                            {% elif h.item.history_type == '~' %}
+                                <i class="bi bi-pencil-fill text-warning"></i>
+                            {% elif h.item.history_type == '-' %}
+                                <i class="bi bi-trash-fill text-danger"></i>
+                            {% endif %}
+                        </span>
+                        {{ h.item.history_date|date:"d/m/Y H:i" }}
+                        <span class="ms-2 fw-bold">
+                            {% if h.item.history_type == '+' %} Criado
+                            {% elif h.item.history_type == '~' %} Alterado
+                            {% elif h.item.history_type == '-' %} Deletado
+                            {% endif %}
+                        </span>
+                        <span class="ms-auto text-muted"> Usuário: {{ h.item.history_user|default:"Sistema" }}</span>
+                    </div>
+                </div>
+            </button>
         </h2>
         <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#historicoAccordion">
-        <div class="accordion-body">
-            {% if h.diff and h.diff.changes %}
-                <ul class="list-group list-group-flush">
-                    {% for change in h.diff.changes %}
-                    <li class="list-group-item">
-                        <strong>{{ change.field }}:</strong>
-                        <span class="text-danger">{{ change.old }}</span>
-                        →
-                        <span class="text-success">{{ change.new }}</span>
-                    </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p class="text-muted">Sem alterações (registro inicial ou sem comparação).</p>
-            {% endif %}
-        </div>
+            <div class="accordion-body">
+                {% if h.diff %}
+                    <ul class="list-group list-group-flush">
+                        {% for change in h.diff %}
+                        <li class="list-group-item d-flex align-items-center gap-2">
+                            <strong>{{ change.verbose_name }}:</strong>
+                            <div>
+                                <span class="text-danger">{{ change.old }}</span>
+                                <i class="bi bi-arrow-right mx-1"></i>
+                                <span class="text-success">{{ change.new }}</span>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">Sem alterações (registro inicial ou sem comparação).</p>
+                {% endif %}
+            </div>
         </div>
     </div>
-    </div>
-    {% endfor %}
+</div>
+{% endfor %}
+
+
+
 </div>
 
 <div class="container mt-3">

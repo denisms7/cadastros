@@ -252,6 +252,12 @@ def DeletePessoa(request, pk):
 from django.core.paginator import Paginator
 
 
+
+
+from django.shortcuts import get_object_or_404, render
+from django.core.paginator import Paginator
+from django.contrib.auth.decorators import user_passes_test
+
 @user_passes_test(lambda user: user.is_authenticated)
 def cadastro_historico(request, pk):
     cadastro = get_object_or_404(Cadastro, pk=pk)
@@ -260,14 +266,30 @@ def cadastro_historico(request, pk):
 
     historico_com_diffs = []
     for i, item in enumerate(historico):
-        diff = None
+        diff_verbose = None
         if i + 1 < len(historico):
             previous = historico[i + 1]
             try:
-                diff = item.diff_against(previous)
+                diff_obj = item.diff_against(previous)
+                
+                # Monta uma lista com verbose_name, old e new
+                diff_verbose = []
+                for change in diff_obj.changes:
+                    field_name = change.field
+                    try:
+                        verbose_name = cadastro._meta.get_field(field_name).verbose_name
+                    except Exception:
+                        verbose_name = field_name  # fallback caso o campo não exista mais
+                    diff_verbose.append({
+                        'field': field_name,
+                        'verbose_name': verbose_name,
+                        'old': change.old,
+                        'new': change.new
+                    })
             except AttributeError:
-                diff = None
-        historico_com_diffs.append({'item': item, 'diff': diff})
+                diff_verbose = None
+
+        historico_com_diffs.append({'item': item, 'diff': diff_verbose})
 
     paginator = Paginator(historico_com_diffs, paginate_by)
     page_number = request.GET.get("page")
@@ -277,6 +299,9 @@ def cadastro_historico(request, pk):
         'cadastro': cadastro,
         'page_obj': page_obj,
     })
+
+
+
 
 
 class Agenda(LoginRequiredMixin, ListView):
