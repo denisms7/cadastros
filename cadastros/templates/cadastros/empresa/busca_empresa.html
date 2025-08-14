@@ -63,12 +63,12 @@ PJ - Busca
                     <td>{{item.nome_fantasia}}</td>
                     <td>{{item.pessoa_juridica}}</td>
                     <td style="white-space: nowrap;">{{ item.cnpj|cnpj_format }}</td>
-                    <td style="height: 100%; white-space: nowrap;">
-                        <div>
-                            <a href="{% url 'empresa-edit' item.pk %}" title="Editar Registro" class="btn btn-primary btn-sm mt-1">
+                    <td>
+                        <div class="text-end">
+                            <a href="{% url 'empresa-edit' item.pk %}" title="Editar Registro" class="btn btn-primary btn-sm mb-1 mb-sm-0">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                            <button title="Apagar Registro" class="btn btn-danger btn-sm mt-1"  data-bs-toggle="modal" data-bs-target="#delete-{{item.pk}}">
+                            <button title="Apagar Registro" class="btn btn-danger btn-sm mb-1 mb-sm-0"  data-bs-toggle="modal" data-bs-target="#delete-{{item.pk}}">
                                 <i class="bi bi-trash3"></i> 
                             </button>
                         </div>
