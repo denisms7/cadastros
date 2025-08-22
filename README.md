@@ -83,7 +83,7 @@ python manage.py createsuperuser
 
 O sistema necessita de um usuario logado ou um usuario com ID/PK 1, para salvar o registro no banco de dados
 
-Configurar variavel INSTALLED_APPS acrescentando com os APPS e Libs baixo:
+Configurar variavel INSTALLED_APPS e MIDDLEWARE acrescentando com os APPS e Libs baixo:
 ```
 INSTALLED_APPS = [
     ...
