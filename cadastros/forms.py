@@ -159,7 +159,7 @@ class CadastroFormDetail(forms.ModelForm):
     class Meta:
         model = Cadastro
         fields = "__all__"
-        
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():

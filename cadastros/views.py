@@ -15,7 +15,7 @@ from .forms import FormCadastroPessoa, FormCadastroEmpresa
 from .forms import CadastroFormDetail
 
 
-class CadastroPessoaDetail(LoginRequiredMixin, DetailView):
+class Pf_DetailView(LoginRequiredMixin, DetailView):
     model = Cadastro
     template_name = 'cadastros/pessoa/cadastro_pessoa.html'
     context_object_name = 'cadastro'
@@ -28,7 +28,7 @@ class CadastroPessoaDetail(LoginRequiredMixin, DetailView):
         return context
 
 
-class CadastroEmpresaDetail(LoginRequiredMixin, DetailView):
+class Pj_DetailView(LoginRequiredMixin, DetailView):
     model = Cadastro
     template_name = 'cadastros/empresa/cadastro_empresa.html'
     context_object_name = 'cadastro'
@@ -41,7 +41,7 @@ class CadastroEmpresaDetail(LoginRequiredMixin, DetailView):
         return context
 
 
-class Agenda(LoginRequiredMixin, ListView):
+class Agenda_ListView(LoginRequiredMixin, ListView):
     model = Cadastro
     template_name = 'cadastros/agenda/agenda.html'
     paginate_by = 40
@@ -56,7 +56,7 @@ class Agenda(LoginRequiredMixin, ListView):
         return queryset.order_by('nome_fantasia', 'primeiro_nome')
 
 
-class BuscaPessoa(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class Pf_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     paginate_by = 20
     model = Cadastro
     template_name = 'cadastros/pessoa/busca_pessoa.html'
@@ -72,7 +72,7 @@ class BuscaPessoa(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return queryset
 
 
-class BuscaEmpresa(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class Pj_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     paginate_by = 20
     model = Cadastro
     template_name = 'cadastros/empresa/busca_empresa.html'
@@ -89,7 +89,7 @@ class BuscaEmpresa(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
 
 # Pessaoa
-class CadastroPessoa(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Cadastro
     form_class = FormCadastroPessoa
     template_name = 'cadastros/pessoa/cadastro_pessoa.html'
@@ -128,7 +128,7 @@ class CadastroPessoa(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         return self.form_invalid(self.get_form())
 
 
-class EditarPessoa(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class Pf_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Cadastro
     form_class = FormCadastroPessoa
     template_name = 'cadastros/pessoa/cadastro_pessoa.html'
@@ -165,7 +165,7 @@ class EditarPessoa(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
 
 # EMPRESA =====================================================================================================
-class CadastroEmpresa(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Cadastro
     form_class = FormCadastroEmpresa
     template_name = 'cadastros/empresa/cadastro_empresa.html'
@@ -203,7 +203,7 @@ class CadastroEmpresa(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         return self.form_invalid(self.get_form())
 
 
-class EditarEmpresa(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class Pj_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Cadastro
     form_class = FormCadastroEmpresa
     template_name = 'cadastros/empresa/cadastro_empresa.html'
@@ -232,7 +232,7 @@ class EditarEmpresa(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
 
 # Delete Empresa
-class EmpresaDeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
+class Pj_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
     success_url = reverse_lazy("empresa-busca")
     permission_required = 'cadastros.delete_cadastro'
 
@@ -251,7 +251,7 @@ class EmpresaDeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
 
 
 # Delete Pessoa
-class PessoaDeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
+class Pf_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
     success_url = reverse_lazy("pessoa-busca")
     permission_required = 'cadastros.delete_cadastro'
 
@@ -269,7 +269,7 @@ class PessoaDeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
         return redirect(self.success_url)
 
 
-class CadastroHistoricoView(LoginRequiredMixin, PermissionRequiredMixin, View):
+class Log_View(LoginRequiredMixin, PermissionRequiredMixin, View):
     paginate_by = 20
     template_name = "cadastros/historico.html"
     permission_required = 'cadastros.view_cadastro'
