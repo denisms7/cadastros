@@ -16,7 +16,7 @@ from .forms import FormCadastroPessoa, FormCadastroEmpresa
 
 class Agenda(LoginRequiredMixin, ListView):
     model = Cadastro
-    template_name = 'cadastros/agenda.html'
+    template_name = 'cadastros/agenda/agenda.html'
     paginate_by = 40
 
     def get_queryset(self):
