@@ -1,5 +1,5 @@
 from django.views import View
-from django.views.generic.list import ListView
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, render, get_object_or_404
@@ -12,6 +12,33 @@ from django.core.paginator import Paginator
 from .models import Cadastro
 from cadastros.utils import cpf_validate, cnpj_validate
 from .forms import FormCadastroPessoa, FormCadastroEmpresa
+from .forms import CadastroFormDetail
+
+
+class CadastroPessoaDetail(LoginRequiredMixin, DetailView):
+    model = Cadastro
+    template_name = 'cadastros/pessoa/cadastro_pessoa.html'
+    context_object_name = 'cadastro'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        obj = self.get_object()
+        context['form'] = CadastroFormDetail(instance=obj)
+        context["is_detail"] = True
+        return context
+
+
+class CadastroEmpresaDetail(LoginRequiredMixin, DetailView):
+    model = Cadastro
+    template_name = 'cadastros/empresa/cadastro_empresa.html'
+    context_object_name = 'cadastro'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        obj = self.get_object()
+        context['form'] = CadastroFormDetail(instance=obj)
+        context["is_detail"] = True
+        return context
 
 
 class Agenda(LoginRequiredMixin, ListView):

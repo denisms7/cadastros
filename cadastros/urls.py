@@ -2,20 +2,23 @@ from django.urls import path
 from .views import CadastroPessoa, EditarPessoa, BuscaPessoa, PessoaDeleteView
 from .views import CadastroEmpresa, EditarEmpresa, BuscaEmpresa, EmpresaDeleteView, Agenda
 from .views import CadastroHistoricoView
+from .views import CadastroPessoaDetail, CadastroEmpresaDetail
 
 
 urlpatterns = [
     # Pessoa
-    path('pf-loc/', BuscaPessoa.as_view(), name='pessoa-busca'),
-    path('pf-add/', CadastroPessoa.as_view(), name='pessoa-cadastro'),
-    path('pf-edit/<int:pk>/', EditarPessoa.as_view(), name='pessoa-edit'),
-    path('pf-del/<int:pk>/', PessoaDeleteView.as_view(), name='pessoa-delete'),
+    path('pf/', BuscaPessoa.as_view(), name='pessoa-busca'),
+    path('pf/add/', CadastroPessoa.as_view(), name='pessoa-cadastro'),
+    path('pf/<int:pk>/', CadastroPessoaDetail.as_view(), name='pessoa-detail'),
+    path('pf/<int:pk>/edit/', EditarPessoa.as_view(), name='pessoa-edit'),
+    path('pf/<int:pk>/del/', PessoaDeleteView.as_view(), name='pessoa-delete'),
     # Empresa
-    path('pj-loc/', BuscaEmpresa.as_view(), name='empresa-busca'),
-    path('pj-add/', CadastroEmpresa.as_view(), name='empresa-cadastro'),
-    path('pj-edit/<int:pk>/', EditarEmpresa.as_view(), name='empresa-edit'),
-    path('pj-del/<int:pk>/', EmpresaDeleteView.as_view(), name='empresa-delete'),
+    path('pj/', BuscaEmpresa.as_view(), name='empresa-busca'),
+    path('pj/add/', CadastroEmpresa.as_view(), name='empresa-cadastro'),
+    path('pj/<int:pk>/', CadastroEmpresaDetail.as_view(), name='empresa-detail'),
+    path('pj/<int:pk>/edit/', EditarEmpresa.as_view(), name='empresa-edit'),
+    path('pj/<int:pk>/del/', EmpresaDeleteView.as_view(), name='empresa-delete'),
     # Utilitarios
-    path('agenda-tel/', Agenda.as_view(), name='agenda-telefonica'),
+    path('agenda/', Agenda.as_view(), name='agenda-telefonica'),
     path('cadastro/<int:pk>/log/', CadastroHistoricoView.as_view(), name='log-cadastro'),
 ]

@@ -45,7 +45,6 @@ class FormCadastroEmpresa(forms.ModelForm):
             'numero',
             'complemento',
             'obs_endereco',
-
             'nome_razao_titular',
             'tipo_de_documento',
             'documento_titular',
@@ -154,3 +153,14 @@ class FormCadastroPessoa(forms.ModelForm):
             cleaned_data['n_banco'] = int(n_banco)
 
         return cleaned_data
+
+
+class CadastroFormDetail(forms.ModelForm):
+    class Meta:
+        model = Cadastro
+        fields = "__all__"
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['disabled'] = True
