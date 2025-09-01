@@ -4,6 +4,7 @@ import requests
 
 def cpf_validate(cpf: str) -> bool:
     TAMANHO_CPF = 11
+    cpf = cpf.replace('.', '').replace('-', '').replace('/', '')
     if len(cpf) != TAMANHO_CPF:
         return False
     if not cpf.isdigit():
@@ -21,6 +22,7 @@ def cpf_validate(cpf: str) -> bool:
 
 def cnpj_validate(cnpj: str) -> bool:
     LENGTH_CNPJ = 14
+    cnpj = cnpj.replace('.', '').replace('-', '').replace('/', '')
     if len(cnpj) != LENGTH_CNPJ:
         return False
     if not cnpj.isdigit():

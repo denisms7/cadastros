@@ -1,6 +1,8 @@
 from django import forms
 from .models import Cadastro
 from cadastros.utils import get_bank
+from django.core.exceptions import ValidationError
+from cadastros.utils import cpf_validate, cnpj_validate
 
 
 class Pj_ModelForm(forms.ModelForm):
@@ -63,12 +65,34 @@ class Pj_ModelForm(forms.ModelForm):
             'nascimento': forms.DateInput(format=("%Y-%m-%d")),
         }
 
-        def clean(self):
-            cleaned_data = super().clean()
-            n_banco = cleaned_data.get('n_banco')
-            if n_banco is not None:
-                cleaned_data['n_banco'] = int(n_banco)
-            return cleaned_data
+    def clean_cnpj(self):
+        cnpj = self.cleaned_data.get('cnpj')
+        if cnpj:
+            cnpj = cnpj.replace('.', '').replace('-', '').replace('/', '')
+            if not cnpj.isdigit() or len(cnpj) != 14:
+                raise ValidationError("CNPJ inválido")
+            if not cnpj_validate(cnpj):
+                raise ValidationError('CNPJ Inválido')
+            return cnpj
+        return cnpj
+
+    def clean_cep(self):
+        cep = self.cleaned_data.get('cep')
+        if cep:
+            cep = cep.replace('.', '').replace('-', '')
+            if len(cep) is not 8:
+                raise ValidationError('CEP Inválido')
+            return cep
+        return cep
+
+    def clean_n_banco(self):
+        n_banco = self.cleaned_data.get('n_banco')
+        if n_banco is not None:
+            try:
+                return int(n_banco)
+            except ValueError:
+                raise ValidationError("Número do banco inválido.")
+        return n_banco
 
 
 class Pf_ModelForm(forms.ModelForm):
@@ -144,14 +168,32 @@ class Pf_ModelForm(forms.ModelForm):
             'cnh_validade': forms.DateInput(format=("%Y-%m-%d")),
         }
 
-    def clean(self):
-        cleaned_data = super().clean()
-        n_banco = cleaned_data.get('n_banco')
+    def clean_cpf(self):
+        cpf = self.cleaned_data.get('cpf')
+        if cpf:
+            cpf = cpf.replace('.', '').replace('-', '')
+            if not cpf_validate(cpf):
+                raise ValidationError('CPF Inválido')
+            return cpf
+        return cpf
 
+    def clean_cep(self):
+        cep = self.cleaned_data.get('cep')
+        if cep:
+            cep = cep.replace('.', '').replace('-', '')
+            if len(cep) is not 8:
+                raise ValidationError('CEP Inválido')
+            return cep
+        return cep
+
+    def clean_n_banco(self):
+        n_banco = self.cleaned_data.get('n_banco')
         if n_banco is not None:
-            cleaned_data['n_banco'] = int(n_banco)
-
-        return cleaned_data
+            try:
+                return int(n_banco)
+            except ValueError:
+                raise ValidationError("Número do banco inválido.")
+        return n_banco
 
 
 class Detail_ModelForm(forms.ModelForm):

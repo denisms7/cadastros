@@ -10,7 +10,6 @@ from django.db.models import Q
 from django.db.models.deletion import ProtectedError, RestrictedError
 from django.core.paginator import Paginator
 from .models import Cadastro
-from cadastros.utils import cpf_validate, cnpj_validate
 from .forms import Detail_ModelForm, Pf_ModelForm, Pj_ModelForm
 
 
@@ -96,17 +95,6 @@ class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = 'cadastros.add_cadastro'
 
     def form_valid(self, form):
-        cpf = form.cleaned_data.get('cpf')
-        if len(cpf) > 1:
-            form.instance.cpf = cpf.replace('.', '').replace('-', '')
-
-        cep = form.cleaned_data.get('cep')
-        if cep is not None:
-            form.instance.cep = cep.replace('.', '').replace('-', '')
-
-        if not cpf_validate(form.instance.cpf):
-            messages.warning(self.request, f"O CPF {cpf} é inválido, O registro não foi salvo.")
-            return self.form_invalid(form)
 
         form.instance.tipo = 0
         form.instance.cadastrado_por = self.request.user
@@ -135,17 +123,6 @@ class Pf_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = 'cadastros.change_cadastro'
 
     def form_valid(self, form):
-        cpf = form.cleaned_data.get('cpf')
-        if cpf is not None:
-            form.instance.cpf = cpf.replace('.', '').replace('-', '')
-
-        cep = form.cleaned_data.get('cep')
-        if cep is not None:
-            form.instance.cep = cep.replace('.', '').replace('-', '')
-
-        if not cpf_validate(form.instance.cpf):
-            messages.warning(self.request, f"O CPF {cpf} é inválido, O registro não foi salvo.")
-            return self.form_invalid(form)
 
         try:
             url = super().form_valid(form)
@@ -172,16 +149,6 @@ class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = 'cadastros.add_cadastro'
 
     def form_valid(self, form):
-        cnpj = form.cleaned_data.get('cnpj')
-        cep = form.cleaned_data.get('cep')
-        if cnpj:
-            cnpj = cnpj.replace('.', '').replace('-', '').replace('/', '')
-            form.instance.cnpj = cnpj
-            if not cnpj_validate(cnpj):
-                messages.warning(self.request, f"O CNPJ {cnpj} é inválido, O registro não foi salvo.")
-                return self.form_invalid(form)
-        if cep:
-            form.instance.cep = cep.replace('.', '').replace('-', '')
 
         form.instance.tipo = 1
         form.instance.cadastrado_por = self.request.user
@@ -210,21 +177,7 @@ class Pj_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = 'cadastros.change_cadastro'
 
     def form_valid(self, form):
-        cnpj = form.cleaned_data.get('cnpj')
-        cep = form.cleaned_data.get('cep')
-        if cnpj:
-            cnpj = cnpj.replace('.', '').replace('-', '').replace('/', '')
-            form.instance.cnpj = cnpj
-            if not cnpj_validate(cnpj):
-                messages.warning(self.request, f"O CNPJ {cnpj} é inválido, O registro não foi salvo.")
-                return self.form_invalid(form)
-        if cep:
-            form.instance.cep = cep.replace('.', '').replace('-', '')
-
-        if not cnpj_validate(cnpj):
-            messages.warning(self.request, f"O CNPJ {cnpj} é inválido, O registro não foi salvo.")
-            return self.form_invalid(form)
-
+        
         url = super().form_valid(form)
         messages.success(self.request, "Registro alterado com sucesso.")
         return url

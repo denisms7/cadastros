@@ -10,32 +10,31 @@
         <label for="div-cnpj" class="form-label">{{ form.cnpj.label }}: {% if form.cnpj.field.required %}<span class="text-danger">*</span>{% endif %}</label>
         <div id="div-cnpj" class="w-100">
 
-
-            <div class="input-group mb-3">
-                {% render_field form.cnpj class="form-control"  onkeyup="validarCNPJ_x()"  autocomplete="false" placeholder="00.000.000/0000-00" data-mask="00.000.000/0000-00" %}
             <div>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#Modal-CNPJ" class="btn btn-outline-primary ms-1" title="Buscar dados do CNPJ" {% if is_detail %}disabled{% endif %}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
-                </button>
+                <div class="input-group mb-3">
+                    {% render_field form.cnpj class="form-control"  onkeyup="validarCNPJ_x()"  autocomplete="false" placeholder="00.000.000/0000-00" data-mask="00.000.000/0000-00" %}
+                <div>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#Modal-CNPJ" class="btn btn-outline-primary ms-1" title="Buscar dados do CNPJ" {% if is_detail %}disabled{% endif %}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                        </svg>
+                    </button>
+                </div>
+                
             </div>
-
-            {% for error in form.cnpj.errors %}
-                <span class="text-danger">{{ error }}</span>
-            {% endfor %}
-            <div class="invalid-feedback">
-                Este campo é obrigatório
+                {% for error in form.cnpj.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+                <div class="invalid-feedback">
+                    Este campo é obrigatório
+                </div>
+                <div class="invalid-feedback" id="cnpjlog">
+                    CNPJ invalido
+                </div>
             </div>
-            <div class="invalid-feedback" id="cnpjlog">
-                CNPJ invalido
-            </div>
-
-            </div>
-
         </div>
-
     </div>
+
     <div class="col-sm-12 col-md-4 mb-3">
         <label for="{{ form.is_estadual.id_for_label }}" class="form-label">{{ form.is_estadual.label }}: {% if form.is_estadual.field.required %}<span class="text-danger">*</span>{% endif %}</label>
         {% render_field form.is_estadual class="form-control" %}
