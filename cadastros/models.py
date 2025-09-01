@@ -53,17 +53,18 @@ class Cadastro(models.Model):
     ]
 
     TIPO_DOCUMENTO_CHOICES = [
-        (0, _('CPF')),
-        (1, _('CNPJ')),
+        (0, 'CPF'),
+        (1, 'CNPJ'),
     ]
 
     CHOICES_CATEGORIA_CNH = [
-        (1, _('A')),
-        (2, _('B')),
-        (3, _('AB')),
-        (4, _('C')),
-        (5, _('D')),
-        (6, _('E')),
+        ('ACC', 'ACC'),
+        ('A', 'A'),
+        ('B', 'B'),
+        ('AB', 'AB'),
+        ('C', 'C'),
+        ('D', 'D'),
+        ('E', 'E'),
     ]
 
     TIPO_CHOICES = [
@@ -111,7 +112,7 @@ class Cadastro(models.Model):
     cnh_n = models.CharField(max_length=50, verbose_name=_('CNH'), null=True, blank=True)
     cnh_emissao = models.DateField(verbose_name=_('Emissão'), null=True, blank=True)
     cnh_validade = models.DateField(verbose_name=_('Validade'), null=True, blank=True)
-    cnh_categoria = models.PositiveSmallIntegerField(choices=CHOICES_CATEGORIA_CNH, verbose_name=_('Categoria'), null=True, blank=True)
+    cnh_categoria = models.CharField(max_length=5, choices=CHOICES_CATEGORIA_CNH, verbose_name=_('Categoria'), null=True, blank=True)
     # =======================================================================================
     # E-mail
     email_1 = models.EmailField(max_length=150, verbose_name=_('E-mail'), null=True, blank=True)
@@ -161,4 +162,4 @@ class Cadastro(models.Model):
             cnpj = str(self.cnpj).zfill(14).replace('.', '').replace('/', '').replace('-', '')
             return f'{self.nome_fantasia} - {cnpj[0:2]}.{cnpj[2:5]}.{cnpj[5:8]}/{cnpj[8:12]}-{cnpj[12:14]}'
         else:
-            return 'Cadastro sem Identificação'
+            return _('Cadastro sem Identificação')
