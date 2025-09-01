@@ -170,6 +170,7 @@ class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
             messages.error(self.request, "Erro. Salvamento cancelado.")
         return self.form_invalid(self.get_form())
 
+
 # Editar Empresa
 class Pj_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Cadastro
