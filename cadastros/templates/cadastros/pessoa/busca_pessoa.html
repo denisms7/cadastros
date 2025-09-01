@@ -79,48 +79,7 @@ PF - Busca
                         </div>
                     </td>
                 </tr>
-
-
-                <div class="modal fade modal-lg" id="delete-{{item.pk}}" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">
-                                <i class="bi bi-trash3"></i>
-                                Apagar
-                            </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>
-                                Deseja excluir o registro?
-                            </p>
-                            <p>
-                                <b>Nome Completo: </b>{{ item.primeiro_nome }} {{ item.ultimo_nome }}<br>
-                                <b>CPF: </b>{{ item.cpf|cpf_format }}
-                            </p>
-                            <p>
-                                <b>Cadastrador Por: </b>{{ item.cadastrado_por }}<br>
-                                <b>Data de Cadastro: </b>{{ item.cadastrado_em }}
-                            </p>
-                            <p>* Esta ação não poderá ser desfeita</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                                <i class="bi bi-x-lg"></i>
-                                Fechar
-                            </button>
-                            <form method="post" action="{% url 'pessoa-delete' item.pk %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="bi bi-check-lg"></i>
-                                    Confirmar
-                                </button>
-                            </form>
-                        </div>
-                        </div>
-                    </div>
-                </div>
+                    {% include "cadastros\_modal_delete.html" %}
                 {% empty %}
                 <tr>
                     <td colspan="5" class="text-center">
