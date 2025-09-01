@@ -5,20 +5,20 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import user_passes_test
-from datetime import datetime
 from django.contrib import messages
-from .models import Cadastro
-from django.db.models import Q
 from django.db import IntegrityError
-from .forms import FormCadastroPessoa, FormCadastroEmpresa
+from django.db.models import Q
+from django.db.models.deletion import ProtectedError, RestrictedError
 from django.core.paginator import Paginator
+from .models import Cadastro
 from cadastros.utils import cpf_validate, cnpj_validate
+from .forms import FormCadastroPessoa, FormCadastroEmpresa
 
 
 class Agenda(LoginRequiredMixin, ListView):
     model = Cadastro
     template_name = 'cadastros/agenda.html'
-    paginate_by = 20
+    paginate_by = 40
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -37,7 +37,7 @@ class BuscaPessoa(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'cadastros.view_cadastro'
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(tipo=0)  # Filtra apenas tipo=0
+        queryset = super().get_queryset().filter(tipo=0)  # Filtra apenas pessoa
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
@@ -46,6 +46,23 @@ class BuscaPessoa(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return queryset
 
 
+class BuscaEmpresa(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    paginate_by = 20
+    model = Cadastro
+    template_name = 'cadastros/empresa/busca_empresa.html'
+    permission_required = 'cadastros.view_cadastro'
+
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(tipo=1)  # Filtra apenas empresas
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(
+                Q(nome_fantasia__icontains=query) | Q(cnpj__icontains=query) | Q(pessoa_juridica__icontains=query)
+            )
+        return queryset
+
+
+# Pessaoa
 class CadastroPessoa(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Cadastro
     form_class = FormCadastroPessoa
@@ -56,21 +73,18 @@ class CadastroPessoa(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     def form_valid(self, form):
         cpf = form.cleaned_data.get('cpf')
         if len(cpf) > 1:
-            cpf = cpf.replace('.', '').replace('-', '')
-            form.instance.cpf = cpf
+            form.instance.cpf = cpf.replace('.', '').replace('-', '')
 
         cep = form.cleaned_data.get('cep')
         if cep is not None:
             form.instance.cep = cep.replace('.', '').replace('-', '')
 
-        if not cpf_validate(cpf):
+        if not cpf_validate(form.instance.cpf):
             messages.warning(self.request, f"O CPF {cpf} é inválido, O registro não foi salvo.")
             return self.form_invalid(form)
 
         form.instance.tipo = 0
         form.instance.cadastrado_por = self.request.user
-        form.instance.ultima_att = self.request.user.username
-        form.instance.data_att = datetime.now()
 
         try:
             url = super().form_valid(form)
@@ -84,7 +98,7 @@ class CadastroPessoa(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         if "cpf" in str(e):
             messages.warning(self.request, "Cadastro com CPF Duplicado. o registro nao foi salvo")
         else:
-            messages.warning(self.request, "Erro. Salvamento cancelado")
+            messages.error(self.request, "Erro. Salvamento cancelado")
         return self.form_invalid(self.get_form())
 
 
@@ -104,12 +118,9 @@ class EditarPessoa(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         if cep is not None:
             form.instance.cep = cep.replace('.', '').replace('-', '')
 
-        if not cpf_validate(cpf):
+        if not cpf_validate(form.instance.cpf):
             messages.warning(self.request, f"O CPF {cpf} é inválido, O registro não foi salvo.")
             return self.form_invalid(form)
-
-        form.instance.ultima_att = self.request.user.username
-        form.instance.data_att = datetime.now()
 
         try:
             url = super().form_valid(form)
@@ -128,22 +139,6 @@ class EditarPessoa(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
 
 # EMPRESA =====================================================================================================
-class BuscaEmpresa(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    paginate_by = 20
-    model = Cadastro
-    template_name = 'cadastros/empresa/busca_empresa.html'
-    permission_required = 'cadastros.view_cadastro'
-
-    def get_queryset(self):
-        queryset = super().get_queryset().filter(tipo=1)  # Filtra apenas empresas
-        query = self.request.GET.get('q')
-        if query:
-            queryset = queryset.filter(
-                Q(nome_fantasia__icontains=query) | Q(cnpj__icontains=query) | Q(pessoa_juridica__icontains=query)
-            )
-        return queryset
-
-
 class CadastroEmpresa(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Cadastro
     form_class = FormCadastroEmpresa
@@ -165,8 +160,6 @@ class CadastroEmpresa(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
         form.instance.tipo = 1
         form.instance.cadastrado_por = self.request.user
-        form.instance.ultima_att = self.request.user.username
-        form.instance.data_att = datetime.now()
 
         try:
             url = super().form_valid(form)
@@ -207,9 +200,6 @@ class EditarEmpresa(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
             messages.warning(self.request, f"O CNPJ {cnpj} é inválido, O registro não foi salvo.")
             return self.form_invalid(form)
 
-        form.instance.ultima_att = self.request.user.username
-        form.instance.data_att = datetime.now()
-
         url = super().form_valid(form)
         messages.success(self.request, "Registro alterado com sucesso.")
         return url
@@ -224,8 +214,21 @@ class EmpresaDeleteView(LoginRequiredMixin, View):
         try:
             registro.delete()
             messages.success(request, "Cadastro deletado")
+        except ProtectedError:
+            messages.warning(
+                request,
+                "Não é possível deletar este registro pois existem outros dados vinculados."
+            )
+        except RestrictedError:
+            messages.warning(
+                request,
+                "Não é possível deletar este registro devido a vínculos restritos."
+            )
         except Exception:
-            messages.warning(request, "Não é possível deletar este registro")
+            messages.warning(
+                request,
+                "Ocorreu um erro ao tentar deletar este registro."
+            )
         return redirect(self.success_url)
 
 
@@ -238,8 +241,21 @@ class PessoaDeleteView(LoginRequiredMixin, View):
         try:
             registro.delete()
             messages.success(request, "Cadastro deletado")
+        except ProtectedError:
+            messages.warning(
+                request,
+                "Não é possível deletar este registro pois existem outros dados vinculados."
+            )
+        except RestrictedError:
+            messages.warning(
+                request,
+                "Não é possível deletar este registro devido a vínculos restritos."
+            )
         except Exception:
-            messages.warning(request, "Não é possível deletar este registro")
+            messages.warning(
+                request,
+                "Ocorreu um erro ao tentar deletar este registro."
+            )
         return redirect(self.success_url)
 
 

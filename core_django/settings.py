@@ -1,14 +1,14 @@
-from pathlib import Path
 import os
-from django.contrib.messages import constants
+from pathlib import Path
+from django.contrib.messages import constants as messages
 
 
 MESSAGE_TAGS = {
-    constants.DEBUG: 'alert-primary',
-    constants.ERROR: 'alert-danger',
-    constants.WARNING: 'alert-warning',
-    constants.SUCCESS: 'alert-success',
-    constants.INFO: 'alert-info ',
+    messages.DEBUG: 'secondary',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger'
 }
 
 
