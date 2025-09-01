@@ -92,7 +92,7 @@ class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Cadastro
     form_class = Pf_ModelForm
     template_name = 'cadastros/pessoa/cadastro_pessoa.html'
-    success_url = reverse_lazy('pessoa-busca')
+    success_url = reverse_lazy('pessoa')
     permission_required = 'cadastros.add_cadastro'
 
     def form_valid(self, form):
@@ -131,7 +131,7 @@ class Pf_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Cadastro
     form_class = Pf_ModelForm
     template_name = 'cadastros/pessoa/cadastro_pessoa.html'
-    success_url = reverse_lazy('pessoa-busca')
+    success_url = reverse_lazy('pessoa')
     permission_required = 'cadastros.change_cadastro'
 
     def form_valid(self, form):
@@ -168,7 +168,7 @@ class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Cadastro
     form_class = Pj_ModelForm
     template_name = 'cadastros/empresa/cadastro_empresa.html'
-    success_url = reverse_lazy('empresa-busca')
+    success_url = reverse_lazy('empresa')
     permission_required = 'cadastros.add_cadastro'
 
     def form_valid(self, form):
@@ -206,7 +206,7 @@ class Pj_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Cadastro
     form_class = Pj_ModelForm
     template_name = 'cadastros/empresa/cadastro_empresa.html'
-    success_url = reverse_lazy('empresa-busca')
+    success_url = reverse_lazy('empresa')
     permission_required = 'cadastros.change_cadastro'
 
     def form_valid(self, form):
@@ -232,7 +232,7 @@ class Pj_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
 # Delete Empresa
 class Pj_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
-    success_url = reverse_lazy("empresa-busca")
+    success_url = reverse_lazy("empresa")
     permission_required = 'cadastros.delete_cadastro'
 
     def post(self, request, pk, *args, **kwargs):
@@ -251,7 +251,7 @@ class Pj_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
 
 # Delete Pessoa
 class Pf_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
-    success_url = reverse_lazy("pessoa-busca")
+    success_url = reverse_lazy("pessoa")
     permission_required = 'cadastros.delete_cadastro'
 
     def post(self, request, pk, *args, **kwargs):
