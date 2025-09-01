@@ -11,8 +11,7 @@ from django.db.models.deletion import ProtectedError, RestrictedError
 from django.core.paginator import Paginator
 from .models import Cadastro
 from cadastros.utils import cpf_validate, cnpj_validate
-from .forms import FormCadastroPessoa, FormCadastroEmpresa
-from .forms import CadastroFormDetail
+from .forms import Detail_ModelForm, Pf_ModelForm, Pj_ModelForm
 
 
 class Pf_DetailView(LoginRequiredMixin, DetailView):
@@ -23,7 +22,7 @@ class Pf_DetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         obj = self.get_object()
-        context['form'] = CadastroFormDetail(instance=obj)
+        context['form'] = Detail_ModelForm(instance=obj)
         context["is_detail"] = True
         return context
 
@@ -36,7 +35,7 @@ class Pj_DetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         obj = self.get_object()
-        context['form'] = CadastroFormDetail(instance=obj)
+        context['form'] = Detail_ModelForm(instance=obj)
         context["is_detail"] = True
         return context
 
@@ -91,7 +90,7 @@ class Pj_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 # Pessaoa
 class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Cadastro
-    form_class = FormCadastroPessoa
+    form_class = Pf_ModelForm
     template_name = 'cadastros/pessoa/cadastro_pessoa.html'
     success_url = reverse_lazy('pessoa-busca')
     permission_required = 'cadastros.add_cadastro'
@@ -130,7 +129,7 @@ class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 class Pf_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Cadastro
-    form_class = FormCadastroPessoa
+    form_class = Pf_ModelForm
     template_name = 'cadastros/pessoa/cadastro_pessoa.html'
     success_url = reverse_lazy('pessoa-busca')
     permission_required = 'cadastros.change_cadastro'
@@ -167,7 +166,7 @@ class Pf_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 # EMPRESA =====================================================================================================
 class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Cadastro
-    form_class = FormCadastroEmpresa
+    form_class = Pj_ModelForm
     template_name = 'cadastros/empresa/cadastro_empresa.html'
     success_url = reverse_lazy('empresa-busca')
     permission_required = 'cadastros.add_cadastro'
@@ -205,7 +204,7 @@ class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 class Pj_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Cadastro
-    form_class = FormCadastroEmpresa
+    form_class = Pj_ModelForm
     template_name = 'cadastros/empresa/cadastro_empresa.html'
     success_url = reverse_lazy('empresa-busca')
     permission_required = 'cadastros.change_cadastro'

@@ -1,10 +1,10 @@
 from django import forms
 from .models import Cadastro
-from cadastros.utils import get_bancos_choices
+from cadastros.utils import get_bank
 
 
-class FormCadastroEmpresa(forms.ModelForm):
-    n_banco = forms.ChoiceField(choices=get_bancos_choices(), required=False)
+class Pj_ModelForm(forms.ModelForm):
+    n_banco = forms.ChoiceField(choices=get_bank(), required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -71,9 +71,9 @@ class FormCadastroEmpresa(forms.ModelForm):
             return cleaned_data
 
 
-class FormCadastroPessoa(forms.ModelForm):
+class Pf_ModelForm(forms.ModelForm):
 
-    n_banco = forms.ChoiceField(choices=get_bancos_choices(), required=False)
+    n_banco = forms.ChoiceField(choices=get_bank(), required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -155,7 +155,7 @@ class FormCadastroPessoa(forms.ModelForm):
         return cleaned_data
 
 
-class CadastroFormDetail(forms.ModelForm):
+class Detail_ModelForm(forms.ModelForm):
     class Meta:
         model = Cadastro
         fields = "__all__"

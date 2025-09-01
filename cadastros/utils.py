@@ -36,7 +36,7 @@ def cnpj_validate(cnpj: str) -> bool:
     return True
 
 
-def get_bancos_choices():
+def get_bank():
     url = 'https://brasilapi.com.br/api/banks/v1'
     try:
         response = requests.get(url)
