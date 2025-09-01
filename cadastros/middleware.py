@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.conf import settings
-import time
+
 
 class AutoLoginMiddleware:
     """
@@ -25,16 +25,4 @@ class AutoLoginMiddleware:
                 pass
 
         response = self.get_response(request)
-        return response
-
-
-class TempoRespostaMiddleware:
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        inicio = time.time()
-        response = self.get_response(request)
-        duracao = time.time() - inicio
-        print(f'Requisição {request.path} levou {duracao:.3f} segundos')
         return response

@@ -1,20 +1,7 @@
 from django import forms
 from .models import Cadastro
-import requests
+from cadastros.utils import get_bancos_choices
 
-
-def get_bancos_choices():
-    url = 'https://brasilapi.com.br/api/banks/v1'
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-        data = response.json()
-    except (requests.exceptions.RequestException, ValueError):
-        raise print('Erro ao buscar bancos.')
-    else:
-        bancos = [(bank['code'], f"{bank['code']} - {bank['name']}") for bank in data if bank['code']]
-        bancos.sort()
-        return [(0,'---------')] + bancos
 
 class FormCadastroEmpresa(forms.ModelForm):
     n_banco = forms.ChoiceField(choices=get_bancos_choices(), required=False)
@@ -84,9 +71,10 @@ class FormCadastroEmpresa(forms.ModelForm):
                 cleaned_data['n_banco'] = int(n_banco)
             return cleaned_data
 
-class FormCadastroPessoa(forms.ModelForm):
-    n_banco = forms.ChoiceField(choices=get_bancos_choices(), required=False)
 
+class FormCadastroPessoa(forms.ModelForm):
+
+    n_banco = forms.ChoiceField(choices=get_bancos_choices(), required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

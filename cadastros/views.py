@@ -1,32 +1,33 @@
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views import View
 from django.views.generic.list import ListView
-from itertools import cycle
+from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import user_passes_test
-from django.views.decorators.http import require_POST
-from django.views.decorators.csrf import csrf_protect
 from datetime import datetime
 from django.contrib import messages
-from django.contrib.messages import constants
-
 from .models import Cadastro
-from .forms import FormCadastroPessoa, FormCadastroEmpresa
 from django.db.models import Q
 from django.db import IntegrityError
+from .forms import FormCadastroPessoa, FormCadastroEmpresa
+from django.core.paginator import Paginator
+from cadastros.utils import cpf_validate, cnpj_validate
 
 
-MESSAGE_TAGS = {
-    constants.DEBUG: 'alert-primary',
-    constants.ERROR: 'alert-danger',
-    constants.WARNING: 'alert-warning',
-    constants.SUCCESS: 'alert-success',
-    constants.INFO: 'alert-info ',
-}
+class Agenda(LoginRequiredMixin, ListView):
+    model = Cadastro
+    template_name = 'cadastros/agenda.html'
+    paginate_by = 20
 
-# messages.add_message(request, constants.ERROR, 'Preencha todos os campos')
-
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(
+                Q(primeiro_nome__icontains=query) | Q(ultimo_nome__icontains=query) | Q(nome_fantasia__icontains=query) | Q(ultimo_nome__icontains=query)
+            )
+        return queryset
 
 
 class BuscaPessoa(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -40,9 +41,7 @@ class BuscaPessoa(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
-                Q(primeiro_nome__icontains=query) |
-                Q(cpf__icontains=query) |
-                Q(ultimo_nome__icontains=query)
+                Q(primeiro_nome__icontains=query) | Q(cpf__icontains=query) | Q(ultimo_nome__icontains=query)
             )
         return queryset
 
@@ -58,12 +57,11 @@ class CadastroPessoa(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         cpf = form.cleaned_data.get('cpf')
         if len(cpf) > 1:
             cpf = cpf.replace('.', '').replace('-', '')
-            form.instance.cpf = cpf 
+            form.instance.cpf = cpf
 
         cep = form.cleaned_data.get('cep')
-        if cep != None:
-            cep = cep.replace('.', '').replace('-', '')
-            form.instance.cep = cep 
+        if cep is not None:
+            form.instance.cep = cep.replace('.', '').replace('-', '')
 
         if not cpf_validate(cpf):
             messages.warning(self.request, f"O CPF {cpf} é inválido, O registro não foi salvo.")
@@ -99,22 +97,20 @@ class EditarPessoa(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         cpf = form.cleaned_data.get('cpf')
-        if cpf != None:
-            cpf = cpf.replace('.', '').replace('-', '')
-            form.instance.cpf = cpf 
+        if cpf is not None:
+            form.instance.cpf = cpf.replace('.', '').replace('-', '')
 
         cep = form.cleaned_data.get('cep')
-        if cep != None:
-            cep = cep.replace('.', '').replace('-', '')
-            form.instance.cep = cep 
-        
+        if cep is not None:
+            form.instance.cep = cep.replace('.', '').replace('-', '')
+
         if not cpf_validate(cpf):
             messages.warning(self.request, f"O CPF {cpf} é inválido, O registro não foi salvo.")
             return self.form_invalid(form)
 
         form.instance.ultima_att = self.request.user.username
         form.instance.data_att = datetime.now()
-        
+
         try:
             url = super().form_valid(form)
         except IntegrityError as e:
@@ -143,9 +139,7 @@ class BuscaEmpresa(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
-                Q(nome_fantasia__icontains=query) |
-                Q(cnpj__icontains=query) |
-                Q(pessoa_juridica__icontains=query)
+                Q(nome_fantasia__icontains=query) | Q(cnpj__icontains=query) | Q(pessoa_juridica__icontains=query)
             )
         return queryset
 
@@ -161,14 +155,13 @@ class CadastroEmpresa(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         cnpj = form.cleaned_data.get('cnpj')
         cep = form.cleaned_data.get('cep')
         if cnpj:
-            cnpj = cnpj.replace('.', '').replace('-', '').replace('/', '') 
-            form.instance.cnpj = cnpj 
+            cnpj = cnpj.replace('.', '').replace('-', '').replace('/', '')
+            form.instance.cnpj = cnpj
             if not cnpj_validate(cnpj):
                 messages.warning(self.request, f"O CNPJ {cnpj} é inválido, O registro não foi salvo.")
                 return self.form_invalid(form)
         if cep:
-            cep = cep.replace('.', '').replace('-', '')
-            form.instance.cep = cep 
+            form.instance.cep = cep.replace('.', '').replace('-', '')
 
         form.instance.tipo = 1
         form.instance.cadastrado_por = self.request.user
@@ -202,14 +195,13 @@ class EditarEmpresa(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         cnpj = form.cleaned_data.get('cnpj')
         cep = form.cleaned_data.get('cep')
         if cnpj:
-            cnpj = cnpj.replace('.', '').replace('-', '').replace('/', '') 
-            form.instance.cnpj = cnpj 
+            cnpj = cnpj.replace('.', '').replace('-', '').replace('/', '')
+            form.instance.cnpj = cnpj
             if not cnpj_validate(cnpj):
                 messages.warning(self.request, f"O CNPJ {cnpj} é inválido, O registro não foi salvo.")
                 return self.form_invalid(form)
         if cep:
-            cep = cep.replace('.', '').replace('-', '')
-            form.instance.cep = cep 
+            form.instance.cep = cep.replace('.', '').replace('-', '')
 
         if not cnpj_validate(cnpj):
             messages.warning(self.request, f"O CNPJ {cnpj} é inválido, O registro não foi salvo.")
@@ -222,41 +214,34 @@ class EditarEmpresa(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         messages.success(self.request, "Registro alterado com sucesso.")
         return url
 
+
 # Delete Empresa
-@csrf_protect
-@require_POST
-@user_passes_test(lambda user: user.is_authenticated)
-def DeleteEmpresa(request, pk):
-    registro = get_object_or_404(Cadastro, id=pk)
-    try:
-        registro.delete()
-        messages.success(request, 'Cadastro deletado')
-    except:
-        messages.warning(request, 'Não é possível deletar este registro')
-    return redirect('empresa-busca')
+class EmpresaDeleteView(LoginRequiredMixin, View):
+    success_url = reverse_lazy("empresa-busca")
+
+    def post(self, request, pk, *args, **kwargs):
+        registro = get_object_or_404(Cadastro, id=pk)
+        try:
+            registro.delete()
+            messages.success(request, "Cadastro deletado")
+        except Exception:
+            messages.warning(request, "Não é possível deletar este registro")
+        return redirect(self.success_url)
+
 
 # Delete Pessoa
-@csrf_protect
-@require_POST
-@user_passes_test(lambda user: user.is_authenticated)
-def DeletePessoa(request, pk):
-    try:
-        registro = Cadastro.objects.get(id=pk)
-        registro.delete()
-        messages.success(request, 'Cadastro deletado')
-        return redirect('pessoa-busca')
-    except:
-        messages.warning(request, 'Não é possível deletar este registro')
-        return redirect('pessoa-busca')
+class PessoaDeleteView(LoginRequiredMixin, View):
+    success_url = reverse_lazy("pessoa-busca")
 
-from django.core.paginator import Paginator
+    def post(self, request, pk, *args, **kwargs):
+        registro = get_object_or_404(Cadastro, id=pk)
+        try:
+            registro.delete()
+            messages.success(request, "Cadastro deletado")
+        except Exception:
+            messages.warning(request, "Não é possível deletar este registro")
+        return redirect(self.success_url)
 
-
-
-
-from django.shortcuts import get_object_or_404, render
-from django.core.paginator import Paginator
-from django.contrib.auth.decorators import user_passes_test
 
 @user_passes_test(lambda user: user.is_authenticated)
 def cadastro_historico(request, pk):
@@ -271,7 +256,6 @@ def cadastro_historico(request, pk):
             previous = historico[i + 1]
             try:
                 diff_obj = item.diff_against(previous)
-                
                 # Monta uma lista com verbose_name, old e new
                 diff_verbose = []
                 for change in diff_obj.changes:
@@ -299,59 +283,3 @@ def cadastro_historico(request, pk):
         'cadastro': cadastro,
         'page_obj': page_obj,
     })
-
-
-
-
-
-class Agenda(LoginRequiredMixin, ListView):
-    model = Cadastro 
-    template_name = 'cadastros/agenda.html'
-    paginate_by = 20
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        query = self.request.GET.get('q')
-        if query:
-            queryset = queryset.filter(
-                Q(primeiro_nome__icontains=query) | Q(ultimo_nome__icontains=query) | 
-                Q(nome_fantasia__icontains=query) | Q(ultimo_nome__icontains=query)
-            )
-        return queryset
-    
-
-
-
-
-def cpf_validate(cpf: str) -> bool:
-    TAMANHO_CPF = 11
-    if len(cpf) != TAMANHO_CPF:
-        return False
-    if not cpf.isdigit():
-        return False
-    if cpf in (c * TAMANHO_CPF for c in "1234567890"):
-        return False
-    cpf_reverso = cpf[::-1]
-    for i in range(2, 0, -1):
-        cpf_enumerado = enumerate(cpf_reverso[i:], start=2)
-        dv_calculado = sum(map(lambda x: int(x[1]) * x[0], cpf_enumerado)) * 10 % 11
-        if cpf_reverso[i - 1:i] != str(dv_calculado % 10):
-            return False
-    return True
-    
-
-def cnpj_validate(cnpj: str) -> bool:
-    LENGTH_CNPJ = 14
-    if len(cnpj) != LENGTH_CNPJ:
-        return False
-    if not cnpj.isdigit():
-        return False
-    if cnpj in (c * LENGTH_CNPJ for c in "1234567890"):
-        return False
-    cnpj_r = cnpj[::-1]
-    for i in range(2, 0, -1):
-        cnpj_enum = zip(cycle(range(2, 10)), cnpj_r[i:])
-        dv = sum(map(lambda x: int(x[1]) * x[0], cnpj_enum)) * 10 % 11
-        if cnpj_r[i - 1:i] != str(dv % 10):
-            return False
-    return True
-

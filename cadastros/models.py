@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from simple_history.models import HistoricalRecords
 
+
 class Cadastro(models.Model):
     SEXO_CHOICES = [
         ('M', _('Masculino')),
@@ -75,7 +76,6 @@ class Cadastro(models.Model):
     status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, verbose_name=_('Status do Cadastro'), default=1)
     cadastrado_em = models.DateTimeField(auto_now_add=True, verbose_name=_('Data de Cadastro'))
     cadastrado_por = models.ForeignKey(User, default=1, on_delete=models.PROTECT, verbose_name=_('Cadastrado por'))
-    
     # Dados da Empresa
     pessoa_juridica = models.CharField(max_length=200, verbose_name=_('Razão Social'), null=True, blank=True)
     nome_fantasia = models.CharField(max_length=200, verbose_name=_('Nome Fantasia'), null=True, blank=True)
@@ -84,10 +84,9 @@ class Cadastro(models.Model):
     cnpj = models.CharField(max_length=18, unique=True, verbose_name=_('CNPJ'), null=True, blank=True)
     cnpj_situacao = models.CharField(max_length=200, verbose_name=_('Situação'), null=True, blank=True)
     cnpj_porte = models.CharField(max_length=200, verbose_name=_('Porte de Empresa'), null=True, blank=True)
-    cnpj_data_abertura = models.DateField(verbose_name=_('Data de Abertura'), null=True, blank=True) 
+    cnpj_data_abertura = models.DateField(verbose_name=_('Data de Abertura'), null=True, blank=True)
     cnpj_tipo = models.CharField(max_length=200, verbose_name=_('Tipo'), null=True, blank=True)
     cnpj_atividade_principal = models.TextField(max_length=2000, verbose_name=_('Atividade Principal'), null=True, blank=True)
-    
     # Dados Pessoais
     primeiro_nome = models.CharField(max_length=50, verbose_name=_('Nome'), null=True, blank=True)
     ultimo_nome = models.CharField(max_length=150, verbose_name=_('Sobrenome'), null=True, blank=True)
@@ -113,7 +112,6 @@ class Cadastro(models.Model):
     cnh_emissao = models.DateField(verbose_name=_('Emissão'), null=True, blank=True)
     cnh_validade = models.DateField(verbose_name=_('Validade'), null=True, blank=True)
     cnh_categoria = models.PositiveSmallIntegerField(choices=CHOICES_CATEGORIA_CNH, verbose_name=_('Categoria'), null=True, blank=True)
-    
     # =======================================================================================
     # E-mail
     email_1 = models.EmailField(max_length=150, verbose_name=_('E-mail'), null=True, blank=True)
@@ -148,7 +146,6 @@ class Cadastro(models.Model):
         'Complemento'), null=True, blank=True)
     obs_endereco = models.TextField(
         max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
-
     # Banco
     nome_razao_titular = models.CharField(max_length=50, verbose_name=_('Nome/Razão'), null=True, blank=True)
     tipo_de_documento = models.PositiveSmallIntegerField(choices=TIPO_DOCUMENTO_CHOICES, verbose_name=_('Tipo de Documento'), null=True, blank=True)
@@ -162,7 +159,7 @@ class Cadastro(models.Model):
     pix_2 = models.CharField(max_length=250, verbose_name=_('Chave PIX'), null=True, blank=True)
     obs_banco = models.TextField(
         max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
-
+    # Historico
     history = HistoricalRecords(inherit=True)
 
     def __str__(self):
@@ -174,4 +171,3 @@ class Cadastro(models.Model):
             return f'{self.nome_fantasia} - {cnpj[0:2]}.{cnpj[2:5]}.{cnpj[5:8]}/{cnpj[8:12]}-{cnpj[12:14]}'
         else:
             return 'Cadastro sem Identificação'
-        
