@@ -86,7 +86,7 @@ class Pj_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return queryset
 
 
-# Pessaoa
+# Criar Pessaoa
 class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Cadastro
     form_class = Pf_ModelForm
@@ -115,6 +115,7 @@ class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         return self.form_invalid(self.get_form())
 
 
+# Editar Pessoa
 class Pf_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Cadastro
     form_class = Pf_ModelForm
@@ -141,6 +142,7 @@ class Pf_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
 
 # EMPRESA =====================================================================================================
+# Criar Empresa
 class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Cadastro
     form_class = Pj_ModelForm
@@ -168,7 +170,7 @@ class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
             messages.error(self.request, "Erro. Salvamento cancelado.")
         return self.form_invalid(self.get_form())
 
-
+# Editar Empresa
 class Pj_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Cadastro
     form_class = Pj_ModelForm
@@ -177,7 +179,6 @@ class Pj_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = 'cadastros.change_cadastro'
 
     def form_valid(self, form):
-        
         url = super().form_valid(form)
         messages.success(self.request, "Registro alterado com sucesso.")
         return url

@@ -1,8 +1,7 @@
 from django import forms
 from .models import Cadastro
-from cadastros.utils import get_bank
 from django.core.exceptions import ValidationError
-from cadastros.utils import cpf_validate, cnpj_validate
+from cadastros.utils import cpf_validate, cnpj_validate, get_bank
 
 
 class Pj_ModelForm(forms.ModelForm):
@@ -80,7 +79,7 @@ class Pj_ModelForm(forms.ModelForm):
         cep = self.cleaned_data.get('cep')
         if cep:
             cep = cep.replace('.', '').replace('-', '')
-            if len(cep) is not 8:
+            if len(cep) != 8:
                 raise ValidationError('CEP Inválido')
             return cep
         return cep
@@ -181,7 +180,7 @@ class Pf_ModelForm(forms.ModelForm):
         cep = self.cleaned_data.get('cep')
         if cep:
             cep = cep.replace('.', '').replace('-', '')
-            if len(cep) is not 8:
+            if len(cep) != 8:
                 raise ValidationError('CEP Inválido')
             return cep
         return cep
