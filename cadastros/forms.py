@@ -72,7 +72,6 @@ class Pj_ModelForm(forms.ModelForm):
 
 
 class Pf_ModelForm(forms.ModelForm):
-
     n_banco = forms.ChoiceField(choices=get_bank(), required=False)
 
     def __init__(self, *args, **kwargs):
@@ -156,6 +155,7 @@ class Pf_ModelForm(forms.ModelForm):
 
 
 class Detail_ModelForm(forms.ModelForm):
+
     class Meta:
         model = Cadastro
         fields = "__all__"
