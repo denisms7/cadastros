@@ -142,7 +142,6 @@ class FormCadastroPessoa(forms.ModelForm):
         widgets = {
             'rg_expedicao': forms.DateInput(format=("%Y-%m-%d")),
             'nascimento': forms.DateInput(format=("%Y-%m-%d")),
-
             'cnh_emissao': forms.DateInput(format=("%Y-%m-%d")),
             'cnh_validade': forms.DateInput(format=("%Y-%m-%d")),
         }

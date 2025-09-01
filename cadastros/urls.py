@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import CadastroPessoa, EditarPessoa, BuscaPessoa, PessoaDeleteView
 from .views import CadastroEmpresa, EditarEmpresa, BuscaEmpresa, EmpresaDeleteView, Agenda
-from .views import cadastro_historico
+from .views import CadastroHistoricoView
 
 
 urlpatterns = [
@@ -17,5 +17,5 @@ urlpatterns = [
     path('pj-del/<int:pk>/', EmpresaDeleteView.as_view(), name='empresa-delete'),
     # Utilitarios
     path('agenda-tel/', Agenda.as_view(), name='agenda-telefonica'),
-    path('cadastro/<int:pk>/log/', cadastro_historico, name='log-cadastro'),
+    path('cadastro/<int:pk>/log/', CadastroHistoricoView.as_view(), name='log-cadastro'),
 ]

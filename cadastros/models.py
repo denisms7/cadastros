@@ -13,8 +13,8 @@ class Cadastro(models.Model):
     ]
 
     STATUS_CHOICES = [
-        (1, _('Ativo')),
-        (0, _('Inativo')),
+        (True, _('Ativo')),
+        (False, _('Inativo')),
     ]
 
     ESCOLARIDADE_CHOICES = [
@@ -73,9 +73,9 @@ class Cadastro(models.Model):
 
     # Sistema
     tipo = models.PositiveSmallIntegerField(choices=TIPO_CHOICES, verbose_name=_('Tipo'), default=0)
-    status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, verbose_name=_('Status do Cadastro'), default=1)
+    status = models.BooleanField(choices=STATUS_CHOICES, verbose_name=_('Status do Cadastro'), default=True)
     cadastrado_em = models.DateTimeField(auto_now_add=True, verbose_name=_('Data de Cadastro'))
-    cadastrado_por = models.ForeignKey(User, default=1, on_delete=models.PROTECT, verbose_name=_('Cadastrado por'))
+    cadastrado_por = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name=_('Cadastrado por'))
     # Dados da Empresa
     pessoa_juridica = models.CharField(max_length=200, verbose_name=_('Razão Social'), null=True, blank=True)
     nome_fantasia = models.CharField(max_length=200, verbose_name=_('Nome Fantasia'), null=True, blank=True)
@@ -91,7 +91,7 @@ class Cadastro(models.Model):
     primeiro_nome = models.CharField(max_length=50, verbose_name=_('Nome'), null=True, blank=True)
     ultimo_nome = models.CharField(max_length=150, verbose_name=_('Sobrenome'), null=True, blank=True)
     cpf = models.CharField(max_length=14, unique=True, verbose_name=_('CPF'), null=True, blank=True)
-    rg = models.CharField(max_length=11, verbose_name=_('RG (legado)'), null=True, blank=True)
+    rg = models.CharField(max_length=11, verbose_name=_('RG (Descontinuado)'), null=True, blank=True)
     rg_emissor = models.CharField(max_length=3, verbose_name=_('Emissor'), null=True, blank=True)
     rg_expedicao = models.DateField(verbose_name=_('Expedicao'), null=True, blank=True)
     nascimento = models.DateField(verbose_name=_('Nascimento'), null=True, blank=True)
