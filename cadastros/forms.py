@@ -68,8 +68,6 @@ class Pj_ModelForm(forms.ModelForm):
         cnpj = self.cleaned_data.get('cnpj')
         if cnpj:
             cnpj = cnpj.replace('.', '').replace('-', '').replace('/', '')
-            if not cnpj.isdigit() or len(cnpj) != 14:
-                raise ValidationError("CNPJ inválido")
             if not cnpj_validate(cnpj):
                 raise ValidationError('CNPJ Inválido')
             return cnpj
@@ -196,6 +194,7 @@ class Pf_ModelForm(forms.ModelForm):
 
 
 class Detail_ModelForm(forms.ModelForm):
+    n_banco = forms.ChoiceField(choices=get_bank(), required=False)
 
     class Meta:
         model = Cadastro
@@ -204,4 +203,4 @@ class Detail_ModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
-            field.widget.attrs['disabled'] = True
+            field.widget.attrs["disabled"] = True

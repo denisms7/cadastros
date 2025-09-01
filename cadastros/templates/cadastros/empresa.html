@@ -9,9 +9,7 @@
     <div class="col-sm-12 col-md-4 mb-3 position-relative">
         <label for="div-cnpj" class="form-label">{{ form.cnpj.label }}: {% if form.cnpj.field.required %}<span class="text-danger">*</span>{% endif %}</label>
         <div id="div-cnpj" class="w-100">
-
-            <div>
-                <div class="input-group mb-3">
+            <div class="input-group">
                     {% render_field form.cnpj class="form-control"  onkeyup="validarCNPJ_x()"  autocomplete="false" placeholder="00.000.000/0000-00" data-mask="00.000.000/0000-00" %}
                 <div>
                     <button type="button" data-bs-toggle="modal" data-bs-target="#Modal-CNPJ" class="btn btn-outline-primary ms-1" title="Buscar dados do CNPJ" {% if is_detail %}disabled{% endif %}>
@@ -20,8 +18,8 @@
                         </svg>
                     </button>
                 </div>
-                
             </div>
+            <div>
                 {% for error in form.cnpj.errors %}
                     <span class="text-danger">{{ error }}</span>
                 {% endfor %}
