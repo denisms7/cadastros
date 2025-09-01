@@ -134,7 +134,7 @@ class EditarPessoa(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         if "cpf" in str(e):
             messages.warning(self.request, "Cadastro com CPF Duplicado. o registro nao foi salvo")
         else:
-            messages.warning(self.request, "Erro. Salvamento cancelado")
+            messages.error(self.request, "Erro. Salvamento cancelado")
         return self.form_invalid(self.get_form())
 
 
@@ -173,7 +173,7 @@ class CadastroEmpresa(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         if "cnpj" in str(e):
             messages.warning(self.request, "Cadastro com CNPJ duplicado. O registro não foi salvo.")
         else:
-            messages.warning(self.request, "Erro. Salvamento cancelado.")
+            messages.error(self.request, "Erro. Salvamento cancelado.")
         return self.form_invalid(self.get_form())
 
 
@@ -225,7 +225,7 @@ class EmpresaDeleteView(LoginRequiredMixin, View):
                 "Não é possível deletar este registro devido a vínculos restritos."
             )
         except Exception:
-            messages.warning(
+            messages.error(
                 request,
                 "Ocorreu um erro ao tentar deletar este registro."
             )
@@ -252,7 +252,7 @@ class PessoaDeleteView(LoginRequiredMixin, View):
                 "Não é possível deletar este registro devido a vínculos restritos."
             )
         except Exception:
-            messages.warning(
+            messages.error(
                 request,
                 "Ocorreu um erro ao tentar deletar este registro."
             )
