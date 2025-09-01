@@ -44,7 +44,7 @@ PJ - Cadastro
 
         {% csrf_token %}
 
-        <p class="text-secondary fw-lighter">
+        <p class="text-secondary fw-lighter text-end">
             Informe todos os campos obrigatorios (<span class="text-danger"><b>*</b></span>)
         </p>
 
@@ -88,15 +88,21 @@ PJ - Cadastro
         <!-- ========================================================================================================== -->
         <!-- ===== BOTOES ===== -->
         <div class="container g-0 mt-2">
-            <button type="submit" class="btn btn-success my-1 me-1">
-                <i class="bi bi-check-lg me-1"></i>Salvar
-            </button>
-            <button type="reset" class="btn btn-warning my-1 me-1">
-                <i class="bi bi-x me-1"></i>Limpar
-            </button>
-            <button type="button" onclick="window.history.go(-1)" class="btn btn-primary my-1">
-                <i class="bi bi-arrow-return-left me-1"></i>Voltar
-            </button>
+            {% if not is_detail %}
+                <button type="submit" class="btn btn-success my-1 me-1">
+                    <i class="bi bi-check-lg me-1"></i> Salvar
+                </button>
+                <button type="reset" class="btn btn-warning my-1 me-1">
+                    <i class="bi bi-x me-1"></i> Limpar
+                </button>
+            {% else %}
+                <a href="{% url 'pessoa-edit' cadastro.pk %}" title="Editar Registro" class="btn btn-primary my-1 me-1">
+                    <i class="bi bi-pencil"></i> Editar
+                </a>
+            {% endif %}
+                <button type="button" onclick="window.history.go(-1)" class="btn btn-secondary my-1">
+                    <i class="bi bi-arrow-return-left me-1"></i>Voltar
+                </button>
         </div>
     </form>
 </div>
