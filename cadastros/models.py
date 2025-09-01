@@ -98,16 +98,16 @@ class Cadastro(models.Model):
     escolaridade = models.PositiveSmallIntegerField(choices=ESCOLARIDADE_CHOICES, verbose_name=_('Escolaridade'), null=True, blank=True)
     sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, verbose_name=_('Sexo'), null=True, blank=True)
     estado_civil = models.PositiveSmallIntegerField(choices=ESTADO_CIVIL_CHOICES, verbose_name=_('Estado Civil'), null=True, blank=True)
-    # = Conjuge
+    # Conjuge
     conjuge_primeiro_nome = models.CharField(max_length=50, verbose_name=_('Nome do Conjuge'), null=True, blank=True)
     conjuge_ultimo_nome = models.CharField(max_length=150, verbose_name=_('Sobrenome do Conjuge'), null=True, blank=True)
-    # = Pais
+    # Pais
     mae_primeiro_nome = models.CharField(max_length=50, verbose_name=_('Nome da Mãe'), null=True, blank=True)
     mae_ultimo_nome = models.CharField(max_length=150, verbose_name=_('Sobrenome da Mãe'), null=True, blank=True)
     pai_primeiro_nome = models.CharField(max_length=50, verbose_name=_('Nome do Pai'), null=True, blank=True)
     pai_ultimo_nome = models.CharField(max_length=150, verbose_name=_('Sobrenome do Pai'), null=True, blank=True)
     obs_pessoal = models.TextField(max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
-    # = CNH
+    # CNH
     cnh_n = models.CharField(max_length=50, verbose_name=_('CNH'), null=True, blank=True)
     cnh_emissao = models.DateField(verbose_name=_('Emissão'), null=True, blank=True)
     cnh_validade = models.DateField(verbose_name=_('Validade'), null=True, blank=True)
@@ -130,22 +130,14 @@ class Cadastro(models.Model):
     link_2 = models.URLField(verbose_name=_('Link'), null=True, blank=True)
     obs_contato = models.TextField(max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
     # Endereço
-    cep = models.CharField(
-        max_length=10, verbose_name='CEP', null=True, blank=True)
-    estado = models.CharField(max_length=2, verbose_name=_(
-        'Estado'), null=True, blank=True)
-    cidade = models.CharField(max_length=200, verbose_name=_(
-        'Cidade'), null=True, blank=True)
-    bairro = models.CharField(max_length=200, verbose_name=_(
-        'Bairro'), null=True, blank=True)
-    endereco = models.CharField(max_length=250, verbose_name=_(
-        'Endereço'), null=True, blank=True)
-    numero = models.IntegerField(
-        default=0, verbose_name=_('Número'), null=True, blank=True)
-    complemento = models.CharField(max_length=250, verbose_name=_(
-        'Complemento'), null=True, blank=True)
-    obs_endereco = models.TextField(
-        max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
+    cep = models.CharField(max_length=10, verbose_name='CEP', null=True, blank=True)
+    estado = models.CharField(max_length=2, verbose_name=_('Estado'), null=True, blank=True)
+    cidade = models.CharField(max_length=200, verbose_name=_('Cidade'), null=True, blank=True)
+    bairro = models.CharField(max_length=200, verbose_name=_('Bairro'), null=True, blank=True)
+    endereco = models.CharField(max_length=250, verbose_name=_('Endereço'), null=True, blank=True)
+    numero = models.IntegerField(default=0, verbose_name=_('Número'), null=True, blank=True)
+    complemento = models.CharField(max_length=250, verbose_name=_('Complemento'), null=True, blank=True)
+    obs_endereco = models.TextField(max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
     # Banco
     nome_razao_titular = models.CharField(max_length=50, verbose_name=_('Nome/Razão'), null=True, blank=True)
     tipo_de_documento = models.PositiveSmallIntegerField(choices=TIPO_DOCUMENTO_CHOICES, verbose_name=_('Tipo de Documento'), null=True, blank=True)
@@ -157,8 +149,7 @@ class Cadastro(models.Model):
     digito = models.CharField(max_length=5, verbose_name=_('Dígito'), null=True, blank=True)
     pix_1 = models.CharField(max_length=250, verbose_name=_('Chave PIX'), null=True, blank=True)
     pix_2 = models.CharField(max_length=250, verbose_name=_('Chave PIX'), null=True, blank=True)
-    obs_banco = models.TextField(
-        max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
+    obs_banco = models.TextField(max_length=2000, verbose_name=_('Observações'), null=True, blank=True)
     # Historico
     history = HistoricalRecords(inherit=True)
 
