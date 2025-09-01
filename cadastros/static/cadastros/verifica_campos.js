@@ -1,46 +1,39 @@
-function Verifica(var_classe) {
-    var verificaCamposDiv = document.querySelector(var_classe);
-    var inputs = verificaCamposDiv.getElementsByTagName('input');
-    var selects = verificaCamposDiv.getElementsByTagName('select');
-    var todosVazios = true;
+function isSectionEmpty(selector) {
+    const section = document.querySelector(selector);
+    if (!section) return true;
 
-    for (var i = 0; i < inputs.length; i++) {
-        if (inputs[i].value !== '' && inputs[i].value !== '0') {
-            todosVazios = false;
-            break;
-        }
-    }
+    const inputs = section.querySelectorAll('input');
+    const selects = section.querySelectorAll('select');
 
-    if (todosVazios) {
-        for (var j = 0; j < selects.length; j++) {
-            if (selects[j].value !== '' && selects[j].value !== '0') {
-                todosVazios = false;
-                break;
-            }
-        }
-    }
-    return todosVazios
+    const hasValue = el => el.value !== '' && el.value !== '0';
+
+    return ![...inputs, ...selects].some(hasValue);
 }
 
-function verificarCampos(classe, btncheckId, elementId) {
-    if (Verifica(classe)) {
-        // Todos os campos estão vazios dentro da div
-        document.getElementById(btncheckId).checked = false;
-        document.getElementById(elementId).classList.remove('show');
-    } else {
-        // Existem campos preenchidos dentro da div
-        document.getElementById(btncheckId).checked = true;
-        document.getElementById(elementId).classList.add('show');
+function toggleSection(selector, checkboxId, elementId) {
+    const isEmpty = isSectionEmpty(selector);
+    const checkbox = document.getElementById(checkboxId);
+    const element = document.getElementById(elementId);
+
+    if (!checkbox || !element) return;
+
+    checkbox.checked = !isEmpty;
+    element.classList.toggle('show', !isEmpty);
+}
+
+// Lista de verificações
+const sections = [
+    { selector: '.Verifica_Contato', checkboxId: 'btncheck1', elementId: 'idContato' },
+    { selector: '.Verifica_Endereco', checkboxId: 'btncheck2', elementId: 'idEndereco' },
+    { selector: '.Verifica_Banco', checkboxId: 'btncheck3', elementId: 'idBanco' },
+    { selector: '.Verifica_Cnh', checkboxId: 'btncheck4', elementId: 'idveiculo' }
+];
+
+// Executa verificações
+sections.forEach(({ selector, checkboxId, elementId }) => {
+    try {
+        toggleSection(selector, checkboxId, elementId);
+    } catch (e) {
+        console.warn(`${selector} não existe ou não foi carregada corretamente. Ignorando verificação.`);
     }
-}
-
-verificarCampos('.Verifica_Contato', 'btncheck1', 'idContato');
-verificarCampos('.Verifica_Endereco', 'btncheck2', 'idEndereco');
-verificarCampos('.Verifica_Banco', 'btncheck3', 'idBanco');
-
-try {
-    verificarCampos('.Verifica_Cnh', 'btncheck4', 'idveiculo');
-} catch {
-    console.log('Verifica_Cnh nao existe ou nao foi carregada corretamente. Ignorando verificacao.');
-}
-
+});
