@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'simple_history',
 
     'cadastros.apps.CadastrosConfig',
-    'nav_bar.apps.NavBarConfig',
 ]
 
 MIDDLEWARE = [
@@ -62,7 +61,10 @@ ROOT_URLCONF = 'core_django.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [
+            BASE_DIR / 'core_django' / 'templates',
+            BASE_DIR / 'templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
