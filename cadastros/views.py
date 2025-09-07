@@ -13,10 +13,11 @@ from .models import Cadastro
 from .forms import Detail_ModelForm, Pf_ModelForm, Pj_ModelForm
 
 
-class Pf_DetailView(LoginRequiredMixin, DetailView):
+class Pf_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Cadastro
     template_name = 'cadastros/pessoa/cadastro_pessoa.html'
     context_object_name = 'cadastro'
+    permission_required = 'cadastros.view_cadastro'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -26,10 +27,11 @@ class Pf_DetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class Pj_DetailView(LoginRequiredMixin, DetailView):
+class Pj_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Cadastro
     template_name = 'cadastros/empresa/cadastro_empresa.html'
     context_object_name = 'cadastro'
+    permission_required = 'cadastros.view_cadastro'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
