@@ -1,5 +1,12 @@
 from itertools import cycle
+from django.core.cache import cache
 import requests
+import logging
+
+
+CACHE_KEY = 'bank_list'
+CACHE_TIMEOUT = 60 * 60  # 1 hora
+logger = logging.getLogger(__name__)
 
 
 def cpf_validate(cpf: str) -> bool:
@@ -37,16 +44,26 @@ def cnpj_validate(cnpj: str) -> bool:
             return False
     return True
 
-
 def get_bank():
+    # Tenta pegar do cache
+    bancos = cache.get(CACHE_KEY)
+    if bancos is not None:
+        return bancos
+
+    # Se não estiver no cache, busca da API
     url = 'https://brasilapi.com.br/api/banks/v1'
     try:
         response = requests.get(url)
         response.raise_for_status()
         data = response.json()
-    except (requests.exceptions.RequestException, ValueError):
-        raise print('Erro ao buscar bancos.')
-    else:
-        bancos = [(bank['code'], f"{bank['code']} - {bank['name']}") for bank in data if bank['code']]
-        bancos.sort()
-        return [(0, '---------')] + bancos
+    except (requests.exceptions.RequestException, ValueError) as e:
+        logger.error(f'Erro ao buscar bancos: {e}')
+        return [(0, '---------')]
+    
+    bancos = [(bank['code'], f"{bank['code']} - {bank['name']}") for bank in data if bank.get('code')]
+    bancos.sort()
+    bancos = [(0, '---------')] + bancos
+
+    # Salva no cache
+    cache.set(CACHE_KEY, bancos, CACHE_TIMEOUT)
+    return bancos
