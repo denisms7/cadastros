@@ -195,7 +195,7 @@ function carregarCNPJ(cnpj) {
 function AbrirConjuge() {
     try {
         const divConjuge = document.getElementById('div_conjuge')
-        let estadoCivil = document.getElementById('id_estado_civil')
+        let estadoCivil = document.getElementById('id_spouse_status')
         teste = false
         if (estadoCivil.value == '1') {
             teste = true
@@ -206,15 +206,15 @@ function AbrirConjuge() {
         
         if (teste) {
             divConjuge.classList.add("show");
-            document.getElementById('id_conjuge_primeiro_nome').setAttribute('required', 'required');
-            document.getElementById('id_conjuge_ultimo_nome').setAttribute('required', 'required');
+            document.getElementById('id_spouse_name').setAttribute('required', 'required');
+            document.getElementById('id_spouse_last_name').setAttribute('required', 'required');
         }
         else {
             divConjuge.classList.remove("show");
-            document.getElementById('id_conjuge_primeiro_nome').value = ''
-            document.getElementById('id_conjuge_ultimo_nome').value = ''
-            document.getElementById('id_conjuge_primeiro_nome').removeAttribute('required');
-            document.getElementById('id_conjuge_ultimo_nome').removeAttribute('required');
+            document.getElementById('id_spouse_name').value = ''
+            document.getElementById('id_spouse_last_name').value = ''
+            document.getElementById('id_spouse_name').removeAttribute('required');
+            document.getElementById('id_spouse_last_name').removeAttribute('required');
         }
     }
     catch {
@@ -226,7 +226,7 @@ function AbrirConjuge() {
 // FORMATAR BOTAO TELEFONE
 function atualizarBotaoContato(inputId, botaoId) {
     let fone = document.getElementById(inputId).value
-    let foneTipo = parseInt(document.getElementById(inputId + "_tipo").value)
+    let foneTipo = parseInt(document.getElementById(inputId + "_type").value)
     let botao = document.getElementById(botaoId)
 
     if (foneTipo === 1) {
