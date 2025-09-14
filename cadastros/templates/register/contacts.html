@@ -42,56 +42,56 @@ Agenda Telefônica
                 {% for item in object_list %}
                 <tr>
                     <td class="text-capitalize">
-                        {% if item.nome_fantasia %}
-                            {{ item.nome_fantasia }}
+                        {% if item.fantasy %}
+                            {{ item.fantasy }}
                         {% else %}
-                            {{ item.primeiro_nome }} {{ item.ultimo_nome }}
+                            {{ item.name }} {{ item.last_name }}
                         {% endif %}
                     </td>
                     <td>
-                        {% if item.fone_1 %}
-                            {% if item.fone_1_tipo == 2 %}
-                                <a href="https://wa.me/{{ item.fone_1}}" target="_blank" class="btn btn-sm btn-outline-success contato">
+                        {% if item.phone_1 %}
+                            {% if item.phone_1_tipo == 2 %}
+                                <a href="https://wa.me/{{ item.phone_1}}" target="_blank" class="btn btn-sm btn-outline-success contato">
                                     <i class="bi bi-whatsapp"></i>
                                 </a>
-                            {% elif item.fone_1_tipo == 1 %}
-                                <a href="tel:{{ item.fone_1}}" target="_blank" class="btn btn-sm btn-outline-dark contato">
+                            {% elif item.phone_1_tipo == 1 %}
+                                <a href="tel:{{ item.phone_1}}" target="_blank" class="btn btn-sm btn-outline-dark contato">
                                     <i class="bi bi-telephone-outbound"></i>
                                 </a>
                             {% endif %}
-                            {{ item.fone_1 }}
-                        {% else %}
-                        <i class="bi bi-hash"></i>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if item.fone_2 %}
-                            {% if item.fone_2_tipo == 2 %}
-                                <a href="https://wa.me/{{ item.fone_2}}" target="_blank" class="btn btn-sm btn-outline-success contato">
-                                    <i class="bi bi-whatsapp"></i>
-                                </a>
-                            {% elif item.fone_2_tipo == 1 %}
-                                <a href="tel:{{ item.fone_2}}" target="_blank" class="btn btn-sm btn-outline-dark contato">
-                                    <i class="bi bi-telephone-outbound"></i>
-                                </a>
-                            {% endif %}
-                            {{ item.fone_2 }}
+                            {{ item.phone_1 }}
                         {% else %}
                         <i class="bi bi-hash"></i>
                         {% endif %}
                     </td>
                     <td>
-                        {% if item.fone_3 %}
-                            {% if item.fone_3_tipo == 2 %}
-                                <a href="https://wa.me/{{ item.fone_3}}" target="_blank" class="btn btn-sm btn-outline-success contato">
+                        {% if item.phone_2 %}
+                            {% if item.phone_2_tipo == 2 %}
+                                <a href="https://wa.me/{{ item.phone_2}}" target="_blank" class="btn btn-sm btn-outline-success contato">
                                     <i class="bi bi-whatsapp"></i>
                                 </a>
-                            {% elif item.fone_3_tipo == 1 %}
-                                <a href="tel:{{ item.fone_3}}" target="_blank" class="btn btn-sm btn-outline-dark contato">
+                            {% elif item.phone_2_tipo == 1 %}
+                                <a href="tel:{{ item.phone_2}}" target="_blank" class="btn btn-sm btn-outline-dark contato">
                                     <i class="bi bi-telephone-outbound"></i>
                                 </a>
                             {% endif %}
-                            {{ item.fone_3 }}
+                            {{ item.phone_2 }}
+                        {% else %}
+                        <i class="bi bi-hash"></i>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if item.phone_3 %}
+                            {% if item.phone_3_tipo == 2 %}
+                                <a href="https://wa.me/{{ item.phone_3}}" target="_blank" class="btn btn-sm btn-outline-success contato">
+                                    <i class="bi bi-whatsapp"></i>
+                                </a>
+                            {% elif item.phone_3_tipo == 1 %}
+                                <a href="tel:{{ item.phone_3}}" target="_blank" class="btn btn-sm btn-outline-dark contato">
+                                    <i class="bi bi-telephone-outbound"></i>
+                                </a>
+                            {% endif %}
+                            {{ item.phone_3 }}
                         {% else %}
                         <i class="bi bi-hash"></i>
                         {% endif %}

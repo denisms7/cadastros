@@ -30,25 +30,24 @@
             </div>
         </div>
     </div>
-
     <div class="col-sm-12 col-md-4 mb-3">
-        <label for="{{ form.is_estadual.id_for_label }}" class="form-label">{{ form.is_estadual.label }}: {% if form.is_estadual.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-        {% render_field form.is_estadual class="form-control" %}
-        {% for error in form.is_estadual.errors %}
+        <label for="{{ form.n_state.id_for_label }}" class="form-label">{{ form.n_state.label }}: {% if form.n_state.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.n_state class="form-control" %}
+        {% for error in form.n_state.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
     </div>
     <div class="col-sm-12 col-md-4 mb-3">
-        <label for="{{ form.is_municipal.id_for_label }}" class="form-label">{{ form.is_municipal.label }}: {% if form.is_municipal.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-        {% render_field form.is_municipal class="form-control" %}
-        {% for error in form.is_municipal.errors %}
+        <label for="{{ form.n_municipal.id_for_label }}" class="form-label">{{ form.n_municipal.label }}: {% if form.n_municipal.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.n_municipal class="form-control" %}
+        {% for error in form.n_municipal.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
     </div>
     <div class="col-sm-12 col-md-12 mb-3">
-        <label for="{{ form.pessoa_juridica.id_for_label }}" class="form-label">{{ form.pessoa_juridica.label }}: {% if form.pessoa_juridica.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-        {% render_field form.pessoa_juridica class="form-control" %}
-        {% for error in form.pessoa_juridica.errors %}
+        <label for="{{ form.legal.id_for_label }}" class="form-label">{{ form.legal.label }}: {% if form.legal.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.legal class="form-control" %}
+        {% for error in form.legal.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
         <div class="invalid-feedback">
@@ -57,9 +56,9 @@
     </div>
 
     <div class="col-sm-12 col-md-12 mb-3">
-        <label for="{{ form.nome_fantasia.id_for_label }}" class="form-label">{{ form.nome_fantasia.label }}: {% if form.nome_fantasia.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-        {% render_field form.nome_fantasia class="form-control" %}
-        {% for error in form.nome_fantasia.errors %}
+        <label for="{{ form.fantasy.id_for_label }}" class="form-label">{{ form.fantasy.label }}: {% if form.fantasy.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.fantasy class="form-control" %}
+        {% for error in form.fantasy.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
         <div class="invalid-feedback">
@@ -67,37 +66,37 @@
         </div>
     </div>
     <div class="col-sm-6 col-md-2 mb-3">
-        <label for="{{ form.cnpj_situacao.id_for_label }}" class="form-label">{{ form.cnpj_situacao.label }}: {% if form.cnpj_situacao.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-        {% render_field form.cnpj_situacao class="form-control" %}
-        {% for error in form.cnpj_situacao.errors %}
+        <label for="{{ form.cnpj_situation.id_for_label }}" class="form-label">{{ form.cnpj_situation.label }}: {% if form.cnpj_situation.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.cnpj_situation class="form-control" %}
+        {% for error in form.cnpj_situation.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
     </div>
     <div class="col-sm-6 col-md-4 mb-3">
-        <label for="{{ form.cnpj_porte.id_for_label }}" class="form-label">{{ form.cnpj_porte.label }}: {% if form.cnpj_porte.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-        {% render_field form.cnpj_porte class="form-control" %}
-        {% for error in form.cnpj_porte.errors %}
+        <label for="{{ form.cnpj_carrying.id_for_label }}" class="form-label">{{ form.cnpj_carrying.label }}: {% if form.cnpj_carrying.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.cnpj_carrying class="form-control" %}
+        {% for error in form.cnpj_carrying.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
     </div>
     <div class="col-sm-6 col-md-2 mb-3">
-        <label for="{{ form.cnpj_data_abertura.id_for_label }}" class="form-label">{{ form.cnpj_data_abertura.label }}: {% if form.cnpj_data_abertura.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-        {% render_field form.cnpj_data_abertura class="form-control" type="date" %}
-        {% for error in form.cnpj_data_abertura.errors %}
+        <label for="{{ form.cnpj_date.id_for_label }}" class="form-label">{{ form.cnpj_date.label }}: {% if form.cnpj_date.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.cnpj_date class="form-control" type="date" %}
+        {% for error in form.cnpj_date.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
     </div>
     <div class="col-sm-6 col-md-4 mb-3">
-        <label for="{{ form.cnpj_tipo.id_for_label }}" class="form-label">{{ form.cnpj_tipo.label }}: {% if form.cnpj_tipo.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-        {% render_field form.cnpj_tipo class="form-control" %}
-        {% for error in form.cnpj_tipo.errors %}
+        <label for="{{ form.cnpj_type_activity.id_for_label }}" class="form-label">{{ form.cnpj_type_activity.label }}: {% if form.cnpj_type_activity.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.cnpj_type_activity class="form-control" %}
+        {% for error in form.cnpj_type_activity.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
     </div>
     <div class="col-sm-12 col-md-12 mb-3">
-        <label for="{{ form.cnpj_atividade_principal.id_for_label }}" class="form-label">{{ form.cnpj_atividade_principal.label }}: {% if form.cnpj_atividade_principal.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-        {% render_field form.cnpj_atividade_principal class="form-control" rows="2"  %}
-        {% for error in form.cnpj_atividade_principal.errors %}
+        <label for="{{ form.cnpj_activity.id_for_label }}" class="form-label">{{ form.cnpj_activity.label }}: {% if form.cnpj_activity.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.cnpj_activity class="form-control" rows="2"  %}
+        {% for error in form.cnpj_activity.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
     </div>
@@ -122,4 +121,3 @@
         </div>
     </div>
 </div>
-

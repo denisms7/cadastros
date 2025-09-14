@@ -1,0 +1,17 @@
+{% load static %}
+{% load widget_tweaks %}   
+
+<section class="row">
+    <div class="col-12 mt-3">
+        <h3>Outros</h3>
+        <hr>
+    </div>
+    <div class="col-sm-12 col-md-4 mb-3">
+        <label for="{{ form.active.id_for_label }}" class="form-label">{{ form.active.label }}: {% if form.active.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.active class="form-select" %}
+        {% for error in form.active.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+
+</section>

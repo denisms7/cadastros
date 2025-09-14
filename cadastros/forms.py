@@ -5,63 +5,67 @@ from cadastros.utils import cpf_validate, cnpj_validate, get_bank
 
 
 class Pj_ModelForm(forms.ModelForm):
-    n_banco = forms.ChoiceField(choices=get_bank(), required=False)
+    bank = forms.ChoiceField(choices=get_bank(), required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['pessoa_juridica'].required = True
-        self.fields['nome_fantasia'].required = True
+        self.fields['legal'].required = True
+        self.fields['fantasy'].required = True
         self.fields['cnpj'].required = True
 
     class Meta:
         model = Cadastro
         fields = [
-            'status',
-            'pessoa_juridica',
-            'nome_fantasia',
+            'active',
+    
+            'legal',
+            'fantasy',
             'cnpj',
-            'cnpj_situacao',
-            'cnpj_porte',
-            'cnpj_data_abertura',
-            'cnpj_tipo',
-            'cnpj_atividade_principal',
-            'is_estadual',
-            'is_municipal',
+            'cnpj_situation',
+            'cnpj_carrying',
+            'cnpj_date',
+            'cnpj_type_activity',
+            'cnpj_activity',
+            'n_state',
+            'n_municipal',
+            'obs',
+
             'email_1',
             'email_2',
-            'fone_1',
-            'fone_1_tipo',
-            'fone_2',
-            'fone_2_tipo',
-            'fone_3',
-            'fone_3_tipo',
+            'phone_1',
+            'phone_1_type',
+            'phone_2',
+            'phone_2_type',
+            'phone_3',
+            'phone_3_type',
             'link_1',
             'link_2',
-            'obs_contato',
+            'obs_contact',
+
             'cep',
-            'estado',
-            'cidade',
-            'bairro',
-            'endereco',
-            'numero',
-            'complemento',
-            'obs_endereco',
-            'nome_razao_titular',
-            'tipo_de_documento',
-            'documento_titular',
-            'tipo_de_conta',
-            'n_banco',
-            'agencia',
-            'conta',
-            'digito',
+            'state',
+            'city',
+            'neighborhood',
+            'address',
+            'number',
+            'complement',
+            'obs_address',
+
+            'title_holder',
+            'document_type',
+            'document_holder',
+            'account_type',
+
+            'bank',
+            'agency',
+            'account',
+            'digit',
             'pix_1',
             'pix_2',
-            'obs_banco',
+            'obs_bank',
         ]
         widgets = {
-            'cnpj_data_abertura': forms.DateInput(format=("%Y-%m-%d")),
-            'rg_expedicao': forms.DateInput(format=("%Y-%m-%d")),
-            'nascimento': forms.DateInput(format=("%Y-%m-%d")),
+            'cnpj_date': forms.DateInput(format=("%Y-%m-%d")),
         }
 
     def clean_cnpj(self):
@@ -82,87 +86,95 @@ class Pj_ModelForm(forms.ModelForm):
             return cep
         return cep
 
-    def clean_n_banco(self):
-        n_banco = self.cleaned_data.get('n_banco')
-        if n_banco is not None:
+    def clean_bank(self):
+        bank = self.cleaned_data.get('bank')
+        if bank is not None:
             try:
-                return int(n_banco)
+                return int(bank)
             except ValueError:
                 raise ValidationError("Número do banco inválido.")
-        return n_banco
+        return bank
 
 
 class Pf_ModelForm(forms.ModelForm):
-    n_banco = forms.ChoiceField(choices=get_bank(), required=False)
+    bank = forms.ChoiceField(choices=get_bank(), required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['primeiro_nome'].required = True
-        self.fields['ultimo_nome'].required = True
+        self.fields['name'].required = True
+        self.fields['last_name'].required = True
         self.fields['cpf'].required = True
-        self.fields['sexo'].required = True
+        self.fields['sex'].required = True
 
     class Meta:
         model = Cadastro
         fields = [
-            'status',
-            'primeiro_nome',
-            'ultimo_nome',
+            'active',
+
+            'name',
+            'last_name',
             'cpf',
             'rg',
-            'rg_emissor',
-            'rg_expedicao',
-            'nascimento',
-            'escolaridade',
-            'sexo',
-            'estado_civil',
-            'conjuge_primeiro_nome',
-            'conjuge_ultimo_nome',
-            'mae_primeiro_nome',
-            'mae_ultimo_nome',
-            'pai_primeiro_nome',
-            'pai_ultimo_nome',
-            'obs_pessoal',
+            'rg_issuer',
+            'rg_expedition',
+            'birth',
+            'education',
+            'sex',
+
+            'spouse_status',
+            'spouse_name',
+            'spouse_last_name',
+
+            'mother_name',
+            'mother_last_name',
+            'father_name',
+            'father_last_name',
+            'obs',
+
             'email_1',
             'email_2',
-            'fone_1',
-            'fone_1_tipo',
-            'fone_2',
-            'fone_2_tipo',
-            'fone_3',
-            'fone_3_tipo',
+            'phone_1',
+            'phone_1_type',
+            'phone_2',
+            'phone_2_type',
+            'phone_3',
+            'phone_3_type',
             'link_1',
             'link_2',
-            'obs_contato',
+            'obs_contact',
+
             'cep',
-            'estado',
-            'cidade',
-            'bairro',
-            'endereco',
-            'numero',
-            'complemento',
-            'obs_endereco',
-            'nome_razao_titular',
-            'tipo_de_documento',
-            'documento_titular',
-            'tipo_de_conta',
-            'n_banco',
-            'agencia',
-            'conta',
-            'digito',
+            'state',
+            'city',
+            'neighborhood',
+            'address',
+            'number',
+            'complement',
+            'obs_address',
+
+            'title_holder',
+            'document_type',
+            'document_holder',
+            'account_type',
+        
+            'bank',
+            'agency',
+            'account',
+            'digit',
             'pix_1',
             'pix_2',
-            'obs_banco',
+            'obs_bank',
+
             'cnh_n',
-            'cnh_emissao',
-            'cnh_validade',
-            'cnh_categoria',
+            'cnh_emission',
+            'cnh_validity',
+            'cnh_category',
         ]
         widgets = {
-            'rg_expedicao': forms.DateInput(format=("%Y-%m-%d")),
-            'nascimento': forms.DateInput(format=("%Y-%m-%d")),
-            'cnh_emissao': forms.DateInput(format=("%Y-%m-%d")),
-            'cnh_validade': forms.DateInput(format=("%Y-%m-%d")),
+            'rg_expedition': forms.DateInput(format=("%Y-%m-%d")),
+            'birth': forms.DateInput(format=("%Y-%m-%d")),
+            'cnh_emission': forms.DateInput(format=("%Y-%m-%d")),
+            'cnh_validity': forms.DateInput(format=("%Y-%m-%d")),
         }
 
     def clean_cpf(self):
@@ -183,18 +195,18 @@ class Pf_ModelForm(forms.ModelForm):
             return cep
         return cep
 
-    def clean_n_banco(self):
-        n_banco = self.cleaned_data.get('n_banco')
-        if n_banco is not None:
+    def clean_bank(self):
+        bank = self.cleaned_data.get('bank')
+        if bank is not None:
             try:
-                return int(n_banco)
+                return int(bank)
             except ValueError:
                 raise ValidationError("Número do banco inválido.")
-        return n_banco
+        return bank
 
 
 class Detail_ModelForm(forms.ModelForm):
-    n_banco = forms.ChoiceField(choices=get_bank(), required=False)
+    bank = forms.ChoiceField(choices=get_bank(), required=False)
 
     class Meta:
         model = Cadastro

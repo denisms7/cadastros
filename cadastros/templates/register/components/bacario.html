@@ -1,0 +1,89 @@
+{% load static %}
+{% load widget_tweaks %}  
+
+<section class="row Verifica_Banco">
+    <div class="col-12 mt-3">
+        <h3>Dados Bancarios</h3>
+        <hr>
+    </div>
+    <div class="col-6 col-sm-6 col-md-2 mb-3">
+        <label for="{{ form.document_type.id_for_label }}" class="form-label">{{ form.document_type.label }}: {% if form.document_type.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.document_type class="form-select" %}
+        {% for error in form.document_type.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div class="col-6 col-sm-6 col-md-3 mb-3">
+        <label for="{{ form.document_holder.id_for_label }}" class="form-label"><span id="texto_document_holder">CPF/CNPJ</span>: {% if form.document_holder.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.document_holder class="form-control" %}
+        {% for error in form.document_holder.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+        <div class="invalid-feedback d-none fs-6" id="cnpjlog_titular">
+            Invalido.
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-7 mb-3">
+        <label for="{{ form.title_holder.id_for_label }}" class="form-label"><span id="texto_nomerazao_titular">Nome Completo/Razão Social</span>: {% if form.title_holder.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.title_holder class="form-control" %}
+        {% for error in form.title_holder.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div class="col-6 col-sm-6 col-md-3 mb-3">
+        <label for="{{ form.account_type.id_for_label }}" class="form-label">{{ form.account_type.label }}: {% if form.account_type.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.account_type class="form-select" %}
+        {% for error in form.account_type.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div class="col-6 col-sm-6 col-md-3 mb-3">
+        <label for="{{ form.bank.id_for_label }}" class="form-label">{{ form.bank.label }}: {% if form.bank.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.bank class="form-select" %}
+        {% for error in form.bank.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div class="col-6 col-sm-6 col-md-3 mb-3">
+        <label for="{{ form.agency.id_for_label }}" class="form-label">{{ form.agency.label }}: {% if form.agency.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.agency class="form-control" %}
+        {% for error in form.agency.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div class="col-6 col-sm-6 col-md-2 mb-3">
+        <label for="{{ form.account.id_for_label }}" class="form-label">{{ form.account.label }}: {% if form.account.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.account class="form-control" %}
+        {% for error in form.account.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div class="col-6 col-sm-6 col-md-1 mb-3">
+        <label for="{{ form.digit.id_for_label }}" class="form-label">{{ form.digit.label }}: {% if form.digit.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.digit class="form-control" %}
+        {% for error in form.digit.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div class="col-12 col-sm-12 col-md-6 mb-3">
+        <label for="{{ form.pix_1.id_for_label }}" class="form-label">{{ form.pix_1.label }}: {% if form.pix_1.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.pix_1 class="form-control" %}
+        {% for error in form.pix_1.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div class="col-12 col-sm-12 col-md-6 mb-3">
+        <label for="{{ form.pix_2.id_for_label }}" class="form-label">{{ form.pix_2.label }}: {% if form.pix_2.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.pix_2 class="form-control" %}
+        {% for error in form.pix_2.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div class="col-sm-12 col-md-12 mb-3">
+        <label for="{{ form.obs_bank.id_for_label }}" class="form-label">{{ form.obs_bank.label }}: {% if form.obs_bank.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.obs_bank class="form-control" rows="2" %}
+        {% for error in form.obs_bank.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+</section>

@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import Pf_DetailView, Pf_ListView, Pf_CreateView, Pf_UpdateView, Pf_DeleteView
 from .views import Pj_DetailView, Pj_ListView, Pj_CreateView, Pj_UpdateView, Pj_DeleteView
-from .views import Log_View, Agenda_ListView
+from .views import Log_View, Contacts_ListView
 
 
 urlpatterns = [
@@ -18,6 +18,6 @@ urlpatterns = [
     path('pj/<int:pk>/edit/', Pj_UpdateView.as_view(), name='empresa-edit'),
     path('pj/<int:pk>/del/', Pj_DeleteView.as_view(), name='empresa-delete'),
     # Utilitarios
-    path('agenda/', Agenda_ListView.as_view(), name='agenda-telefonica'),
-    path('cad/<int:pk>/log/', Log_View.as_view(), name='log-cadastro'),
+    path('agenda/', Contacts_ListView.as_view(), name='contacts_'),
+    path('cad/<int:pk>/log/', Log_View.as_view(), name='register_log'),
 ]

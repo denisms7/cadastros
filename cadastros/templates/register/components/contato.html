@@ -22,44 +22,44 @@
         {% endfor %}
     </div>
     <div class="col-sm-12 col-md-4 mb-3">
-        <label for="div-fone-1" class="form-label">{{ form.fone_1.label }}: {% if form.fone_1.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-        <div id="div-fone-1" class="d-inline-flex w-100 ">
+        <label for="div-phone-1" class="form-label">{{ form.phone_1.label }}: {% if form.phone_1.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        <div id="div-phone-1" class="d-inline-flex w-100 ">
             <div class="input-group pe-1">
-                {% render_field form.fone_1 class="form-control" style="width: 60%;" %}
-                {% render_field form.fone_1_tipo class="form-select" style="width: 40%;" %}
+                {% render_field form.phone_1 class="form-control" style="width: 60%;" %}
+                {% render_field form.phone_1_tipo class="form-select" style="width: 40%;" %}
             </div>
-            <a class="btn btn-outline-primary" href="#" id="btn_id_fone_1" target="_blank" title="Abrir APP com o Contato">
+            <a class="btn btn-outline-primary" href="#" id="btn_id_phone_1" target="_blank" title="Abrir APP com o Contato">
             </a>
         </div>
-        {% for error in form.fone_1.errors %}
+        {% for error in form.phone_1.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
     </div>
     <div class="col-sm-12 col-md-4 mb-3">
-        <label for="div-fone-2" class="form-label">{{ form.fone_2.label }}: {% if form.fone_2.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-        <div id="div-fone-2" class="d-inline-flex w-100 ">
+        <label for="div-phone-2" class="form-label">{{ form.phone_2.label }}: {% if form.phone_2.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        <div id="div-phone-2" class="d-inline-flex w-100 ">
             <div class="input-group pe-1">
-                {% render_field form.fone_2 class="form-control" style="width: 60%;" %}
-                {% render_field form.fone_2_tipo class="form-select" style="width: 40%;" %}
+                {% render_field form.phone_2 class="form-control" style="width: 60%;" %}
+                {% render_field form.phone_2_tipo class="form-select" style="width: 40%;" %}
             </div>
-            <a class="btn btn-outline-primary" href="#" id="btn_id_fone_2" target="_blank" title="Abrir APP com o Contato">
+            <a class="btn btn-outline-primary" href="#" id="btn_id_phone_2" target="_blank" title="Abrir APP com o Contato">
             </a>
         </div>
-        {% for error in form.fone_2.errors %}
+        {% for error in form.phone_2.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
     </div>
     <div class="col-sm-12 col-md-4 mb-3">
-        <label for="div-fone-3" class="form-label">{{ form.fone_3.label }}: {% if form.fone_3.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-        <div id="div-fone-3" class="d-inline-flex w-100 ">
+        <label for="div-phone-3" class="form-label">{{ form.phone_3.label }}: {% if form.phone_3.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        <div id="div-phone-3" class="d-inline-flex w-100 ">
             <div class="input-group pe-1">
-                {% render_field form.fone_3 class="form-control" style="width: 60%;" %}
-                {% render_field form.fone_3_tipo class="form-select" style="width: 40%;" %}
+                {% render_field form.phone_3 class="form-control" style="width: 60%;" %}
+                {% render_field form.phone_3_tipo class="form-select" style="width: 40%;" %}
             </div>
-            <a class="btn btn-outline-primary" href="#" id="btn_id_fone_3" target="_blank" title="Abrir APP com o Contato">
+            <a class="btn btn-outline-primary" href="#" id="btn_id_phone_3" target="_blank" title="Abrir APP com o Contato">
             </a>
         </div>
-        {% for error in form.fone_3.errors %}
+        {% for error in form.phone_3.errors %}
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
     </div>

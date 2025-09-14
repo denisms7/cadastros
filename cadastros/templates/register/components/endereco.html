@@ -1,0 +1,75 @@
+{% load static %}
+
+{% load widget_tweaks %}
+<section class="row Verifica_address">
+    <div class="col-12 mt-3">
+        <h3>Endereço</h3>
+        <hr>
+    </div>
+    <div class="col-6 col-sm-6 col-md-3 mb-3">
+        <label for="div-cep" class="form-label">{{ form.cep.label }}: {% if form.cep.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        <div class="input-group">
+            {% render_field form.cep class="form-control" placeholder="00.000-000" data-mask="00.000-000" %}
+            <button type="button" onclick="pesquisacep(id_cep.value);" class="btn btn-outline-primary" title="Buscar dados do CEP" {% if is_detail %}disabled{% endif %}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                    <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                </svg>
+            </button>
+        </div>
+        {% for error in form.cep.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+        <div class="invalid-feedback show fs-6" id="ceplog">
+            CEP invalido.
+        </div>
+    </div>
+    <div class="col-6 col-sm-6 col-md-2 mb-3">
+        <label for="{{ form.state.id_for_label }}" class="form-label">{{ form.state.label }}: {% if form.state.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.state class="form-control text-uppercase" placeholder="XX" %}
+        {% for error in form.state.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div class="col-sm-12 col-md-7 mb-3">
+        <label for="{{ form.city.id_for_label }}" class="form-label">{{ form.city.label }}: {% if form.city.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.city class="form-control" %}
+        {% for error in form.city.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div class="col-sm-12 col-md-4 mb-3">
+        <label for="{{ form.neighborhood.id_for_label }}" class="form-label">{{ form.neighborhood.label }}: {% if form.neighborhood.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.neighborhood class="form-control" %}
+        {% for error in form.neighborhood.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div class="col-sm-12 col-md-6 mb-3">
+        <label for="{{ form.address.id_for_label }}" class="form-label">{{ form.address.label }}: {% if form.address.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.address class="form-control" %}
+        {% for error in form.address.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div class="col-sm-12 col-md-2 mb-3">
+        <label for="{{ form.number.id_for_label }}" class="form-label">{{ form.number.label }}: {% if form.number.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.number class="form-control" %}
+        {% for error in form.number.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div class="col-sm-12 col-md-12 mb-3">
+        <label for="{{ form.complement.id_for_label }}" class="form-label">{{ form.complement.label }}: {% if form.complement.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.complement class="form-control" %}
+        {% for error in form.complement.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div class="col-sm-12 col-md-12 mb-3">
+        <label for="{{ form.obs_address.id_for_label }}" class="form-label">{{ form.obs_address.label }}: {% if form.obs_address.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.obs_address class="form-control" rows="2" %}
+        {% for error in form.obs_address.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+</section>

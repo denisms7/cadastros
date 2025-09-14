@@ -3,16 +3,17 @@
 {% load custom_humanize %}
 
 {% block titulo %}
-PJ - Busca
+PF - Busca
 {% endblock %}
 
 {% block pagina %}
 
+
 <div class="container">
     <div>
         <h2>
-            <i class="bi bi-building"></i>
-            Cadastros de Empresas
+        <i class="bi bi-person-lines-fill me-2"></i>
+        Cadastros de Pessoas
         </h2>
     </div>
 </div>
@@ -20,18 +21,21 @@ PJ - Busca
     <hr>
 </div>
 
+
+
 <div class="container">
     <div class="d-flex justify-content-end my-3">
-        <a href="{% url 'empresa-add' %}" class="btn btn-primary">
-            <i class="bi bi-building-add me-1"></i>
+        <a href="{% url 'pessoa-add' %}" class="btn btn-primary">
+            <i class="bi bi-person-plus"></i>
             Adicionar Novo
         </a>
     </div>
+
     <form method="get">
         <div class="row mb-3">
             <label for="busca" class="form-label">Pesquisar:</label>
             <div class="d-flex align-items-end" id="busca">
-                <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Nome ou CNPJ"
+                <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Nome/Nome Completo ou CPF"
                     class="form-control me-1">
                 <button type="submit" title="Pesquisar Registros" class="btn btn-primary">
                     <i class="bi bi-search"></i>
@@ -39,15 +43,15 @@ PJ - Busca
             </div>
         </div>
     </form>
+
     <div class="table-responsive">
         <table class="table table-sm table-striped mt-3">
             <thead>
                 <tr>
                     <th scope="col">ID:</th>
                     <th scope="col" class="text-center">Status:</th>
-                    <th scope="col">Nome Fantasia:</th>
-                    <th scope="col">Razão Social:</th>
-                    <th scope="col">CNPJ:</th>
+                    <th scope="col">Nome Completo:</th>
+                    <th scope="col">CPF:</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -56,18 +60,17 @@ PJ - Busca
                 <tr>
                     <td class="fw-bold">{{item.pk}}</td>
                     <td class="text-center">
-                        {% if item.status == 0 %}
+                        {% if item.active == 0 %}
                             <i class="bi bi-x-circle text-danger"></i>
                         {% else %}
                             <i class="bi bi-check-circle-fill text-success"></i>
                         {% endif %}
                     </td>
-                    <td>{{item.nome_fantasia}}</td>
-                    <td>{{item.pessoa_juridica}}</td>
-                    <td style="white-space: nowrap;">{{ item.cnpj|cnpj_format }}</td>
+                    <td>{{item.name}} {{item.last_name}}</td>
+                    <td style="white-space: nowrap;">{{ item.cpf|cpf_format }}</td>
                     <td>
                         <div class="text-end">
-                            <a href="{% url 'empresa-detail' item.pk %}" title="Ver Registro" class="btn btn-info btn-sm mb-1 mb-sm-0">
+                            <a href="{% url 'pessoa-detail' item.pk %}" title="Ver Registro" class="btn btn-info btn-sm mb-1 mb-sm-0">
                                 <i class="bi bi-eye"></i>
                             </a>
                             <button title="Apagar Registro" class="btn btn-danger btn-sm mb-1 mb-sm-0"  data-bs-toggle="modal" data-bs-target="#delete-{{item.pk}}">
@@ -76,10 +79,10 @@ PJ - Busca
                         </div>
                     </td>
                 </tr>
-                    {% include "cadastros\_modal_delete.html" %}
+                    {% include "register\_modal_delete.html" %}
                 {% empty %}
                 <tr>
-                    <td colspan="6" class="text-center">
+                    <td colspan="5" class="text-center">
                         <i class="bi bi-exclamation-lg"></i>
                         Não existem Cadastros
                     </td>
@@ -89,8 +92,6 @@ PJ - Busca
         </table>
     </div>
 </div>
-
-
 
 {% include "pagination.html" %}
 

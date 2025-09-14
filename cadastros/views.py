@@ -15,7 +15,7 @@ from .forms import Detail_ModelForm, Pf_ModelForm, Pj_ModelForm
 
 class Pf_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Cadastro
-    template_name = 'cadastros/pessoa/cadastro_pessoa.html'
+    template_name = 'register/register_person.html.html'
     context_object_name = 'cadastro'
     permission_required = 'cadastros.view_cadastro'
 
@@ -29,7 +29,7 @@ class Pf_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
 
 class Pj_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Cadastro
-    template_name = 'cadastros/empresa/cadastro_empresa.html'
+    template_name = 'register/register_enterprise.html'
     context_object_name = 'cadastro'
     permission_required = 'cadastros.view_cadastro'
 
@@ -41,49 +41,49 @@ class Pj_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
         return context
 
 
-class Agenda_ListView(LoginRequiredMixin, ListView):
+class Contacts_ListView(LoginRequiredMixin, ListView):
     model = Cadastro
-    template_name = 'cadastros/agenda/agenda.html'
-    paginate_by = 40
+    template_name = 'register/contacts.html'
+    paginate_by = 15
 
     def get_queryset(self):
         queryset = super().get_queryset()
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
-                Q(primeiro_nome__icontains=query) | Q(ultimo_nome__icontains=query) | Q(nome_fantasia__icontains=query) | Q(ultimo_nome__icontains=query)
+                Q(name__icontains=query) | Q(last_name__icontains=query) | Q(legal__icontains=query) | Q(fantasy__icontains=query)
             )
-        return queryset.order_by('nome_fantasia', 'primeiro_nome')
+        return queryset.order_by('fantasy', 'name')
 
 
 class Pf_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    paginate_by = 20
+    paginate_by = 10
     model = Cadastro
-    template_name = 'cadastros/pessoa/busca_pessoa.html'
+    template_name = 'register/list_person.html'
     permission_required = 'cadastros.view_cadastro'
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(tipo=0).order_by('primeiro_nome', 'ultimo_nome')  # Filtra apenas pessoa
+        queryset = super().get_queryset().filter(active=0).order_by('name', 'last_name')  # Filtra apenas pessoa
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
-                Q(primeiro_nome__icontains=query) | Q(cpf__icontains=query) | Q(ultimo_nome__icontains=query)
+                Q(name__icontains=query) | Q(cpf__icontains=query) | Q(last_name__icontains=query)
             )
         return queryset
 
 
 class Pj_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    paginate_by = 20
+    paginate_by = 10
     model = Cadastro
-    template_name = 'cadastros/empresa/busca_empresa.html'
+    template_name = 'register/list_enterprise.html'
     permission_required = 'cadastros.view_cadastro'
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(tipo=1).order_by('nome_fantasia', 'pessoa_juridica')  # Filtra apenas empresas
+        queryset = super().get_queryset().filter(active=1).order_by('legal', 'fantasy')  # Filtra apenas empresas
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
-                Q(nome_fantasia__icontains=query) | Q(cnpj__icontains=query) | Q(pessoa_juridica__icontains=query)
+                Q(fantasy__icontains=query) | Q(cnpj__icontains=query) | Q(legal__icontains=query)
             )
         return queryset
 
@@ -92,7 +92,7 @@ class Pj_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Cadastro
     form_class = Pf_ModelForm
-    template_name = 'cadastros/pessoa/cadastro_pessoa.html'
+    template_name = 'register/register_person.html.html' 
     success_url = reverse_lazy('pessoa')
     permission_required = 'cadastros.add_cadastro'
 
@@ -121,7 +121,7 @@ class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 class Pf_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Cadastro
     form_class = Pf_ModelForm
-    template_name = 'cadastros/pessoa/cadastro_pessoa.html'
+    template_name = 'register/register_person.html.html'
     success_url = reverse_lazy('pessoa')
     permission_required = 'cadastros.change_cadastro'
 
@@ -148,7 +148,7 @@ class Pf_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Cadastro
     form_class = Pj_ModelForm
-    template_name = 'cadastros/empresa/cadastro_empresa.html'
+    template_name = 'register/register_enterprise.html'
     success_url = reverse_lazy('empresa')
     permission_required = 'cadastros.add_cadastro'
 
@@ -177,7 +177,7 @@ class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 class Pj_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Cadastro
     form_class = Pj_ModelForm
-    template_name = 'cadastros/empresa/cadastro_empresa.html'
+    template_name = 'register/register_enterprise.html'
     success_url = reverse_lazy('empresa')
     permission_required = 'cadastros.change_cadastro'
 
