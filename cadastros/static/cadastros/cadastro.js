@@ -13,14 +13,14 @@ window.onload = function () {
 
 
 $(document).ready(function () {
-    $('#id_tipo_de_documento').on('change', configurarCampoDocumento);
+    $('#id_document_type').on('change', configurarCampoDocumento);
 });
 
 function configurarCampoDocumento() {
-    let tipo_titular = document.getElementById('id_tipo_de_documento');
-    let documento_titular = document.getElementById('id_documento_titular');
-    let texto_documento_titular = document.getElementById('texto_documento_titular')
-    let titular_conta = document.getElementById('id_nome_razao_titular')
+    let tipo_titular = document.getElementById('id_document_type');
+    let documento_titular = document.getElementById('id_document_holder');
+    let texto_documento_titular = document.getElementById('texto_nomerazao_titular')
+    let titular_conta = document.getElementById('id_title_holder')
     let titular_conta_label = document.getElementById('texto_nomerazao_titular')
 
 
