@@ -100,6 +100,19 @@
             <span class="text-danger">{{ error }}</span>
         {% endfor %}
     </div>
+
+    <!-- ===== OBS ===== -->
+    <div class="col-sm-12 col-md-12 mb-3">
+        <label for="{{ form.obs.id_for_label }}" class="form-label">{{ form.obs.label }}: {% if form.obs.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+        {% render_field form.obs class="form-control" rows="2" %}
+        {% for error in form.obs.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+        <div class="invalid-feedback">
+            Este campo é obrigatório
+        </div>
+    </div>
+
 </section>
 
 <div class="modal" tabindex="-1" id="Modal-CNPJ">

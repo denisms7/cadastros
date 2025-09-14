@@ -63,7 +63,7 @@ class Pf_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'cadastros.view_cadastro'
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(active=0).order_by('name', 'last_name')  # Filtra apenas pessoa
+        queryset = super().get_queryset().filter(type=0).order_by('name', 'last_name')  # Filtra apenas pessoa
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
@@ -99,7 +99,7 @@ class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     def form_valid(self, form):
 
         form.instance.tipo = 0
-        form.instance.cadastrado_por = self.request.user
+        form.instance.created_by = self.request.user
 
         try:
             url = super().form_valid(form)
@@ -113,7 +113,7 @@ class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         if "cpf" in str(e):
             messages.warning(self.request, "Cadastro com CPF Duplicado. o registro nao foi salvo")
         else:
-            messages.error(self.request, "Erro. Salvamento cancelado")
+            messages.error(self.request, f"Erro. Salvamento cancelado {e}")
         return self.form_invalid(self.get_form())
 
 
@@ -155,7 +155,7 @@ class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     def form_valid(self, form):
 
         form.instance.tipo = 1
-        form.instance.cadastrado_por = self.request.user
+        form.instance.created_by = self.request.user
 
         try:
             url = super().form_valid(form)
@@ -227,7 +227,7 @@ class Pf_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
 
 class Log_View(LoginRequiredMixin, PermissionRequiredMixin, View):
     paginate_by = 20
-    template_name = "cadastros/historico.html"
+    template_name = "register/history.html"
     permission_required = 'cadastros.view_cadastro'
 
     def get(self, request, pk, *args, **kwargs):
