@@ -63,6 +63,7 @@ class Pj_ModelForm(forms.ModelForm):
             'pix_1',
             'pix_2',
             'obs_bank',
+
         ]
         widgets = {
             'cnpj_date': forms.DateInput(format=("%Y-%m-%d")),
@@ -76,6 +77,9 @@ class Pj_ModelForm(forms.ModelForm):
                 raise ValidationError('CNPJ Inválido')
             return cnpj
         return cnpj
+    
+    def clean_type(self):
+        return 1
 
     def clean_cep(self):
         cep = self.cleaned_data.get('cep')
@@ -169,6 +173,7 @@ class Pf_ModelForm(forms.ModelForm):
             'cnh_emission',
             'cnh_validity',
             'cnh_category',
+
         ]
         widgets = {
             'rg_expedition': forms.DateInput(format=("%Y-%m-%d")),
@@ -185,6 +190,9 @@ class Pf_ModelForm(forms.ModelForm):
                 raise ValidationError('CPF Inválido')
             return cpf
         return cpf
+    
+    def clean_type(self):
+        return 0
 
     def clean_cep(self):
         cep = self.cleaned_data.get('cep')

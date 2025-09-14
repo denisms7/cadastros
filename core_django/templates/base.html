@@ -24,27 +24,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Pessoa Juridica
-                        </a>
-                        <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="{% url 'empresa-add' %}">Added</a></li>
-                          <li><a class="dropdown-item" href="{% url 'empresa' %}">Busca</a></li>
-                        </ul>
-                      </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Pessoa Fisica
-                        </a>
-                        <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="{% url 'pessoa-add' %}">Added</a></li>
-                          <li><a class="dropdown-item" href="{% url 'pessoa' %}">Busca</a></li>
-                        </ul>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="{% url 'contacts_' %}">Agenda</a>
-                      </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'pessoa' %}">Pessoa Fisica</a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'empresa' %}">Pessoa Juridica</a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contacts_' %}">Agenda</a>
+                  </li>
+
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">

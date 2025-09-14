@@ -79,7 +79,7 @@ class Pj_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'cadastros.view_cadastro'
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(active=1).order_by('legal', 'fantasy')  # Filtra apenas empresas
+        queryset = super().get_queryset().filter(type=1).order_by('legal', 'fantasy')  # Filtra apenas empresas
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
@@ -98,7 +98,7 @@ class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
     def form_valid(self, form):
 
-        form.instance.tipo = 0
+        form.instance.type = 0
         form.instance.created_by = self.request.user
 
         try:
@@ -153,8 +153,7 @@ class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = 'cadastros.add_cadastro'
 
     def form_valid(self, form):
-
-        form.instance.tipo = 1
+        form.instance.type = 1
         form.instance.created_by = self.request.user
 
         try:
@@ -222,7 +221,7 @@ class Pf_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
             messages.warning(request, "Não é possível deletar este registro devido a vínculos restritos.")
         except Exception:
             messages.error(request, "Ocorreu um erro ao tentar deletar este registro.")
-        return redirect(self.success_url)
+        return redirect(self.success_url)  
 
 
 class Log_View(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -267,5 +266,4 @@ class Log_View(LoginRequiredMixin, PermissionRequiredMixin, View):
         return render(
             request,
             self.template_name,
-            {"cadastro": cadastro, "page_obj": page_obj},
-        )
+            {"cadastro": cadastro, "page_obj": page_obj})

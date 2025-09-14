@@ -72,7 +72,7 @@ class Cadastro(models.Model):
     ]
 
     # Sistema
-    type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES, verbose_name=_('Tipo'), default=0)
+    type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES, verbose_name=_('Tipo'), default=None)
     active = models.BooleanField(choices=ACTIVE_CHOICES, verbose_name=_('Ativo'), default=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Cadastro'))
     created_by = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name=_('Cadastrado'))

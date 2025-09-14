@@ -1,11 +1,11 @@
 window.onload = function () {
-    formatarTelefone("input", "id_fone_1");
-    formatarTelefone("input", "id_fone_2");
-    formatarTelefone("input", "id_fone_3");
+    formatarTelefone("input", "id_phone_1");
+    formatarTelefone("input", "id_phone_2");
+    formatarTelefone("input", "id_phone_3");
 
-    atualizarBotaoContato("id_fone_1", "btn_id_fone_1");
-    atualizarBotaoContato("id_fone_2", "btn_id_fone_2");
-    atualizarBotaoContato("id_fone_3", "btn_id_fone_3");
+    atualizarBotaoContato("id_phone_1", "btn_id_phone_1");
+    atualizarBotaoContato("id_phone_2", "btn_id_phone_2");
+    atualizarBotaoContato("id_phone_3", "btn_id_phone_3");
 
     AbrirConjuge()
     configurarCampoDocumento()
@@ -113,44 +113,44 @@ function carregarCNPJ(cnpj) {
                 success: function (response) {
                     if (response.status === "OK") {
                         if (response.nome != '') {
-                            document.getElementById('id_pessoa_juridica').value = response.nome
+                            document.getElementById('id_legal').value = response.nome
                         }
                         if (response.fantasia != '') {
-                            document.getElementById('id_nome_fantasia').value = response.fantasia
+                            document.getElementById('id_fantasy').value = response.fantasia
                         }
                         if (response.cep != '') {
                             document.getElementById('id_cep').value = response.cep
                         }
                         if (response.uf != '') {
-                            document.getElementById('id_estado').value = response.uf
+                            document.getElementById('id_state').value = response.uf
                         }
                         if (response.municipio != '') {
-                            document.getElementById('id_cidade').value = response.municipio
+                            document.getElementById('id_city').value = response.municipio
                         }
                         if (response.bairro != '') {
-                            document.getElementById('id_bairro').value = response.bairro
+                            document.getElementById('id_neighborhood').value = response.bairro
                         }
                         if (response.logradouro != '') {
-                            document.getElementById('id_endereco').value = response.logradouro
+                            document.getElementById('id_address').value = response.logradouro
                         }
                         if (response.numero != '') {
-                            document.getElementById('id_numero').value = response.numero
+                            document.getElementById('id_number').value = response.numero
                         }
                         if (response.situacao != '') {
-                            document.getElementById('id_cnpj_situacao').value = response.situacao
+                            document.getElementById('id_cnpj_situation').value = response.situacao
                         }
                         if (response.porte != '') {
-                            document.getElementById('id_cnpj_porte').value = response.porte
+                            document.getElementById('id_cnpj_carrying').value = response.porte
                         }
                         if (response.abertura != '') {
                             let dataOriginal = response.abertura
                             let partesData = dataOriginal.split("/");
                             let dataNova = new Date(partesData[2], partesData[1] - 1, partesData[0]);
                             let novaStringData = dataNova.toISOString().slice(0, 10);
-                            document.getElementById('id_cnpj_data_abertura').value = novaStringData
+                            document.getElementById('id_cnpj_date').value = novaStringData
                         }
                         if (response.tipo != '') {
-                            document.getElementById('id_cnpj_tipo').value = response.tipo
+                            document.getElementById('id_cnpj_type_activity').value = response.tipo
                         }
                         if (response.atividade_principal.length > 0) {
                             let dados_web = response.atividade_principal;
@@ -158,7 +158,7 @@ function carregarCNPJ(cnpj) {
                             for (let i = 0; i < dados_web.length; i++) {
                                 dados = dados_web[i].code + ' - ' + dados_web[i].text + '. '
                             }
-                            document.getElementById('id_cnpj_atividade_principal').value = dados;
+                            document.getElementById('cnpj_activity').value = dados;
                         }
                         if (response.atividades_secundarias.length > 0) {
                             let dados_web = response.atividades_secundarias;
