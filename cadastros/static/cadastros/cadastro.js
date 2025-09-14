@@ -259,16 +259,16 @@ function atualizarBotaoContato(inputId, botaoId) {
 }
 
 
-document.getElementById("id_fone_1_tipo").addEventListener("input", function () {
-    atualizarBotaoContato("id_fone_1", "btn_id_fone_1");
+document.getElementById("id_phone_1_tipo").addEventListener("input", function () {
+    atualizarBotaoContato("id_phone_1", "btn_id_phone_1");
 });
 
-document.getElementById("id_fone_2_tipo").addEventListener("input", function () {
-    atualizarBotaoContato("id_fone_2", "btn_id_fone_2");
+document.getElementById("id_phone_2_tipo").addEventListener("input", function () {
+    atualizarBotaoContato("id_phone_2", "btn_id_phone_2");
 });
 
-document.getElementById("id_fone_3_tipo").addEventListener("input", function () {
-    atualizarBotaoContato("id_fone_3", "btn_id_fone_3");
+document.getElementById("id_phone_3_tipo").addEventListener("input", function () {
+    atualizarBotaoContato("id_phone_3", "btn_id_phone_3");
 });
 
 
@@ -296,16 +296,16 @@ function formatarTelefone(event, inputId) {
     document.getElementById(inputId).value = retorno;
 }
 
-document.getElementById("id_fone_1").addEventListener("input", function (event) {
-    formatarTelefone(event, "id_fone_1");
+document.getElementById("id_phone_1").addEventListener("input", function (event) {
+    formatarTelefone(event, "id_phone_1");
 });
 
-document.getElementById("id_fone_2").addEventListener("input", function (event) {
-    formatarTelefone(event, "id_fone_2");
+document.getElementById("id_phone_2").addEventListener("input", function (event) {
+    formatarTelefone(event, "id_phone_2");
 });
 
-document.getElementById("id_fone_3").addEventListener("input", function (event) {
-    formatarTelefone(event, "id_fone_3");
+document.getElementById("id_phone_3").addEventListener("input", function (event) {
+    formatarTelefone(event, "id_phone_3");
 });
 
 
@@ -316,20 +316,20 @@ document.getElementById("id_fone_3").addEventListener("input", function (event) 
 // Buscar CEP
 function limpa_formulário_cep() {
     //Limpa valores do formulário de cep.
-    document.getElementById('id_endereco').value = ("");
-    document.getElementById('id_bairro').value = ("");
-    document.getElementById('id_cidade').value = ("");
-    document.getElementById('id_estado').value = ("");
+    document.getElementById('id_address').value = ("");
+    document.getElementById('id_neighborhood').value = ("");
+    document.getElementById('id_city').value = ("");
+    document.getElementById('id_state').value = ("");
     document.getElementById('ceplog').classList.remove('d-block')
 }
 
 function meu_callback(conteudo) {
     if (!("erro" in conteudo)) {
         //Atualiza os campos com os valores.
-        document.getElementById('id_endereco').value = (conteudo.logradouro);
-        document.getElementById('id_bairro').value = (conteudo.bairro);
-        document.getElementById('id_cidade').value = (conteudo.localidade);
-        document.getElementById('id_estado').value = (conteudo.uf);
+        document.getElementById('id_address').value = (conteudo.logradouro);
+        document.getElementById('id_neighborhood').value = (conteudo.bairro);
+        document.getElementById('id_city').value = (conteudo.localidade);
+        document.getElementById('id_state').value = (conteudo.uf);
         document.getElementById('ceplog').classList.remove('d-block')
     } //end if.
     else {
@@ -351,10 +351,10 @@ function pesquisacep(valor) {
         //Valida o formato do CEP.
         if (validacep.test(cep)) {
             //Preenche os campos com "..." enquanto consulta webservice.
-            document.getElementById('id_endereco').value = "...";
-            document.getElementById('id_bairro').value = "...";
-            document.getElementById('id_cidade').value = "...";
-            document.getElementById('id_estado').value = "...";
+            document.getElementById('id_address').value = "...";
+            document.getElementById('id_neighborhood').value = "...";
+            document.getElementById('id_city').value = "...";
+            document.getElementById('id_state').value = "...";
             //Cria um elemento javascript.
             var script = document.createElement('script');
             //Sincroniza com o callback.
