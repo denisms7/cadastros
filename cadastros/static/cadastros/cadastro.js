@@ -223,6 +223,10 @@ function AbrirConjuge() {
 
 }
 
+
+
+
+
 // FORMATAR BOTAO TELEFONE
 function atualizarBotaoContato(inputId, botaoId) {
     let fone = document.getElementById(inputId).value
@@ -259,17 +263,23 @@ function atualizarBotaoContato(inputId, botaoId) {
 }
 
 
-document.getElementById("id_phone_1_tipo").addEventListener("input", function () {
+document.getElementById("id_phone_1_type").addEventListener("input", function () {
     atualizarBotaoContato("id_phone_1", "btn_id_phone_1");
 });
 
-document.getElementById("id_phone_2_tipo").addEventListener("input", function () {
+document.getElementById("id_phone_2_type").addEventListener("input", function () {
     atualizarBotaoContato("id_phone_2", "btn_id_phone_2");
 });
 
-document.getElementById("id_phone_3_tipo").addEventListener("input", function () {
+document.getElementById("id_phone_3_type").addEventListener("input", function () {
     atualizarBotaoContato("id_phone_3", "btn_id_phone_3");
 });
+
+
+
+
+
+
 
 
 
