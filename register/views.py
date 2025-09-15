@@ -92,7 +92,7 @@ class Pj_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Register
     form_class = Pf_ModelForm
-    template_name = 'register/register_person.html.html' 
+    template_name = 'register/register_person.html.html'
     success_url = reverse_lazy('person_')
     permission_required = 'register.add_register'
 
@@ -192,7 +192,7 @@ class Pj_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = 'register.delete_register'
 
     def post(self, request, pk, *args, **kwargs):
-        registro = get_object_or_404(Cadastro, id=pk)
+        registro = get_object_or_404(Register, id=pk)
         try:
             registro.delete()
             messages.success(request, "Cadastro deletado")
@@ -211,7 +211,7 @@ class Pf_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = 'register.delete_register'
 
     def post(self, request, pk, *args, **kwargs):
-        registro = get_object_or_404(Cadastro, id=pk)
+        registro = get_object_or_404(Register, id=pk)
         try:
             registro.delete()
             messages.success(request, "Cadastro deletado")
@@ -221,7 +221,7 @@ class Pf_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
             messages.warning(request, "Não é possível deletar este registro devido a vínculos restritos.")
         except Exception:
             messages.error(request, "Ocorreu um erro ao tentar deletar este registro.")
-        return redirect(self.success_url)  
+        return redirect(self.success_url)
 
 
 class Log_View(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -230,7 +230,7 @@ class Log_View(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = 'register.view_register'
 
     def get(self, request, pk, *args, **kwargs):
-        cadastro = get_object_or_404(Cadastro, pk=pk)
+        cadastro = get_object_or_404(Register, pk=pk)
         historico = list(cadastro.history.all().order_by("-history_date"))
 
         historico_com_diffs = []

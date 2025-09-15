@@ -8,6 +8,7 @@ ACTIVE_CHOICES = [
     (False, _('Inativo')),
 ]
 
+
 class Register(models.Model):
     SEXO_CHOICES = [
         ('M', _('Masculino')),

@@ -44,6 +44,7 @@ def cnpj_validate(cnpj: str) -> bool:
             return False
     return True
 
+
 def get_bank():
     # Tenta pegar do cache
     bancos = cache.get(CACHE_KEY)
@@ -59,7 +60,7 @@ def get_bank():
     except (requests.exceptions.RequestException, ValueError) as e:
         logger.error(f'Erro ao buscar bancos: {e}')
         return [(0, '---------')]
-    
+
     bancos = [(bank['code'], f"{bank['code']} - {bank['name']}") for bank in data if bank.get('code')]
     bancos.sort()
     bancos = [(0, '---------')] + bancos

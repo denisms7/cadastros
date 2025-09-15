@@ -17,7 +17,6 @@ class Pj_ModelForm(forms.ModelForm):
         model = Register
         fields = [
             'active',
-    
             'legal',
             'fantasy',
             'cnpj',
@@ -29,7 +28,6 @@ class Pj_ModelForm(forms.ModelForm):
             'n_state',
             'n_municipal',
             'obs',
-
             'email_1',
             'email_2',
             'phone_1',
@@ -41,7 +39,6 @@ class Pj_ModelForm(forms.ModelForm):
             'link_1',
             'link_2',
             'obs_contact',
-
             'cep',
             'state',
             'city',
@@ -50,12 +47,10 @@ class Pj_ModelForm(forms.ModelForm):
             'number',
             'complement',
             'obs_address',
-
             'title_holder',
             'document_type',
             'document_holder',
             'account_type',
-
             'bank',
             'agency',
             'account',
@@ -63,7 +58,6 @@ class Pj_ModelForm(forms.ModelForm):
             'pix_1',
             'pix_2',
             'obs_bank',
-
         ]
         widgets = {
             'cnpj_date': forms.DateInput(format=("%Y-%m-%d")),
@@ -77,7 +71,7 @@ class Pj_ModelForm(forms.ModelForm):
                 raise ValidationError('CNPJ Inválido')
             return cnpj
         return cnpj
-    
+
     def clean_type(self):
         return 1
 
@@ -114,7 +108,6 @@ class Pf_ModelForm(forms.ModelForm):
         model = Register
         fields = [
             'active',
-
             'name',
             'last_name',
             'cpf',
@@ -124,17 +117,14 @@ class Pf_ModelForm(forms.ModelForm):
             'birth',
             'education',
             'sex',
-
             'spouse_status',
             'spouse_name',
             'spouse_last_name',
-
             'mother_name',
             'mother_last_name',
             'father_name',
             'father_last_name',
             'obs',
-
             'email_1',
             'email_2',
             'phone_1',
@@ -146,7 +136,6 @@ class Pf_ModelForm(forms.ModelForm):
             'link_1',
             'link_2',
             'obs_contact',
-
             'cep',
             'state',
             'city',
@@ -155,12 +144,10 @@ class Pf_ModelForm(forms.ModelForm):
             'number',
             'complement',
             'obs_address',
-
             'title_holder',
             'document_type',
             'document_holder',
             'account_type',
-        
             'bank',
             'agency',
             'account',
@@ -168,12 +155,10 @@ class Pf_ModelForm(forms.ModelForm):
             'pix_1',
             'pix_2',
             'obs_bank',
-
             'cnh_n',
             'cnh_emission',
             'cnh_validity',
             'cnh_category',
-
         ]
         widgets = {
             'rg_expedition': forms.DateInput(format=("%Y-%m-%d")),
@@ -190,7 +175,7 @@ class Pf_ModelForm(forms.ModelForm):
                 raise ValidationError('CPF Inválido')
             return cpf
         return cpf
-    
+
     def clean_type(self):
         return 0
 
