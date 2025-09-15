@@ -34,7 +34,7 @@
             <p>* Esta ação não poderá ser desfeita</p>
         </div>
         <div class="modal-footer">
-            <form method="post" action="{% url 'empresa-delete' item.pk %}">
+            <form method="post" action="{% url 'enterprise_delete' item.pk %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger">
                     <i class="bi bi-check-lg"></i>

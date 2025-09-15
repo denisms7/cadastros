@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'simple_history',
 
-    'cadastros.apps.CadastrosConfig',
+    'register',
 ]
 
 MIDDLEWARE = [

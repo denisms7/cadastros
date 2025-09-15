@@ -9,15 +9,15 @@ from django.db import IntegrityError
 from django.db.models import Q
 from django.db.models.deletion import ProtectedError, RestrictedError
 from django.core.paginator import Paginator
-from .models import Cadastro
+from .models import Register
 from .forms import Detail_ModelForm, Pf_ModelForm, Pj_ModelForm
 
 
 class Pf_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
-    model = Cadastro
+    model = Register
     template_name = 'register/register_person.html.html'
     context_object_name = 'cadastro'
-    permission_required = 'cadastros.view_cadastro'
+    permission_required = 'register.view_register'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -28,10 +28,10 @@ class Pf_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
 
 
 class Pj_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
-    model = Cadastro
+    model = Register
     template_name = 'register/register_enterprise.html'
     context_object_name = 'cadastro'
-    permission_required = 'cadastros.view_cadastro'
+    permission_required = 'register.view_register'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -42,7 +42,7 @@ class Pj_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
 
 
 class Contacts_ListView(LoginRequiredMixin, ListView):
-    model = Cadastro
+    model = Register
     template_name = 'register/contacts.html'
     paginate_by = 15
 
@@ -58,9 +58,9 @@ class Contacts_ListView(LoginRequiredMixin, ListView):
 
 class Pf_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     paginate_by = 10
-    model = Cadastro
+    model = Register
     template_name = 'register/list_person.html'
-    permission_required = 'cadastros.view_cadastro'
+    permission_required = 'register.view_register'
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(type=0).order_by('name', 'last_name')  # Filtra apenas pessoa
@@ -74,9 +74,9 @@ class Pf_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
 class Pj_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     paginate_by = 10
-    model = Cadastro
+    model = Register
     template_name = 'register/list_enterprise.html'
-    permission_required = 'cadastros.view_cadastro'
+    permission_required = 'register.view_register'
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(type=1).order_by('legal', 'fantasy')  # Filtra apenas empresas
@@ -90,11 +90,11 @@ class Pj_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
 # Criar Pessaoa
 class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    model = Cadastro
+    model = Register
     form_class = Pf_ModelForm
     template_name = 'register/register_person.html.html' 
-    success_url = reverse_lazy('pessoa')
-    permission_required = 'cadastros.add_cadastro'
+    success_url = reverse_lazy('person_')
+    permission_required = 'register.add_register'
 
     def form_valid(self, form):
 
@@ -119,11 +119,11 @@ class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 # Editar Pessoa
 class Pf_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
-    model = Cadastro
+    model = Register
     form_class = Pf_ModelForm
     template_name = 'register/register_person.html.html'
-    success_url = reverse_lazy('pessoa')
-    permission_required = 'cadastros.change_cadastro'
+    success_url = reverse_lazy('person_')
+    permission_required = 'register.change_register'
 
     def form_valid(self, form):
 
@@ -146,11 +146,11 @@ class Pf_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 # EMPRESA =====================================================================================================
 # Criar Empresa
 class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    model = Cadastro
+    model = Register
     form_class = Pj_ModelForm
     template_name = 'register/register_enterprise.html'
-    success_url = reverse_lazy('empresa')
-    permission_required = 'cadastros.add_cadastro'
+    success_url = reverse_lazy('enterprise_')
+    permission_required = 'register.add_register'
 
     def form_valid(self, form):
         form.instance.type = 1
@@ -174,11 +174,11 @@ class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 # Editar Empresa
 class Pj_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
-    model = Cadastro
+    model = Register
     form_class = Pj_ModelForm
     template_name = 'register/register_enterprise.html'
-    success_url = reverse_lazy('empresa')
-    permission_required = 'cadastros.change_cadastro'
+    success_url = reverse_lazy('enterprise_')
+    permission_required = 'register.change_register'
 
     def form_valid(self, form):
         url = super().form_valid(form)
@@ -189,7 +189,7 @@ class Pj_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 # Delete Empresa
 class Pj_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
     success_url = reverse_lazy("empresa")
-    permission_required = 'cadastros.delete_cadastro'
+    permission_required = 'register.delete_register'
 
     def post(self, request, pk, *args, **kwargs):
         registro = get_object_or_404(Cadastro, id=pk)
@@ -208,7 +208,7 @@ class Pj_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
 # Delete Pessoa
 class Pf_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
     success_url = reverse_lazy("pessoa")
-    permission_required = 'cadastros.delete_cadastro'
+    permission_required = 'register.delete_register'
 
     def post(self, request, pk, *args, **kwargs):
         registro = get_object_or_404(Cadastro, id=pk)
@@ -227,7 +227,7 @@ class Pf_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
 class Log_View(LoginRequiredMixin, PermissionRequiredMixin, View):
     paginate_by = 20
     template_name = "register/history.html"
-    permission_required = 'cadastros.view_cadastro'
+    permission_required = 'register.view_register'
 
     def get(self, request, pk, *args, **kwargs):
         cadastro = get_object_or_404(Cadastro, pk=pk)

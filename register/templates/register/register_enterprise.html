@@ -4,17 +4,23 @@
 {% load widget_tweaks %}
 
 {% block titulo %}
-PF - Cadastro
+PJ - Cadastro
 {% endblock %}
 
+
 {% block pagina %}
+
+
+<div class="container">
+    <div id="liveAlertPlaceholder"></div>
+</div>
 
 <div class="container">
     <div class="d-flex justify-content-between">
         <div>
             <h2>
-                <i class="bi bi-person-vcard me-2"></i>
-                Cadastro de Pessoa
+                <i class="bi bi-building"></i>
+                Cadastro de Empresa
             </h2>
         </div>
         <div>
@@ -27,18 +33,24 @@ PF - Cadastro
         </div>
     </div>
 </div>
+
 <div class="container">
     <hr>
 </div>
 
-
 <div class="container">
+
     <form method="post" class="needs-validation" novalidate>
+
         {% csrf_token %}
+
         <p class="text-secondary fw-lighter text-end">
             Informe todos os campos obrigatorios (<span class="text-danger"><b>*</b></span>)
         </p>
-        {% include "register/components/pessoa.html" %}
+
+
+        {% include "register/components/empresa.html" %}
+
         <p>
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                 <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" data-bs-toggle="collapse" href="#idContato" role="button">
@@ -46,24 +58,21 @@ PF - Cadastro
                     <i class="bi bi-telephone"></i>
                     Contato
                 </label>
+            
                 <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" data-bs-toggle="collapse" href="#idEndereco" role="button">
                 <label class="btn btn-outline-primary" for="btncheck2">
                     <i class="bi bi-mailbox"></i>
                     Endereço
                 </label>
+            
                 <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off" data-bs-toggle="collapse" href="#idBanco" role="button">
                 <label class="btn btn-outline-primary" for="btncheck3">
                     <i class="bi bi-bank"></i>
                     Dados Bancários
                 </label>
-
-                <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off" data-bs-toggle="collapse" href="#idveiculo" role="button">
-                <label class="btn btn-outline-primary" for="btncheck4">
-                    <i class="bi bi-car-front"></i>
-                    Habilitação
-                </label>
             </div>
         </p>
+
         <div class="collapse" id="idContato">
             {% include "register/components/contato.html" %}
         </div>
@@ -73,10 +82,7 @@ PF - Cadastro
         <div class="collapse" id="idBanco">
             {% include "register/components/bacario.html" %}
         </div>
-        <div class="collapse" id="idveiculo">
-            {% include "register/components/veiculo.html" %}
-        </div>
-        
+
         {% include "register/components/outros.html" %}
 
         <!-- ========================================================================================================== -->
@@ -90,7 +96,7 @@ PF - Cadastro
                     <i class="bi bi-x me-1"></i> Limpar
                 </button>
             {% else %}
-                <a href="{% url 'pessoa-edit' cadastro.pk %}" title="Editar Registro" class="btn btn-primary my-1 me-1">
+                <a href="{% url 'enterprise_edit' cadastro.pk %}" title="Editar Registro" class="btn btn-primary my-1 me-1">
                     <i class="bi bi-pencil"></i> Editar
                 </a>
             {% endif %}
@@ -101,10 +107,12 @@ PF - Cadastro
     </form>
 </div>
 
-    <script src="{% static 'cadastros/jQuery-v3.6.4.js' %}"></script>
-    <script src="{% static 'cadastros/jQuery Mask Plugin v1.14.16.js' %}"></script>
-    <script src="{% static 'cadastros/cadastro.js' %}"></script>
-    <script src="{% static 'cadastros/verifica_campos.js' %}"></script>
-    <script src="{% static 'cadastros/validacao.js' %}"></script>
+
+<script src="{% static 'cadastros/jQuery-v3.6.4.js' %}"></script>
+<script src="{% static 'cadastros/jQuery Mask Plugin v1.14.16.js' %}"></script>
+<script src="{% static 'cadastros/cadastro.js' %}"></script>
+<script src="{% static 'cadastros/verifica_campos.js' %}"></script>
+<script src="{% static 'cadastros/validacao.js' %}"></script>
+
 
 {% endblock %}

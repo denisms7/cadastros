@@ -1,5 +1,5 @@
 from django import forms
-from .models import Cadastro
+from .models import Register
 from django.core.exceptions import ValidationError
 from cadastros.utils import cpf_validate, cnpj_validate, get_bank
 
@@ -14,7 +14,7 @@ class Pj_ModelForm(forms.ModelForm):
         self.fields['cnpj'].required = True
 
     class Meta:
-        model = Cadastro
+        model = Register
         fields = [
             'active',
     
@@ -111,7 +111,7 @@ class Pf_ModelForm(forms.ModelForm):
         self.fields['sex'].required = True
 
     class Meta:
-        model = Cadastro
+        model = Register
         fields = [
             'active',
 
@@ -217,7 +217,7 @@ class Detail_ModelForm(forms.ModelForm):
     bank = forms.ChoiceField(choices=get_bank(), required=False)
 
     class Meta:
-        model = Cadastro
+        model = Register
         fields = "__all__"
 
     def __init__(self, *args, **kwargs):

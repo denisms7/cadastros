@@ -22,7 +22,7 @@ PJ - Busca
 
 <div class="container">
     <div class="d-flex justify-content-end my-3">
-        <a href="{% url 'empresa-add' %}" class="btn btn-primary">
+        <a href="{% url 'enterprise_add' %}" class="btn btn-primary">
             <i class="bi bi-building-add me-1"></i>
             Adicionar Novo
         </a>
@@ -67,7 +67,7 @@ PJ - Busca
                     <td style="white-space: nowrap;">{{ item.cnpj|cnpj_format }}</td>
                     <td>
                         <div class="text-end">
-                            <a href="{% url 'empresa-detail' item.pk %}" title="Ver Registro" class="btn btn-info btn-sm mb-1 mb-sm-0">
+                            <a href="{% url 'enterprise_detail' item.pk %}" title="Ver Registro" class="btn btn-info btn-sm mb-1 mb-sm-0">
                                 <i class="bi bi-eye"></i>
                             </a>
                             <button title="Apagar Registro" class="btn btn-danger btn-sm mb-1 mb-sm-0"  data-bs-toggle="modal" data-bs-target="#delete-{{item.pk}}">
