@@ -1,7 +1,7 @@
 from django import forms
 from .models import Register
 from django.core.exceptions import ValidationError
-from cadastros.utils import cpf_validate, cnpj_validate, get_bank
+from .utils import cpf_validate, cnpj_validate, get_bank
 
 
 class Pj_ModelForm(forms.ModelForm):

@@ -56,13 +56,13 @@ MIDDLEWARE = [
     'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
-ROOT_URLCONF = 'core_django.urls'
+ROOT_URLCONF = 'app.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'core_django' / 'templates',
+            BASE_DIR / 'app' / 'templates',
             BASE_DIR / 'templates',
         ],
         'APP_DIRS': True,
@@ -77,7 +77,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'core_django.wsgi.application'
+WSGI_APPLICATION = 'app.wsgi.application'
 
 
 # Database
