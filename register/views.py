@@ -188,7 +188,7 @@ class Pj_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
 # Delete Empresa
 class Pj_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
-    success_url = reverse_lazy("empresa")
+    success_url = reverse_lazy("enterprise_")
     permission_required = 'register.delete_register'
 
     def post(self, request, pk, *args, **kwargs):
@@ -207,7 +207,7 @@ class Pj_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
 
 # Delete Pessoa
 class Pf_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
-    success_url = reverse_lazy("pessoa")
+    success_url = reverse_lazy("person_")
     permission_required = 'register.delete_register'
 
     def post(self, request, pk, *args, **kwargs):

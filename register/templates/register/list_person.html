@@ -69,11 +69,11 @@ PF - Busca
                     <td>{{item.name}} {{item.last_name}}</td>
                     <td style="white-space: nowrap;">{{ item.cpf|cpf_format }}</td>
                     <td>
-                        <div class="text-end">
-                            <a href="{% url 'person_detail' item.pk %}" title="Ver Registro" class="btn btn-info btn-sm mb-1 mb-sm-0">
+                        <div class="d-flex justify-content-end gap-2">
+                            <a href="{% url 'person_detail' item.pk %}" title="Ver Registro" class="btn btn-info btn-sm">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <button title="Apagar Registro" class="btn btn-danger btn-sm mb-1 mb-sm-0"  data-bs-toggle="modal" data-bs-target="#delete-{{item.pk}}">
+                            <button title="Apagar Registro" class="btn btn-danger btn-sm"  data-bs-toggle="modal" data-bs-target="#delete-{{item.pk}}">
                                 <i class="bi bi-trash3"></i> 
                             </button>
                         </div>
