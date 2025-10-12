@@ -90,7 +90,7 @@ INSTALLED_APPS = [
     'simple_history',
     'widget_tweaks',
     'django.contrib.humanize',
-    'cadastros.apps.CadastrosConfig',
+    'register',
     ...
     
 ]
