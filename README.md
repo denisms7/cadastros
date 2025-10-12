@@ -137,8 +137,7 @@ Configurar a variavel urlpatterns no arquivo urls.py com as URLS desejadas:
 ```
 urlpatterns = [
     ...
-    path('', include('cadastro_pessoa.urls')),
-    path('', include('cadastro_empresa.urls')),
+    path('', include('register.urls')),
     ...
 ]
 ```
