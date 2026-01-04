@@ -13,10 +13,8 @@ PJ - Busca
         <h2>
             🏢 Cadastros de Empresas
         </h2>
+        <hr>
     </div>
-</div>
-<div class="container">
-    <hr>
 </div>
 
 <div class="container">
@@ -28,6 +26,13 @@ PJ - Busca
                 <div class="input-group" id="busca">
                     <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Nome ou CNPJ"
                         class="form-control">
+
+                    {% if request.GET.q %}
+                        <a href="{% url 'enterprise_' %}" class="btn btn-warning" title="Limpar busca">
+                            <i class="bi bi-x-lg"></i>
+                        </a>
+                    {% endif %}
+
                     <button type="submit" title="Pesquisar Registros" class="btn btn-primary">
                         <i class="bi bi-search"></i>
                     </button>

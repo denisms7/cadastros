@@ -14,13 +14,9 @@ PF - Busca
         <h2>
         👥 Cadastros de Pessoas
         </h2>
+        <hr>
     </div>
 </div>
-<div class="container">
-    <hr>
-</div>
-
-
 
 <div class="container">
 
@@ -31,6 +27,13 @@ PF - Busca
                 <div class="input-group" id="busca">
                     <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Nome/Nome Completo ou CPF"
                         class="form-control">
+
+                    {% if request.GET.q %}
+                        <a href="{% url 'person_' %}" class="btn btn-warning" title="Limpar busca">
+                            <i class="bi bi-x-lg"></i>
+                        </a>
+                    {% endif %}
+
                     <button type="submit" title="Pesquisar Registros" class="btn btn-primary">
                         <i class="bi bi-search"></i>
                     </button>
