@@ -11,10 +11,13 @@ ACTIVE_CHOICES = [
 
 class Register(models.Model):
     SEXO_CHOICES = [
-        ('M', _('Masculino')),
-        ('F', _('Feminino')),
-        ('O', _('Outros')),
-        ('-', _('Não Informado')),
+        ('M', _('Homem cisgênero')),
+        ('MT', _('Homem transgênero')),
+        ('F', _('Mulher cisgênero')),
+        ('FT', _('Mulher transgênero')),
+        ('NF', _('Pessoa não binária do sexo feminino')),
+        ('NM', _('Pessoa não binária do sexo masculino')),
+        ('-', _('Não informado')),
     ]
 
     ESCOLARIDADE_CHOICES = [
@@ -97,7 +100,7 @@ class Register(models.Model):
     rg_expedition = models.DateField(verbose_name=_('Expedicao'), null=True, blank=True)
     birth = models.DateField(verbose_name=_('Nascimento'), null=True, blank=True)
     education = models.PositiveSmallIntegerField(choices=ESCOLARIDADE_CHOICES, verbose_name=_('Escolaridade'), null=True, blank=True)
-    sex = models.CharField(max_length=1, choices=SEXO_CHOICES, verbose_name=_('Sexo'), null=True, blank=True)
+    sex = models.CharField(max_length=2, choices=SEXO_CHOICES, verbose_name=_('Sexo'), null=True, blank=True)
     # Conjuge
     spouse_status = models.PositiveSmallIntegerField(choices=ESTADO_CIVIL_CHOICES, verbose_name=_('Estado Civil'), null=True, blank=True)
     spouse_name = models.CharField(max_length=50, verbose_name=_('Nome do Conjuge'), null=True, blank=True)
