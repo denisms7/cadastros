@@ -17,21 +17,21 @@
             </button>
         </div>
     </div>
-</div>
-
-<div class="container">
     <hr>
 </div>
 
-<div class="container mt-4">
-    <p class="">
+<div class="container">
+    <p class="text-uppercase">
         {% if cadastro.name %}
-            {{ cadastro.name }} {{ cadastro.last_name }}
+            <span class="fw-bold">🔹 NOME COMPLETO:</span> {{ cadastro.name }} {{ cadastro.last_name }}
         {% else %}
-            {{ cadastro.legal }} - {{ cadastro.fantasy }}
+            <span class="fw-bold">🔸 RAZÃO SOCIAL:</span> {{ cadastro.legal }}<br>
+            <span class="fw-bold">🔸 NOME FANTASIA:</span> {{ cadastro.fantasy }}
         {% endif %}
     </p>
+</div>
 
+<div class="container mt-4">
 
 {% for h in page_obj %}
 <div class="accordion mb-1" id="historicoAccordion">
