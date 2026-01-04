@@ -9,9 +9,19 @@ CACHE_TIMEOUT = 60 * 60  # 1 hora
 logger = logging.getLogger(__name__)
 
 
+def clear_data(data: str | None) -> str:
+    if not data:
+        return ''
+
+    for char in ('.', '-', '/', ' '):
+        data = data.replace(char, '')
+
+    return data
+
+
 def cpf_validate(cpf: str) -> bool:
     TAMANHO_CPF = 11
-    cpf = cpf.replace('.', '').replace('-', '').replace('/', '')
+    cpf = clear_data(cpf)
     if len(cpf) != TAMANHO_CPF:
         return False
     if not cpf.isdigit():
@@ -29,7 +39,7 @@ def cpf_validate(cpf: str) -> bool:
 
 def cnpj_validate(cnpj: str) -> bool:
     LENGTH_CNPJ = 14
-    cnpj = cnpj.replace('.', '').replace('-', '').replace('/', '')
+    cnpj = clear_data(cnpj)
     if len(cnpj) != LENGTH_CNPJ:
         return False
     if not cnpj.isdigit():
