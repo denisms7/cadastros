@@ -60,7 +60,7 @@ class Pj_ModelForm(forms.ModelForm):
             'obs_bank',
         ]
         widgets = {
-            'cnpj_date': forms.DateInput(format=("%Y-%m-%d")),
+            'cnpj_date': forms.DateInput(format=("%Y-%m-%d"), attrs={'type': 'date'}),
         }
 
     def clean_cnpj(self):
@@ -164,10 +164,10 @@ class Pf_ModelForm(forms.ModelForm):
             'cnh_category',
         ]
         widgets = {
-            'rg_expedition': forms.DateInput(format=("%Y-%m-%d")),
-            'birth': forms.DateInput(format=("%Y-%m-%d")),
-            'cnh_emission': forms.DateInput(format=("%Y-%m-%d")),
-            'cnh_validity': forms.DateInput(format=("%Y-%m-%d")),
+            'rg_expedition': forms.DateInput(format=("%Y-%m-%d"), attrs={'type': 'date'}),
+            'birth': forms.DateInput(format=("%Y-%m-%d"), attrs={'type': 'date'}),
+            'cnh_emission': forms.DateInput(format=("%Y-%m-%d"), attrs={'type': 'date'}),
+            'cnh_validity': forms.DateInput(format=("%Y-%m-%d"), attrs={'type': 'date'}),
         }
 
     def clean_cpf(self):
@@ -210,6 +210,13 @@ class Detail_ModelForm(forms.ModelForm):
     class Meta:
         model = Register
         fields = "__all__"
+        widgets = {
+            'rg_expedition': forms.DateInput(format=("%Y-%m-%d"), attrs={'type': 'date'}),
+            'birth': forms.DateInput(format=("%Y-%m-%d"), attrs={'type': 'date'}),
+            'cnh_emission': forms.DateInput(format=("%Y-%m-%d"), attrs={'type': 'date'}),
+            'cnh_validity': forms.DateInput(format=("%Y-%m-%d"), attrs={'type': 'date'}),
+            'cnpj_date': forms.DateInput(format=("%Y-%m-%d"), attrs={'type': 'date'}),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
