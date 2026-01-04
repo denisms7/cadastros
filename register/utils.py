@@ -47,9 +47,9 @@ def cnpj_validate(cnpj: str) -> bool:
 
 def get_bank():
     # Tenta pegar do cache
-    bancos = cache.get(CACHE_KEY)
-    if bancos is not None:
-        return bancos
+    bank = cache.get(CACHE_KEY)
+    if bank is not None:
+        return bank
 
     # Se não estiver no cache, busca da API
     url = 'https://brasilapi.com.br/api/banks/v1'
@@ -61,10 +61,10 @@ def get_bank():
         logger.error(f'Erro ao buscar bancos: {e}')
         return [(0, '---------')]
 
-    bancos = [(bank['code'], f"{bank['code']} - {bank['name']}") for bank in data if bank.get('code')]
-    bancos.sort()
-    bancos = [(0, '---------')] + bancos
+    bank = [(bank['code'], f"{bank['code']} - {bank['name']}") for bank in data if bank.get('code')]
+    bank.sort()
+    bank = [(0, '---------')] + bank
 
     # Salva no cache
-    cache.set(CACHE_KEY, bancos, CACHE_TIMEOUT)
-    return bancos
+    cache.set(CACHE_KEY, bank, CACHE_TIMEOUT)
+    return bank

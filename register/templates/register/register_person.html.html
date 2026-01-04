@@ -33,7 +33,7 @@ PF - Cadastro
         <p class="text-secondary fw-lighter text-end">
             Informe todos os campos obrigatorios (<span class="text-danger"><b>*</b></span>)
         </p>
-        {% include "register/components/pessoa.html" %}
+        {% include "register/components/person.html" %}
         <p>
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                 <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" data-bs-toggle="collapse" href="#idContato" role="button">
@@ -60,19 +60,19 @@ PF - Cadastro
             </div>
         </p>
         <div class="collapse" id="idContato">
-            {% include "register/components/contato.html" %}
+            {% include "register/components/contact.html" %}
         </div>
         <div class="collapse" id="idEndereco">
-            {% include "register/components/endereco.html" %}
+            {% include "register/components/address.html" %}
         </div>
         <div class="collapse" id="idBanco">
-            {% include "register/components/bacario.html" %}
+            {% include "register/components/banking.html" %}
         </div>
         <div class="collapse" id="idveiculo">
-            {% include "register/components/veiculo.html" %}
+            {% include "register/components/vehicle.html" %}
         </div>
         
-        {% include "register/components/outros.html" %}
+        {% include "register/components/others.html" %}
 
         <!-- ========================================================================================================== -->
         <!-- ===== BOTOES ===== -->
