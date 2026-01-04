@@ -16,7 +16,7 @@ from .forms import Detail_ModelForm, Pf_ModelForm, Pj_ModelForm
 class Pf_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Register
     template_name = 'register/register_person.html.html'
-    context_object_name = 'cadastro'
+    context_object_name = 'item'
     permission_required = 'register.view_register'
 
     def get_context_data(self, **kwargs):
@@ -30,7 +30,7 @@ class Pf_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
 class Pj_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Register
     template_name = 'register/register_enterprise.html'
-    context_object_name = 'cadastro'
+    context_object_name = 'item'
     permission_required = 'register.view_register'
 
     def get_context_data(self, **kwargs):
