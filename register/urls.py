@@ -4,6 +4,9 @@ from .views import Pj_DetailView, Pj_ListView, Pj_CreateView, Pj_UpdateView, Pj_
 from .views import Log_View, Contacts_ListView
 
 
+app_name = 'register'
+
+
 urlpatterns = [
     # Pessoa
     path('pf/', Pf_ListView.as_view(), name='person_'),

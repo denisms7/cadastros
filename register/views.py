@@ -93,7 +93,7 @@ class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Register
     form_class = Pf_ModelForm
     template_name = 'register/register_person.html'
-    success_url = reverse_lazy('person_')
+    success_url = reverse_lazy('register:person_')
     permission_required = 'register.add_register'
 
     def form_valid(self, form):
@@ -122,7 +122,7 @@ class Pf_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Register
     form_class = Pf_ModelForm
     template_name = 'register/register_person.html'
-    success_url = reverse_lazy('person_')
+    success_url = reverse_lazy('register:person_')
     permission_required = 'register.change_register'
 
     def form_valid(self, form):
@@ -149,7 +149,7 @@ class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Register
     form_class = Pj_ModelForm
     template_name = 'register/register_enterprise.html'
-    success_url = reverse_lazy('enterprise_')
+    success_url = reverse_lazy('register:enterprise_')
     permission_required = 'register.add_register'
 
     def form_valid(self, form):
@@ -177,7 +177,7 @@ class Pj_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Register
     form_class = Pj_ModelForm
     template_name = 'register/register_enterprise.html'
-    success_url = reverse_lazy('enterprise_')
+    success_url = reverse_lazy('register:enterprise_')
     permission_required = 'register.change_register'
 
     def form_valid(self, form):
@@ -207,7 +207,7 @@ class Pj_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
 
 # Delete Pessoa
 class Pf_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
-    success_url = reverse_lazy("person_")
+    success_url = reverse_lazy("register:person_")
     permission_required = 'register.delete_register'
 
     def post(self, request, pk, *args, **kwargs):

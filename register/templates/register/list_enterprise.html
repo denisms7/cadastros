@@ -28,7 +28,7 @@ PJ - Busca
                         class="form-control">
 
                     {% if request.GET.q %}
-                        <a href="{% url 'enterprise_' %}" class="btn btn-warning" title="Limpar busca">
+                        <a href="{% url 'register:enterprise_' %}" class="btn btn-warning" title="Limpar busca">
                             <i class="bi bi-x-lg"></i>
                         </a>
                     {% endif %}
@@ -39,7 +39,7 @@ PJ - Busca
                 </div>
             </div>
             <div class="col-12 col-md-6 mb-1 align-self-end text-end">
-                <a href="{% url 'enterprise_add' %}" class="btn btn-primary">
+                <a href="{% url 'register:enterprise_add' %}" class="btn btn-primary">
                     <i class="bi bi-building-add me-1"></i>
                     Adicionar Novo
                 </a>
@@ -75,7 +75,7 @@ PJ - Busca
                     <td style="white-space: nowrap;">{{ item.cnpj|cnpj_format }}</td>
                     <td>
                         <div class="d-flex justify-content-end gap-2">
-                            <a href="{% url 'enterprise_detail' item.pk %}" title="Ver Registro" class="btn btn-info btn-sm">
+                            <a href="{% url 'register:enterprise_detail' item.pk %}" title="Ver Registro" class="btn btn-info btn-sm">
                                 <i class="bi bi-eye"></i>
                             </a>
                             <button title="Apagar Registro" class="btn btn-danger btn-sm"  data-bs-toggle="modal" data-bs-target="#delete-{{item.pk}}">

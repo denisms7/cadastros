@@ -34,9 +34,9 @@
         <div class="modal-footer">
 
             {% if item.legal %}
-                <form method="post" action="{% url 'enterprise_delete' item.pk %}">
+                <form method="post" action="{% url 'register:enterprise_delete' item.pk %}">
             {% elif item.name %}
-                <form method="post" action="{% url 'person_delete' item.pk %}">
+                <form method="post" action="{% url 'register:person_delete' item.pk %}">
             {% endif %}
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger">
