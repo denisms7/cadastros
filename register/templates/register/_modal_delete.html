@@ -14,18 +14,26 @@
                 Deseja excluir o registro?
             </p>
 
-            {% if item.legal %}
+            {% if item.cnpj %}
                 <p>
                     <b>Data de Cadastro:</b> {{ item.created_at|date:"d/m/Y H:i" }}<br>
-                    <b>Razão Social: </b>{{ item.legal }}<br>
-                    <b>Nome Fantasia: </b>{{ item.fantasy }}<br>
                     <b>CNPJ: </b>{{ item.cnpj|cnpj_format }}
+                    <hr>
+                    <b>Razão Social:</b><br>
+                    {{ item.legal }}<br>
+                    <b>Nome Fantasia:</b><br>
+                    {{ item.fantasy }}
                 </p>
-            {% elif item.name %}
+            {% elif item.cpf %}
                 <p>
                     <b>Data de Cadastro:</b> {{ item.created_at|date:"d/m/Y H:i" }}<br>
-                    <b>Nome Completo: </b>{{ item.name }} {{ item.last_name }}<br>
                     <b>CPF: </b>{{ item.cpf|cpf_format }}
+                    <hr>
+                    <b>Nome Completo:</b><br>{{ item.name }} {{ item.last_name }}
+                </p>
+            {% else %}
+                <p class="text-danger">
+                    <b>#Erro</b>
                 </p>
             {% endif %}
             

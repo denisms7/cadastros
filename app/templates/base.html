@@ -90,7 +90,64 @@
           </div>
         </div>
       {% endif  %}
-  
+
+      {% if request.user.is_authenticated %}
+      <div class="container mt-3">
+          <div class="row">
+
+              <div class="col-12">
+                  <h2>
+                      <i class="bi bi-person-vcard me-1"></i>
+                      Permissões
+                  </h2>
+                  <p class="lead">
+                      Este usuário possui as seguintes permissões atribuídas via Django Admin:
+                  </p>
+              </div>
+
+              <!-- Permissões diretas -->
+              <div class="col-12 col-md-6 mb-3">
+                  <label class="form-label fw-bold">Permissões do usuário:</label>
+
+                  {% if user_permissions %}
+                      <ul class="mb-0 ps-3">
+                          {% for perm in user_permissions %}
+                              <li>{{ perm.name }}</li>
+                          {% endfor %}
+                      </ul>
+                  {% else %}
+                      <div class="text-muted fst-italic">
+                          Nenhuma permissão direta atribuída.
+                      </div>
+                  {% endif %}
+              </div>
+
+              <!-- Grupos -->
+              <div class="col-12 col-md-6 mb-3">
+                  <label class="form-label fw-bold">Grupos:</label>
+
+                  <ul class="mb-0 ps-3">
+                      {% if user.is_superuser %}
+                          <li>
+                              <i class="bi bi-shield-lock-fill text-danger me-1"></i>
+                              Superusuário
+                          </li>
+                      {% endif %}
+
+                      {% for group in groups %}
+                          <li>{{ group.name }}</li>
+                      {% empty %}
+                          <li class="text-muted fst-italic">
+                              Nenhum grupo associado.
+                          </li>
+                      {% endfor %}
+                  </ul>
+              </div>
+
+          </div>
+      </div>
+      {% endif %}
+
     {% endblock %}
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
