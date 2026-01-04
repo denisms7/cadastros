@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name="base.html"), name="inicio"),  # MENU
+    path('', TemplateView.as_view(template_name="base.html"), name="home"),  # MENU
     path('admin/', admin.site.urls),
     path('', include('register.urls')),
 ]
