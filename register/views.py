@@ -17,7 +17,7 @@ class Pf_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = PessoaFisica
     template_name = 'register/register_person.html'
     context_object_name = 'item'
-    permission_required = 'register.view_register'
+    permission_required = 'register.view_pessoafisica'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -31,7 +31,7 @@ class Pj_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = PessoaJuridica
     template_name = 'register/register_enterprise.html'
     context_object_name = 'item'
-    permission_required = 'register.view_register'
+    permission_required = 'register.view_pessoajuridica'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -60,7 +60,7 @@ class Pf_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     paginate_by = 10
     model = PessoaFisica
     template_name = 'register/list_person.html'
-    permission_required = 'register.view_register'
+    permission_required = 'register.view_pessoafisica'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -76,7 +76,7 @@ class Pj_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     paginate_by = 10
     model = PessoaJuridica
     template_name = 'register/list_enterprise.html'
-    permission_required = 'register.view_register'
+    permission_required = 'register.view_pessoajuridica'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -94,7 +94,7 @@ class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     form_class = Pf_ModelForm
     template_name = 'register/register_person.html'
     success_url = reverse_lazy('register:person_')
-    permission_required = 'register.add_register'
+    permission_required = 'register.add_pessoafisica'
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -121,7 +121,7 @@ class Pf_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = Pf_ModelForm
     template_name = 'register/register_person.html'
     success_url = reverse_lazy('register:person_')
-    permission_required = 'register.change_register'
+    permission_required = 'register.change_pessoafisica'
 
     def form_valid(self, form):
 
@@ -148,7 +148,7 @@ class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     form_class = Pj_ModelForm
     template_name = 'register/register_enterprise.html'
     success_url = reverse_lazy('register:enterprise_')
-    permission_required = 'register.add_register'
+    permission_required = 'register.add_pessoajuridica'
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -175,7 +175,7 @@ class Pj_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = Pj_ModelForm
     template_name = 'register/register_enterprise.html'
     success_url = reverse_lazy('register:enterprise_')
-    permission_required = 'register.change_register'
+    permission_required = 'register.change_pessoajuridica'
 
     def form_valid(self, form):
         url = super().form_valid(form)
@@ -186,7 +186,7 @@ class Pj_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 # Delete Empresa
 class Pj_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
     success_url = reverse_lazy("enterprise_")
-    permission_required = 'register.delete_register'
+    permission_required = 'register.delete_pessoajuridica'
 
     def post(self, request, pk, *args, **kwargs):
         registro = get_object_or_404(Register, id=pk)
@@ -205,7 +205,7 @@ class Pj_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
 # Delete Pessoa
 class Pf_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
     success_url = reverse_lazy("register:person_")
-    permission_required = 'register.delete_register'
+    permission_required = 'register.delete_pessoafisica'
 
     def post(self, request, pk, *args, **kwargs):
         registro = get_object_or_404(Register, id=pk)
@@ -221,10 +221,10 @@ class Pf_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
         return redirect(self.success_url)
 
 
-class Log_View(LoginRequiredMixin, PermissionRequiredMixin, View):
+class Log_View(LoginRequiredMixin, View): # PermissionRequiredMixin, 
     paginate_by = 20
     template_name = "register/history.html"
-    permission_required = 'register.view_register'
+    # permission_required = 'register.view_register'
 
     def get(self, request, pk, *args, **kwargs):
         cadastro = get_object_or_404(Register, pk=pk)
