@@ -64,6 +64,21 @@ class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         messages.success(self.request, "Registro salvo com sucesso.")
         return url
 
+    def form_invalid(self, form):
+        # Verifica se há erro de CPF duplicado
+        if 'cpf' in form.errors:
+            for error in form.errors['cpf']:
+                if 'já existe' in str(error):
+                    messages.warning(self.request, "Cadastro com CPF duplicado. O registro não foi salvo.")
+                elif 'Inválido' in str(error):
+                    messages.error(self.request, "CPF inválido. Verifique o número digitado.")
+
+        # Verifica outros erros
+        if form.errors and 'cpf' not in form.errors:
+            messages.error(self.request, "Corrija os erros no formulário antes de salvar.")
+
+        return super().form_invalid(form)
+
     def handle_unique(self, e):
         if "cpf" in str(e):
             messages.warning(self.request, "Cadastro com CPF Duplicado. o registro nao foi salvo")
@@ -88,6 +103,21 @@ class Pf_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
         messages.success(self.request, "Registro salvo com sucesso.")
         return url
+
+    def form_invalid(self, form):
+        # Verifica se há erro de CPF duplicado
+        if 'cpf' in form.errors:
+            for error in form.errors['cpf']:
+                if 'já existe' in str(error):
+                    messages.warning(self.request, "Cadastro com CPF duplicado. O registro não foi salvo.")
+                elif 'Inválido' in str(error):
+                    messages.error(self.request, "CPF inválido. Verifique o número digitado.")
+
+        # Verifica outros erros
+        if form.errors and 'cpf' not in form.errors:
+            messages.error(self.request, "Corrija os erros no formulário antes de salvar.")
+
+        return super().form_invalid(form)
 
     def handle_unique(self, e):
         if "cpf" in str(e):
@@ -166,6 +196,21 @@ class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         messages.success(self.request, "Registro salvo com sucesso.")
         return url
 
+    def form_invalid(self, form):
+        # Verifica se há erro de CNPJ duplicado
+        if 'cnpj' in form.errors:
+            for error in form.errors['cnpj']:
+                if 'já existe' in str(error):
+                    messages.warning(self.request, "Cadastro com CNPJ duplicado. O registro não foi salvo.")
+                elif 'Inválido' in str(error):
+                    messages.error(self.request, "CNPJ inválido. Verifique o número digitado.")
+
+        # Verifica outros erros
+        if form.errors and 'cnpj' not in form.errors:
+            messages.error(self.request, "Corrija os erros no formulário antes de salvar.")
+
+        return super().form_invalid(form)
+
     def handle_unique(self, e):
         if "cnpj" in str(e):
             messages.warning(self.request, "Cadastro com CNPJ duplicado. O registro não foi salvo.")
@@ -185,6 +230,21 @@ class Pj_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         url = super().form_valid(form)
         messages.success(self.request, "Registro alterado com sucesso.")
         return url
+
+    def form_invalid(self, form):
+        # Verifica se há erro de CNPJ duplicado
+        if 'cnpj' in form.errors:
+            for error in form.errors['cnpj']:
+                if 'já existe' in str(error):
+                    messages.warning(self.request, "Cadastro com CNPJ duplicado. O registro não foi salvo.")
+                elif 'Inválido' in str(error):
+                    messages.error(self.request, "CNPJ inválido. Verifique o número digitado.")
+
+        # Verifica outros erros
+        if form.errors and 'cnpj' not in form.errors:
+            messages.error(self.request, "Corrija os erros no formulário antes de salvar.")
+
+        return super().form_invalid(form)
 
 
 class Pj_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):

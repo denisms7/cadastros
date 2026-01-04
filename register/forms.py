@@ -69,6 +69,12 @@ class Pj_ModelForm(forms.ModelForm):
             cnpj = cnpj.replace('.', '').replace('-', '').replace('/', '')
             if not cnpj_validate(cnpj):
                 raise ValidationError('CNPJ Inválido')
+
+            # Verifica se já existe outro registro com este CNPJ
+            existing = PessoaJuridica.objects.filter(cnpj=cnpj).exclude(pk=self.instance.pk if self.instance.pk else None)
+            if existing.exists():
+                raise ValidationError('Cadastro com este CNPJ já existe.')
+
             return cnpj
         return cnpj
 
@@ -170,6 +176,12 @@ class Pf_ModelForm(forms.ModelForm):
             cpf = cpf.replace('.', '').replace('-', '')
             if not cpf_validate(cpf):
                 raise ValidationError('CPF Inválido')
+
+            # Verifica se já existe outro registro com este CPF
+            existing = PessoaFisica.objects.filter(cpf=cpf).exclude(pk=self.instance.pk if self.instance.pk else None)
+            if existing.exists():
+                raise ValidationError('Cadastro com este CPF já existe.')
+
             return cpf
         return cpf
 
