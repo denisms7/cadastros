@@ -40,7 +40,7 @@ class Register(models.Model):
         (1, _('Casado')),
         (2, _('Divorciado')),
         (3, _('Solteiro')),
-        (4, _('União Estavel')),
+        (4, _('União Estável')),
         (5, _('Viúvo')),
     ]
 
@@ -76,15 +76,15 @@ class Register(models.Model):
     ]
 
     # Sistema
-    type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES, verbose_name=_('Tipo'), default=None)
+    type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES, verbose_name=_('Tipo'))
     active = models.BooleanField(choices=ACTIVE_CHOICES, verbose_name=_('Ativo'), default=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Cadastro'))
     created_by = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name=_('Cadastrado'))
     # Dados da Empresa
     legal = models.CharField(max_length=200, verbose_name=_('Razão Social'), null=True, blank=True)
     fantasy = models.CharField(max_length=200, verbose_name=_('Nome Fantasia'), null=True, blank=True)
-    n_state = models.CharField(max_length=14, verbose_name=_('Incrição Estadual'), null=True, blank=True)
-    n_municipal = models.CharField(max_length=14, verbose_name=_('Incrição Municipal'), null=True, blank=True)
+    n_state = models.CharField(max_length=14, verbose_name=_('Inscrição Estadual'), null=True, blank=True)
+    n_municipal = models.CharField(max_length=14, verbose_name=_('Inscrição Municipal'), null=True, blank=True)
     cnpj = models.CharField(max_length=18, unique=True, verbose_name=_('CNPJ'), null=True, blank=True)
     cnpj_situation = models.CharField(max_length=200, verbose_name=_('Situação'), null=True, blank=True)
     cnpj_carrying = models.CharField(max_length=200, verbose_name=_('Porte de Empresa'), null=True, blank=True)
@@ -97,7 +97,7 @@ class Register(models.Model):
     cpf = models.CharField(max_length=14, unique=True, verbose_name=_('CPF'), null=True, blank=True)
     rg = models.CharField(max_length=11, verbose_name=_('RG (Descontinuado)'), null=True, blank=True)
     rg_issuer = models.CharField(max_length=3, verbose_name=_('Emissor'), null=True, blank=True)
-    rg_expedition = models.DateField(verbose_name=_('Expedicao'), null=True, blank=True)
+    rg_expedition = models.DateField(verbose_name=_('Expedição'), null=True, blank=True)
     birth = models.DateField(verbose_name=_('Nascimento'), null=True, blank=True)
     education = models.PositiveSmallIntegerField(choices=ESCOLARIDADE_CHOICES, verbose_name=_('Escolaridade'), null=True, blank=True)
     sex = models.CharField(max_length=2, choices=SEXO_CHOICES, verbose_name=_('Sexo'), null=True, blank=True)
@@ -159,6 +159,22 @@ class Register(models.Model):
             return f'{self.name} {self.last_name} - {cpf[0:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:11]}'
         elif self.cnpj:
             cnpj = str(self.cnpj).zfill(14).replace('.', '').replace('/', '').replace('-', '')
-            return f'{self.nome_fantasia} - {cnpj[0:2]}.{cnpj[2:5]}.{cnpj[5:8]}/{cnpj[8:12]}-{cnpj[12:14]}'
+            return f'{self.fantasy} - {cnpj[0:2]}.{cnpj[2:5]}.{cnpj[5:8]}/{cnpj[8:12]}-{cnpj[12:14]}'
         else:
             return _('Cadastro sem Identificação')
+
+
+class PessoaFisica(Register):
+    """Proxy model para Pessoa Física"""
+    class Meta:
+        proxy = True
+        verbose_name = _('Pessoa Física')
+        verbose_name_plural = _('Pessoas Físicas')
+
+
+class PessoaJuridica(Register):
+    """Proxy model para Pessoa Jurídica"""
+    class Meta:
+        proxy = True
+        verbose_name = _('Pessoa Jurídica')
+        verbose_name_plural = _('Pessoas Jurídicas')

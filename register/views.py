@@ -15,7 +15,7 @@ from .forms import Detail_ModelForm, Pf_ModelForm, Pj_ModelForm
 
 class Pf_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Register
-    template_name = 'register/register_person.html.html'
+    template_name = 'register/register_person.html'
     context_object_name = 'item'
     permission_required = 'register.view_register'
 
@@ -92,7 +92,7 @@ class Pj_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Register
     form_class = Pf_ModelForm
-    template_name = 'register/register_person.html.html'
+    template_name = 'register/register_person.html'
     success_url = reverse_lazy('person_')
     permission_required = 'register.add_register'
 
@@ -121,7 +121,7 @@ class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 class Pf_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Register
     form_class = Pf_ModelForm
-    template_name = 'register/register_person.html.html'
+    template_name = 'register/register_person.html'
     success_url = reverse_lazy('person_')
     permission_required = 'register.change_register'
 
