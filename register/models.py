@@ -9,6 +9,18 @@ ACTIVE_CHOICES = [
 ]
 
 
+class PessoaFisicaManager(models.Manager):
+    """Manager que retorna apenas Pessoas Físicas (type=0)"""
+    def get_queryset(self):
+        return super().get_queryset().filter(type=0)
+
+
+class PessoaJuridicaManager(models.Manager):
+    """Manager que retorna apenas Pessoas Jurídicas (type=1)"""
+    def get_queryset(self):
+        return super().get_queryset().filter(type=1)
+
+
 class Register(models.Model):
     SEXO_CHOICES = [
         ('M', _('Homem cisgênero')),
@@ -166,15 +178,29 @@ class Register(models.Model):
 
 class PessoaFisica(Register):
     """Proxy model para Pessoa Física"""
+    objects = PessoaFisicaManager()
+
     class Meta:
         proxy = True
         verbose_name = _('Pessoa Física')
         verbose_name_plural = _('Pessoas Físicas')
 
+    def save(self, *args, **kwargs):
+        """Garante que o type seja sempre 0 (Pessoa Física)"""
+        self.type = 0
+        super().save(*args, **kwargs)
+
 
 class PessoaJuridica(Register):
     """Proxy model para Pessoa Jurídica"""
+    objects = PessoaJuridicaManager()
+
     class Meta:
         proxy = True
         verbose_name = _('Pessoa Jurídica')
         verbose_name_plural = _('Pessoas Jurídicas')
+
+    def save(self, *args, **kwargs):
+        """Garante que o type seja sempre 1 (Pessoa Jurídica)"""
+        self.type = 1
+        super().save(*args, **kwargs)

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Register
+from .models import Register, PessoaFisica, PessoaJuridica
 from django.core.exceptions import ValidationError
 from .utils import cpf_validate, cnpj_validate, get_bank
 
@@ -14,7 +14,7 @@ class Pj_ModelForm(forms.ModelForm):
         self.fields['cnpj'].required = True
 
     class Meta:
-        model = Register
+        model = PessoaJuridica
         fields = [
             'active',
             'legal',
@@ -72,9 +72,6 @@ class Pj_ModelForm(forms.ModelForm):
             return cnpj
         return cnpj
 
-    def clean_type(self):
-        return 1
-
     def clean_cep(self):
         cep = self.cleaned_data.get('cep')
         if cep:
@@ -105,7 +102,7 @@ class Pf_ModelForm(forms.ModelForm):
         self.fields['sex'].required = True
 
     class Meta:
-        model = Register
+        model = PessoaFisica
         fields = [
             'active',
             'name',
@@ -175,9 +172,6 @@ class Pf_ModelForm(forms.ModelForm):
                 raise ValidationError('CPF Inválido')
             return cpf
         return cpf
-
-    def clean_type(self):
-        return 0
 
     def clean_cep(self):
         cep = self.cleaned_data.get('cep')

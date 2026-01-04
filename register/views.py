@@ -9,12 +9,12 @@ from django.db import IntegrityError
 from django.db.models import Q
 from django.db.models.deletion import ProtectedError, RestrictedError
 from django.core.paginator import Paginator
-from .models import Register
+from .models import Register, PessoaFisica, PessoaJuridica
 from .forms import Detail_ModelForm, Pf_ModelForm, Pj_ModelForm
 
 
 class Pf_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
-    model = Register
+    model = PessoaFisica
     template_name = 'register/register_person.html'
     context_object_name = 'item'
     permission_required = 'register.view_register'
@@ -28,7 +28,7 @@ class Pf_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
 
 
 class Pj_DetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
-    model = Register
+    model = PessoaJuridica
     template_name = 'register/register_enterprise.html'
     context_object_name = 'item'
     permission_required = 'register.view_register'
@@ -58,47 +58,45 @@ class Contacts_ListView(LoginRequiredMixin, ListView):
 
 class Pf_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     paginate_by = 10
-    model = Register
+    model = PessoaFisica
     template_name = 'register/list_person.html'
     permission_required = 'register.view_register'
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(type=0).order_by('name', 'last_name')  # Filtra apenas pessoa
+        queryset = super().get_queryset()
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
                 Q(name__icontains=query) | Q(cpf__icontains=query) | Q(last_name__icontains=query)
             )
-        return queryset
+        return queryset.order_by('name', 'last_name')
 
 
 class Pj_ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     paginate_by = 10
-    model = Register
+    model = PessoaJuridica
     template_name = 'register/list_enterprise.html'
     permission_required = 'register.view_register'
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(type=1).order_by('legal', 'fantasy')  # Filtra apenas empresas
+        queryset = super().get_queryset()
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
                 Q(fantasy__icontains=query) | Q(cnpj__icontains=query) | Q(legal__icontains=query)
             )
-        return queryset
+        return queryset.order_by('legal', 'fantasy')
 
 
 # Criar Pessaoa
 class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    model = Register
+    model = PessoaFisica
     form_class = Pf_ModelForm
     template_name = 'register/register_person.html'
     success_url = reverse_lazy('register:person_')
     permission_required = 'register.add_register'
 
     def form_valid(self, form):
-
-        form.instance.type = 0
         form.instance.created_by = self.request.user
 
         try:
@@ -119,7 +117,7 @@ class Pf_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 # Editar Pessoa
 class Pf_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
-    model = Register
+    model = PessoaFisica
     form_class = Pf_ModelForm
     template_name = 'register/register_person.html'
     success_url = reverse_lazy('register:person_')
@@ -146,14 +144,13 @@ class Pf_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 # EMPRESA =====================================================================================================
 # Criar Empresa
 class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    model = Register
+    model = PessoaJuridica
     form_class = Pj_ModelForm
     template_name = 'register/register_enterprise.html'
     success_url = reverse_lazy('register:enterprise_')
     permission_required = 'register.add_register'
 
     def form_valid(self, form):
-        form.instance.type = 1
         form.instance.created_by = self.request.user
 
         try:
@@ -174,7 +171,7 @@ class Pj_CreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 # Editar Empresa
 class Pj_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
-    model = Register
+    model = PessoaJuridica
     form_class = Pj_ModelForm
     template_name = 'register/register_enterprise.html'
     success_url = reverse_lazy('register:enterprise_')
