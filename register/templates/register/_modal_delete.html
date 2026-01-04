@@ -1,37 +1,37 @@
 {% load custom_humanize %}
 
-<div class="modal fade modal-lg" id="delete-{{item.pk}}" tabindex="-1">
+<div class="modal fade modal-md" id="delete-{{item.pk}}" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header text-bg-danger">
             <h5 class="modal-title">
-                <i class="bi bi-trash3"></i>
-                Apagar
+                🗑️ Apagar
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <p>
+            <p class="lead">
                 Deseja excluir o registro?
             </p>
-            {% if item.nome_fantasia %}
+
+
+
+            {% if item.legal %}
                 <p>
-                    <b>Nome Fantasia: </b>{{ item.nome_fantasia }}<br>
-                    <b>Razão Social: </b>{{ item.pessoa_juridica }}<br>
+                    <b>Data de Cadastro:</b> {{ item.created_at|date:"d/m/Y H:i" }}<br>
+                    <b>Razão Social: </b>{{ item.legal }}<br>
+                    <b>Nome Fantasia: </b>{{ item.fantasy }}<br>
                     <b>CNPJ: </b>{{ item.cnpj|cnpj_format }}
                 </p>
-            {% elif item.primeiro_nome %}
+            {% elif item.name %}
                 <p>
-                    <b>Nome Completo: </b>{{ item.primeiro_nome }} {{ item.ultimo_nome }}<br>
+                    <b>Data de Cadastro:</b> {{ item.created_at|date:"d/m/Y H:i" }}<br>
+                    <b>Nome Completo: </b>{{ item.name }} {{ item.last_name }}<br>
                     <b>CPF: </b>{{ item.cpf|cpf_format }}
                 </p>
             {% endif %}
-            <p>
-                <b>Cadastrador Por: </b>{{ item.cadastrado_por }}<br>
-                <b>Data de Cadastro: </b>{{ item.cadastrado_em }}
-            </p>
-        
-            <p>* Esta ação não poderá ser desfeita</p>
+            
+            <p class="text-center">Esta ação não poderá ser desfeita</p>
         </div>
         <div class="modal-footer">
             <form method="post" action="{% url 'enterprise_delete' item.pk %}">
