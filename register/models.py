@@ -3,9 +3,10 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from simple_history.models import HistoricalRecords
 
-ACTIVE_CHOICES = [
-    (True, _('Ativo')),
-    (False, _('Inativo')),
+
+TYPE_CHOICES = [
+    (0, _('Pessoa Física')),
+    (1, _('Pessoa Jurídica')),
 ]
 
 
@@ -22,6 +23,11 @@ class PessoaJuridicaManager(models.Manager):
 
 
 class Register(models.Model):
+    ACTIVE_CHOICES = [
+        (True, _('Ativo')),
+        (False, _('Inativo')),
+    ]
+
     SEXO_CHOICES = [
         ('M', _('Homem cisgênero')),
         ('MT', _('Homem transgênero')),
@@ -80,11 +86,6 @@ class Register(models.Model):
         ('C', 'C'),
         ('D', 'D'),
         ('E', 'E'),
-    ]
-
-    TYPE_CHOICES = [
-        (0, _('Pessoa Física')),
-        (1, _('Pessoa Jurídica')),
     ]
 
     # Sistema
