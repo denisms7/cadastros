@@ -92,17 +92,6 @@ function configurarCampoDocumento() {
 function carregarCNPJ(cnpj) {
     let v_cnpj = cnpj.replace(/[^0-9]/g, '')
     let v_url = 'https://www.receitaws.com.br/v1/cnpj/' + v_cnpj
-    const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
-    const alert = (message, type) => {
-        const wrapper = document.createElement('div')
-        wrapper.innerHTML = [
-            `<div class="alert alert-${type} alert-dismissible" role="alert">`,
-            `   <div>${message}</div>`,
-            '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-            '</div>'
-        ].join('')
-        alertPlaceholder.append(wrapper)
-    }
 
     try {
         if (v_cnpj.length == 14 && validarCNPJ(v_cnpj)) {
@@ -111,82 +100,77 @@ function carregarCNPJ(cnpj) {
                 dataType: 'jsonp',
                 crossDomain: true,
                 success: function (response) {
+                    console.log('Response status:', response.status);
                     if (response.status === "OK") {
-                        if (response.nome != '') {
-                            document.getElementById('id_legal').value = response.nome
-                        }
-                        if (response.fantasia != '') {
-                            document.getElementById('id_fantasy').value = response.fantasia
-                        }
-                        if (response.cep != '') {
-                            document.getElementById('id_cep').value = response.cep
-                        }
-                        if (response.uf != '') {
-                            document.getElementById('id_state').value = response.uf
-                        }
-                        if (response.municipio != '') {
-                            document.getElementById('id_city').value = response.municipio
-                        }
-                        if (response.bairro != '') {
-                            document.getElementById('id_neighborhood').value = response.bairro
-                        }
-                        if (response.logradouro != '') {
-                            document.getElementById('id_address').value = response.logradouro
-                        }
-                        if (response.numero != '') {
-                            document.getElementById('id_number').value = response.numero
-                        }
-                        if (response.situacao != '') {
-                            document.getElementById('id_cnpj_situation').value = response.situacao
-                        }
-                        if (response.porte != '') {
-                            document.getElementById('id_cnpj_carrying').value = response.porte
-                        }
+                        const setValueIfExists = (id, value) => {
+                            const element = document.getElementById(id);
+                            if (element && value != '') {
+                                element.value = value;
+                            }
+                        };
+
+                        setValueIfExists('id_legal', response.nome);
+                        setValueIfExists('id_fantasy', response.fantasia);
+                        setValueIfExists('id_cep', response.cep);
+                        setValueIfExists('id_state', response.uf);
+                        setValueIfExists('id_city', response.municipio);
+                        setValueIfExists('id_neighborhood', response.bairro);
+                        setValueIfExists('id_address', response.logradouro);
+                        setValueIfExists('id_number', response.numero);
+                        setValueIfExists('id_cnpj_situation', response.situacao);
+                        setValueIfExists('id_cnpj_carrying', response.porte);
+                        setValueIfExists('id_cnpj_type_activity', response.tipo);
+
                         if (response.abertura != '') {
                             let dataOriginal = response.abertura
                             let partesData = dataOriginal.split("/");
                             let dataNova = new Date(partesData[2], partesData[1] - 1, partesData[0]);
                             let novaStringData = dataNova.toISOString().slice(0, 10);
-                            document.getElementById('id_cnpj_date').value = novaStringData
+                            setValueIfExists('id_cnpj_date', novaStringData);
                         }
-                        if (response.tipo != '') {
-                            document.getElementById('id_cnpj_type_activity').value = response.tipo
-                        }
-                        if (response.atividade_principal.length > 0) {
+
+                        if (response.atividade_principal && response.atividade_principal.length > 0) {
                             let dados_web = response.atividade_principal;
                             let dados = '';
                             for (let i = 0; i < dados_web.length; i++) {
-                                dados = dados_web[i].code + ' - ' + dados_web[i].text + '. '
+                                dados += dados_web[i].code + ' - ' + dados_web[i].text + '. ';
                             }
-                            document.getElementById('cnpj_activity').value = dados;
+                            setValueIfExists('cnpj_activity', dados);
                         }
-                        if (response.atividades_secundarias.length > 0) {
+
+                        if (response.atividades_secundarias && response.atividades_secundarias.length > 0) {
                             let dados_web = response.atividades_secundarias;
                             let dados = '';
                             for (let i = 0; i < dados_web.length; i++) {
-                                dados = dados_web[i].code + ' - ' + dados_web[i].text + '. '
+                                dados += dados_web[i].code + ' - ' + dados_web[i].text + '. ';
                             }
-                            // document.getElementById('id_cnpj_atividade_principal').value = dados;
+                            setValueIfExists('id_cnpj_atividade_secundaria', dados);
+                        }
+                        console.log('Chamando fireAlert de sucesso');
+                        if (typeof window.fireAlert === 'function') {
+                            window.fireAlert('Dados do CNPJ carregados com sucesso!', 'success');
+                        } else {
+                            console.error('fireAlert não está disponível');
                         }
                     }
                     else {
-                        alert('CNPJ não encontrado na base de dados', 'primary')
+                        window.fireAlert('CNPJ não encontrado na base de dados', 'primary')
                     }
                 },
                 error: function (xhr, textStatus, error) {
                     if (xhr.status == 429) {
-                        alert('Houve um erro ao receber os dados, aguarde 1 minuto e tente novamente.', 'primary')
+                        window.fireAlert('Houve um erro ao receber os dados, aguarde 1 minuto e tente novamente.', 'primary')
                     } else {
-                        alert(`${xhr.status} - Status: ${textStatus} - ${error}`, 'warning')
+                        window.fireAlert(`${xhr.status} - Status: ${textStatus} - ${error}`, 'warning')
                     }
                 }
             });
         } else {
-            alert(`O CNPJ ${cnpj} é inválido!`, 'warning')
+            window.fireAlert(`O CNPJ ${cnpj} é inválido!`, 'warning')
         }
 
     } catch {
-        alert('Erro ao enviar dados', 'warning')
+        window.fireAlert('Erro ao enviar dados', 'warning')
     }
 
 }
@@ -341,12 +325,13 @@ function meu_callback(conteudo) {
         document.getElementById('id_city').value = (conteudo.localidade);
         document.getElementById('id_state').value = (conteudo.uf);
         document.getElementById('ceplog').classList.remove('d-block')
+        window.fireAlert('CEP encontrado com sucesso!', 'success')
     } //end if.
     else {
         //CEP não Encontrado.
         limpa_formulário_cep();
-        //alert("CEP não encontrado.");
         document.getElementById('ceplog').classList.add('d-block')
+        window.fireAlert('CEP não encontrado.', 'warning')
     }
 }
 
@@ -376,7 +361,7 @@ function pesquisacep(valor) {
             //cep é inválido.
             limpa_formulário_cep();
             document.getElementById('ceplog').classList.add('d-block')
-            // alert("Formato de CEP inválido.");
+            window.fireAlert('Formato de CEP inválido.', 'danger')
         }
     } //end if.
     else {

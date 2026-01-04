@@ -12,10 +12,6 @@ PJ - Cadastro
 
 
 <div class="container">
-    <div id="liveAlertPlaceholder"></div>
-</div>
-
-<div class="container">
     <div class="d-flex justify-content-between">
         <div>
             <h2>
@@ -114,6 +110,7 @@ PJ - Cadastro
 </div>
 
     {% include "register/_modal_delete.html" %}
+    {% include "alerts.html" %}
 
 <script src="{% static 'cadastros/jQuery-v3.6.4.js' %}"></script>
 <script src="{% static 'cadastros/jQuery Mask Plugin v1.14.16.js' %}"></script>
