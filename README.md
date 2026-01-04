@@ -5,10 +5,6 @@ Sistema completo de Cadastro de Pessoas Físicas e Jurídicas com Django, inclui
   <img height="180em" src="https://user-images.githubusercontent.com/82631808/218283234-3c42a1f5-40e6-4175-88df-aacaf0e0a81e.png"/>
   <img height="180em" src="https://user-images.githubusercontent.com/82631808/218283236-a1b0e8f4-6e10-4eff-88ff-d7b2a23b119f.png"/>
 </div>
-<div align="center">
-  <img height="180em" src="https://user-images.githubusercontent.com/82631808/218283233-685611a5-7d42-4ef9-be5d-92e7cc11f1bf.png"/>
-  <img height="180em" src="https://user-images.githubusercontent.com/82631808/218283237-b6bbefe5-31e8-4f33-aa32-f61e9f0ff48c.png"/>
-</div>
 
 ### 🚀 Tecnologias
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
