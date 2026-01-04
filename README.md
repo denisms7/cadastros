@@ -2,8 +2,8 @@
 Sistema completo de Cadastro de Pessoas Físicas e Jurídicas com Django, incluindo log de auditoria detalhado, validações automáticas, sistema de permissões e interface responsiva com Bootstrap
 
 <div align="center">
-  <img height="180em" src="https://user-images.githubusercontent.com/82631808/218283234-3c42a1f5-40e6-4175-88df-aacaf0e0a81e.png"/>
-  <img height="180em" src="https://user-images.githubusercontent.com/82631808/218283236-a1b0e8f4-6e10-4eff-88ff-d7b2a23b119f.png"/>
+  <img height="auto" src="https://user-images.githubusercontent.com/82631808/218283234-3c42a1f5-40e6-4175-88df-aacaf0e0a81e.png"/>
+  <img height="auto" src="https://user-images.githubusercontent.com/82631808/218283236-a1b0e8f4-6e10-4eff-88ff-d7b2a23b119f.png"/>
 </div>
 
 ### 🚀 Tecnologias
