@@ -4,8 +4,13 @@
 {% load widget_tweaks %}
 
 {% block title %}
-PF - Cadastro {% if not form.instance.id %} Novo {% endif %}
+    {% if is_detail %}
+        {{ form.instance.name }} {{ form.instance.last_name }}
+    {% else %}
+        Cadastro {% if not form.instance.id %}Novo{% endif %}
+    {% endif %}
 {% endblock %}
+
 
 {% block content %}
 

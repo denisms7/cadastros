@@ -4,7 +4,11 @@
 {% load widget_tweaks %}
 
 {% block title %}
-PJ - Cadastro {% if not form.instance.id %} Novo {% endif %}
+    {% if is_detail %}
+        {{ form.instance.fantasy }}
+    {% else %}
+        Cadastro {% if not form.instance.id %}Novo{% endif %}
+    {% endif %}
 {% endblock %}
 
 
