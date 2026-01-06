@@ -4,7 +4,7 @@
 {% load widget_tweaks %}
 
 {% block title %}
-PJ - Cadastro
+PJ - Cadastro {% if not form.instance.id %} Novo {% endif %}
 {% endblock %}
 
 
@@ -12,19 +12,18 @@ PJ - Cadastro
 
 
 <div class="container">
-    <div class="d-flex justify-content-between">
-        <div>
-            <h2>
-                🏢 Cadastro de Empresa
-            </h2>
-        </div>
-        <div>
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>🏢 Empresa</h2>
+        <div class="text-end">
             {% if form.instance.id %}
                 <a href="{% url 'register:enterprise_log' form.instance.id %}" title="Log de Alterações" class="btn btn-outline-secondary">
                     <i class="bi bi-journal-text"></i>
                     Log
                 </a>
             {% endif %}
+            <p class="text-secondary fw-lighter small text-end g-0 m-0 p-0">
+                Informe todos os campos obrigatorios (<span class="text-danger"><b>*</b></span>)
+            </p>
         </div>
     </div>
     <hr>
@@ -36,11 +35,6 @@ PJ - Cadastro
     <form method="post" class="needs-validation" novalidate>
 
         {% csrf_token %}
-
-        <p class="text-secondary fw-lighter text-end">
-            Informe todos os campos obrigatorios (<span class="text-danger"><b>*</b></span>)
-        </p>
-
 
         {% include "register/components/enterprise.html" %}
 

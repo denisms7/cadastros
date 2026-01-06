@@ -1,63 +1,76 @@
 {% load custom_humanize %}
 
-<div class="modal fade modal-md" id="delete-{{item.pk}}" tabindex="-1">
+<div class="modal fade" id="delete-{{ item.pk }}" tabindex="-1"
+     aria-labelledby="deleteLabel-{{ item.pk }}" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header text-bg-danger">
-            <h5 class="modal-title">
-                🗑️ Apagar
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <p class="lead">
-                Deseja excluir o registro?
-            </p>
+        <div class="modal-content border-0 shadow-sm">
 
-            {% if item.cnpj %}
-                <p>
-                    <b>Data de Cadastro:</b> {{ item.created_at|date:"d/m/Y H:i" }}<br>
-                    <b>CNPJ: </b>{{ item.cnpj|cnpj_format }}
-                    <hr>
-                    <b>Razão Social:</b><br>
-                    {{ item.legal }}<br>
-                    <b>Nome Fantasia:</b><br>
-                    {{ item.fantasy }}
-                </p>
-            {% elif item.cpf %}
-                <p>
-                    <b>Data de Cadastro:</b> {{ item.created_at|date:"d/m/Y H:i" }}<br>
-                    <b>CPF: </b>{{ item.cpf|cpf_format }}
-                    <hr>
-                    <b>Nome Completo:</b><br>{{ item.name }} {{ item.last_name }}
-                </p>
-            {% else %}
-                <p class="text-danger">
-                    <b>#Erro</b>
-                </p>
-            {% endif %}
-            
-            <p class="text-center">Esta ação não poderá ser desfeita</p>
-        </div>
-        <div class="modal-footer">
+            <!-- Header -->
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title m-0" id="deleteLabel-{{ item.pk }}">
+                    <i class="bi bi-exclamation-triangle"></i> Confirmar Exclusão
+                </h5>
+            </div>
 
-            {% if item.legal %}
-                <form method="post" action="{% url 'register:enterprise_delete' item.pk %}">
-            {% elif item.name %}
-                <form method="post" action="{% url 'register:person_delete' item.pk %}">
-            {% endif %}
+            <!-- Body -->
+            <div class="modal-body">
+                <p class="lead">
+                    Deseja realmente <span class="fw-bold text-danger">excluir</span> o seguinte registro?
+                </p>
+
+                {% if item.cnpj %}
+                    <p class="text-secondary mb-2">
+                        <i class="bi bi-calendar-event"></i>
+                        <b>Data:</b> {{ item.created_at|date:"d/m/Y H:i" }}<br>
+                        <i class="bi bi-building"></i>
+                        <b>CNPJ:</b> {{ item.cnpj|cnpj_format }}
+                    </p>
+                    <hr>
+                    <p class="mb-0">
+                        <b>Razão Social:</b><br>
+                        {{ item.legal }}<br>
+                        <b>Nome Fantasia:</b><br>
+                        {{ item.fantasy }}
+                    </p>
+
+                {% elif item.cpf %}
+                    <p class="text-secondary mb-2">
+                        <i class="bi bi-calendar-event"></i>
+                        <b>Data:</b> {{ item.created_at|date:"d/m/Y H:i" }}<br>
+                        <i class="bi bi-person-vcard"></i>
+                        <b>CPF:</b> {{ item.cpf|cpf_format }}
+                    </p>
+                    <hr>
+                    <p class="mb-0">
+                        <b>Nome Completo:</b><br>
+                        {{ item.name }} {{ item.last_name }}
+                    </p>
+                {% endif %}
+
+                <p class="text-center text-muted mt-3 mb-0 small">
+                    Esta ação não poderá ser desfeita.
+                </p>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer d-flex">
+                {% if item.legal %}
+                    <form method="post" action="{% url 'register:enterprise_delete' item.pk %}">
+                {% elif item.name %}
+                    <form method="post" action="{% url 'register:person_delete' item.pk %}">
+                {% endif %}
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">
-                        <i class="bi bi-check-lg"></i>
-                        Confirmar
-                    </button>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-danger">
+                            Sim, Excluir
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Não, Cancelar
+                        </button>
+                    </div>
                 </form>
+            </div>
 
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                <i class="bi bi-x-lg"></i>
-                Cancelar
-            </button>
-        </div>
         </div>
     </div>
 </div>
