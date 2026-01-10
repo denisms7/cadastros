@@ -35,7 +35,7 @@ Pessoas
                     {% endif %}
 
                     <button type="submit" title="Pesquisar Registros" class="btn btn-primary">
-                        <i class="bi bi-search"></i>
+                        🔍
                     </button>
                 </div>
             </div>
@@ -75,10 +75,10 @@ Pessoas
                     <td>
                         <div class="d-flex justify-content-end gap-2">
                             <a href="{% url 'register:person_detail' item.pk %}" title="Ver Registro" class="btn btn-info btn-sm">
-                                <i class="bi bi-eye"></i>
+                                🔍
                             </a>
                             <button title="Apagar Registro" class="btn btn-danger btn-sm"  data-bs-toggle="modal" data-bs-target="#delete-{{item.pk}}">
-                                <i class="bi bi-trash3"></i> 
+                                🗑️
                             </button>
                         </div>
                     </td>

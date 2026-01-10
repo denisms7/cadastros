@@ -20,8 +20,7 @@
         <div class="text-end">
             {% if form.instance.id %}
                 <a href="{% url 'register:person_log' form.instance.id %}" title="Log de Alterações" class="btn btn-outline-secondary">
-                    <i class="bi bi-journal-text"></i>
-                    Log
+                    📄 Log
                 </a>
             {% endif %}
             <p class="text-secondary fw-lighter small text-end g-0 m-0 p-0">
@@ -41,24 +40,20 @@
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                 <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" data-bs-toggle="collapse" href="#idContato" role="button">
                 <label class="btn btn-outline-primary" for="btncheck1">
-                    <i class="bi bi-telephone"></i>
-                    Contato
+                    ☎️ Contato
                 </label>
                 <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" data-bs-toggle="collapse" href="#idEndereco" role="button">
                 <label class="btn btn-outline-primary" for="btncheck2">
-                    <i class="bi bi-mailbox"></i>
-                    Endereço
+                    📫 Endereço
                 </label>
                 <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off" data-bs-toggle="collapse" href="#idBanco" role="button">
                 <label class="btn btn-outline-primary" for="btncheck3">
-                    <i class="bi bi-bank"></i>
-                    Dados Bancários
+                    🏦 Dados Bancários
                 </label>
 
                 <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off" data-bs-toggle="collapse" href="#idveiculo" role="button">
                 <label class="btn btn-outline-primary" for="btncheck4">
-                    <i class="bi bi-car-front"></i>
-                    Habilitação
+                    🚘 Habilitação
                 </label>
             </div>
         </p>
@@ -82,27 +77,27 @@
         <div class="container g-0 mt-2">
             {% if not is_detail %}
                 <button type="submit" class="btn btn-success my-1 me-1">
-                    <i class="bi bi-check-lg me-1"></i> Salvar
+                    💾 Salvar
                 </button>
                 <button type="reset" class="btn btn-warning my-1 me-1">
-                    <i class="bi bi-x me-1"></i> Limpar
+                    🧹 Limpar
                 </button>
             {% else %}
                 <a href="{% url 'register:person_change' item.pk %}" title="Editar Registro" class="btn btn-primary my-1 me-1">
-                    <i class="bi bi-pencil"></i> Editar
+                    ✒️ Editar
                 </a>
 
                 <a href="{% url 'register:person_log' item.pk %}" title="Log de Alterações" class="btn btn-outline-secondary my-1 me-1">
-                    <i class="bi bi-journal-text"></i> Log
+                    📄 Log
                 </a>
 
                 <button title="Apagar Registro" type="button" class="btn btn-danger my-1 me-1" data-bs-toggle="modal" data-bs-target="#delete-{{item.pk}}">
-                    <i class="bi bi-trash3"></i>
+                    🗑️
                 </button>
 
             {% endif %}
                 <button type="button" onclick="window.history.go(-1)" class="btn btn-secondary my-1">
-                    <i class="bi bi-arrow-return-left me-1"></i>Voltar
+                    ⬅️ Voltar
                 </button>
         </div>
     </form>
